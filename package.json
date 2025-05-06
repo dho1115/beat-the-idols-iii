@@ -7,12 +7,18 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "json-server": "json-server --watch ./src/database.json -d 1.75 -p 3003"
   },
   "dependencies": {
     "beat-the-idols-iii": "file:",
+    "bootstrap": "^5.3.6",
+    "json-server": "^0.17.3",
+    "motion": "^12.9.7",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.3",
+    "reactstrap": "^9.2.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
