@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import './App.css';
+
 import WelcomePage from './pages/welcome/WelcomePage';
+
+import './App.css';
 
 function App() {
 
