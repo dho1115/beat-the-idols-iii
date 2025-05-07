@@ -1,2 +1,6 @@
 Parallax Scroll: 
 https://www.youtube.com/watch?v=mxHoPYFsTuk&t=225s
+
+Video Tag:
+https://www.w3schools.com/tags/tag_video.asp
+
