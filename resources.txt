@@ -4,3 +4,61 @@ https://www.youtube.com/watch?v=mxHoPYFsTuk&t=225s
 Video Tag:
 https://www.w3schools.com/tags/tag_video.asp
 
+PARALLAX VIDEO:
+.jsx:
+import React from 'react';
+import './ParallaxVideo.css'; // your CSS file
+
+const ParallaxVideo = () => {
+  return (
+    <div className="parallax-container">
+      <video
+        className="parallax-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+        src="your-video.mp4"
+        type="video/mp4"
+      />
+      <div className="parallax-content">
+        <h1>Your Parallax Content</h1>
+      </div>
+    </div>
+  );
+};
+
+export default ParallaxVideo;
+
+.css:
+.parallax-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.parallax-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  object-fit: cover;
+  transform: translateY(-25%); /* tweak for effect */
+  will-change: transform;
+}
+
+.parallax-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+This simulates a parallax-like effect using transform and object-fit on a video.
+
+You could use a scroll event or IntersectionObserver to dynamically animate the video position for true parallax, but the above gives a visual approximation.
+
+
