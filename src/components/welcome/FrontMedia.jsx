@@ -5,9 +5,7 @@ import "./WelcomeComponent.styles.css";
 
 const FrontMedia = () => {
   return (
-    <div className='front-media-div'>
-      <img src={FrontImage} className='front-media-img' />
-    </div>
+    <img src={FrontImage} className='front-img' />
   )
 }
 
