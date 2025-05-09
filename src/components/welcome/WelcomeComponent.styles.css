@@ -1,9 +1,25 @@
 .back-video {
-   position: absolute;
+   transform: translateZ(-15px) scale(2.5);
 }
 
-.front-media-img {
-   width: 100%;
+.front-img {
+   transform: translateZ(-15px) scale(2.5);
+}
+
+.back-video, .front-img {
+   position: absolute;
    height: 100%;
+   width: 100%;
    object-fit: cover;
+   z-index: -1;
+}
+
+.header {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   transform-style: preserve-3d;
+   z-index: -1;
 }
