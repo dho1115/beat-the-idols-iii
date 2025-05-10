@@ -9,8 +9,9 @@ section {
 
 .welcome-page-wrapper{
    height: 100vh;
+   min-width: 100%;
    overflow-x: hidden;
-   overflow-y: scroll;
+   overflow-y: auto;
    perspective: 10px;
    position: relative
 }
