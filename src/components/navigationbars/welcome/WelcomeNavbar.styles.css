@@ -1,9 +1,15 @@
+.welcome-link-container {
+   width: 100%;
+   display: flex;
+   justify-content: space-around;
+}
 .welcome-navbar {
+   position: absolute;
    display: flex;
    justify-content: space-between;
    border-bottom: 1.75px solid black;
-   background-color: whitesmoke;
-   height: 7%;
+   background-color: rgba(0, 0, 0, 1);
+   max-height: 5vh;
 }
 
 .welcome-nav-img {
