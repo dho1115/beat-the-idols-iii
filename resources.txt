@@ -1,5 +1,14 @@
+CSS Text Animations:
+https://prismic.io/blog/css-text-animations
+
+How to do Shake Animation:
+https://unused-css.com/blog/css-shake-animation/
+
 Parallax Scroll: 
 https://www.youtube.com/watch?v=mxHoPYFsTuk&t=225s
+
+stagger-children for Framer Motion (and maybe Framer?)
+https://stackoverflow.com/questions/62007505/staggerchildren-with-framer-motion
 
 Video Tag:
 https://www.w3schools.com/tags/tag_video.asp
