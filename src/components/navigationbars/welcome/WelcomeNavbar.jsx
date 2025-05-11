@@ -11,7 +11,7 @@ import "./WelcomeNavbar.styles.css";
 const WelcomeNavbar = () => {
   const location = useLocation();
 
-  const [generalRoutes, setGeneralRoutes] = useGeneralRoutes([{name: 'home', path: '/'}, {name: 'about', path: '/about'}, {name: 'contact us!!!', path: '/contact'}])
+  const [generalRoutes, setGeneralRoutes] = useGeneralRoutes([{name: 'welcome', path: '/'}, {name: 'home', path: '/home'}, {name: 'about', path: '/about'}, {name: 'contact us!!!', path: '/contact'}])
 
   console.log({ generalRoutes });
   console.log({ locationPathname: location.pathname });
