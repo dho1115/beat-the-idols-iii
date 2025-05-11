@@ -3,7 +3,6 @@ import React from 'react';
 //Dependencies
 import { Parallax } from 'react-scroll-parallax';
 
-//Components
 //Components.
 import Header from '../../components/welcome/Header';
 import WelcomeNavbar from '../../components/navigationbars/welcome/WelcomeNavbar';
