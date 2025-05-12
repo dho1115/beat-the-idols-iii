@@ -1,0 +1,18 @@
+.registration-card {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+}
+
+.registration-title {
+   position: relative;
+}
+
+.registration-video, .registration-img {
+   position: absolute;
+   top: 0;
+   height: 100%;
+   width: 100%;
+   z-index: -1;
+}
