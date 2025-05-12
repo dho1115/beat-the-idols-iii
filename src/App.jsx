@@ -1,12 +1,18 @@
+import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 //Components.
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Pages
-import AboutUsPage from './pages/about/AboutUsPage';
-import ContactPage from './pages/contact/ContactPage';
-import Homepage from './pages/home/Homepage';
+// import AboutUsPage from './pages/about/AboutUsPage'; //lazy loaded.
+// import ContactPage from './pages/contact/ContactPage'; //lazy loaded.
+// import Homepage from './pages/home/Homepage'; //lazy loaded now.
 import WelcomePage from './pages/welcome/WelcomePage';
+
+//Pages - Lazy loaded.
+const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
+const Homepage = lazy(() => import('./pages/home/Homepage'));
+const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
 
 import './App.css';
 
