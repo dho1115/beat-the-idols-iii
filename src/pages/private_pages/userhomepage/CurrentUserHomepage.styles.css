@@ -1,0 +1,6 @@
+.current-user-homepage-header {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: bisque;
+}
