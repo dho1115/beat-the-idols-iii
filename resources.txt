@@ -4,6 +4,9 @@ https://prismic.io/blog/css-text-animations
 How to do Shake Animation:
 https://unused-css.com/blog/css-shake-animation/
 
+Lazy Loading & Code-Splitting:
+https://www.youtube.com/watch?v=JU6sl_yyZqs
+
 Parallax Scroll: 
 https://www.youtube.com/watch?v=mxHoPYFsTuk&t=225s
 
