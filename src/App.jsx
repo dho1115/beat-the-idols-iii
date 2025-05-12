@@ -7,12 +7,13 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 // import AboutUsPage from './pages/about/AboutUsPage'; //lazy loaded.
 // import ContactPage from './pages/contact/ContactPage'; //lazy loaded.
 // import Homepage from './pages/home/Homepage'; //lazy loaded now.
-import WelcomePage from './pages/welcome/WelcomePage';
+// import WelcomePage from './pages/welcome/WelcomePage'; //Lazy Loaded now.
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
 const Homepage = lazy(() => import('./pages/home/Homepage'));
 const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
+const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
 
 import './App.css';
 
