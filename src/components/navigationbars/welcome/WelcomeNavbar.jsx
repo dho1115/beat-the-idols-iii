@@ -12,7 +12,7 @@ import "./WelcomeNavbar.styles.css";
 const WelcomeNavbar = () => {
   const location = useLocation();
 
-  const [generalRoutes, setGeneralRoutes] = useState([{name: 'welcome', path: '/'}, {name: 'home', path: '/home'}, {name: 'about', path: '/about'}, {name: 'contact us!!!', path: '/contact'}])
+  const [generalRoutes, setGeneralRoutes] = useState([{name: 'welcome', path: '/'}, {name: 'home', path: '/home'}, {name: 'about', path: '/about'}, {name: 'contact', path: '/contact'}, {name: 'register', path: '/register'}])
 
   return (
     <nav className='welcome-navbar p-1 sticky-top' style={{position: 'absolute', top: '0%', left: '0%', right: '0%'}}>
