@@ -8,7 +8,7 @@ import "./RegistrationPage.styles.css";
 
 const RegistrationPage = () => {
   return (
-   <div className='registration-page-div'>
+   <div className='registration-page-div py-5'>
       <Suspense fallback={<SuspenseFallback />}>
          <h1>LOGIN AND SIGNUP GOES HERE.</h1>
       </Suspense>
