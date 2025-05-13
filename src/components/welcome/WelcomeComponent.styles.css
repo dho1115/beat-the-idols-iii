@@ -1,10 +1,6 @@
 
 .back-video {
-   transform: translateZ(-50px) scale(7.5);
-}
-
-.front-img {
-   transform: translateZ(-15px) scale(3.5);
+   transform: translateZ(-150px);
 }
 
 .back-video, .front-img {
@@ -15,6 +11,10 @@
    z-index: -1;
    margin: 0px;
    padding: 0px;
+}
+
+.front-img {
+   transform: translateZ(-35px) scale(1.15);
 }
 
 .header {
@@ -28,11 +28,25 @@
    margin: 0px;
    padding: 0px;
    width: 100%;
+   overflow: hidden
+}
+
+.second-section {
+   background-color: lightpink;
+   height: 100vh;
+}
+
+.second-section > header {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: antiquewhite;
 }
 
 img.logo {
-   height: 100%;
-   width: 50%;
+   transform: translateZ(-15px) scale(3.5);
+   height: 90%;
+   width: 40%;
    animation: tilt-shaking infinite linear 925ms;
 }
 
