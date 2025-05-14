@@ -8,10 +8,10 @@ import "./WelcomeComponent.styles.css";
 
 const Header = () => {
   return (
-    <div className='header-wrapper'>
+    <div className='header'>
       <BackMedia />
       <img src={Logo} className='logo' />
-      <FrontMedia />
+      <FrontMedia />    
     </div>
   )
 }
