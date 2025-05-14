@@ -8,7 +8,7 @@ import "./WelcomeComponent.styles.css";
 
 const Header = () => {
   return (
-    <div className='header'> {/* I May need to make the HEADER the wrapper */}
+    <div className='header'>
       <BackMedia />
       <img src={Logo} className='logo' />
       <FrontMedia />

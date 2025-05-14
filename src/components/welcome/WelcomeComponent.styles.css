@@ -1,6 +1,6 @@
 
 .back-video {
-   transform: translateZ(-150px);
+   transform: translateZ(-150px) scale(17);
 }
 
 .back-video, .front-img {
@@ -14,7 +14,7 @@
 }
 
 .front-img {
-   transform: translateZ(-35px) scale(1.15);
+   transform: translateZ(-35px) scale(5);
 }
 
 .header {
@@ -28,7 +28,6 @@
    margin: 0px;
    padding: 0px;
    width: 100%;
-   overflow: hidden
 }
 
 .second-section {
