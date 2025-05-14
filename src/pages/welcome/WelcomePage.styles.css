@@ -12,6 +12,6 @@ section {
    min-width: 100%;
    overflow-x: hidden;
    overflow-y: auto;
-   perspective: 10px;
+   /* perspective: 10px; */
    position: relative
 }

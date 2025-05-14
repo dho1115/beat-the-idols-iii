@@ -8,7 +8,7 @@ import "./WelcomeComponent.styles.css";
 
 const Header = () => {
   return (
-    <div className='header'>
+    <div className='header-wrapper'>
       <BackMedia />
       <img src={Logo} className='logo' />
       <FrontMedia />
