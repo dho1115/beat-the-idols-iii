@@ -10,6 +10,9 @@ https://www.youtube.com/watch?v=JU6sl_yyZqs
 Parallax Scroll: 
 https://www.youtube.com/watch?v=mxHoPYFsTuk&t=225s
 
+Reactstrap Carousel:
+https://reactstrap.github.io/?path=/docs/components-carousel--carousel
+
 stagger-children for Framer Motion (and maybe Framer?)
 https://stackoverflow.com/questions/62007505/staggerchildren-with-framer-motion
 
