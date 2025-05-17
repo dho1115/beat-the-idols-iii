@@ -14,9 +14,11 @@ import "./WelcomePage.styles.css";
 const WelcomePage = () => {
 
   return (    
-    <div className='welcome-page-wrapper p-0'>      
-      <Header />
-      <SecondSection />      
+    <div className='welcome-page-wrapper p-0'>
+      <Suspense fallback={SuspenseFallback}>  
+        <Header />
+        <SecondSection />
+      </Suspense>      
     </div>
   )
 }
