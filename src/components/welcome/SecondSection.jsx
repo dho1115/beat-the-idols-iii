@@ -4,6 +4,8 @@ import SecondSectionCarousel from "./SecondSectionCarousel"
 import ErrorBoundary from "../ErrorBoundary"
 
 import "./WelcomeComponent.styles.css"
+import { Carousel } from "reactstrap"
+import { useState } from "react"
 
 const SecondSection = () => {
    const location = useLocation();
@@ -22,7 +24,9 @@ const SecondSection = () => {
             <h3>Build your own performance team</h3>
             </header>
             <div>
-               
+               <ErrorBoundary fallback={<h3>Error implementing Reactstrap Carousel</h3>}>
+                  <SecondSectionCarousel images={images} />
+               </ErrorBoundary>
             </div>
          </ErrorBoundary>         
       </div>
