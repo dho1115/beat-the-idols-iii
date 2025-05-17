@@ -1,9 +1,6 @@
 import React from 'react';
 import { Suspense } from 'react';
 
-//Dependencies
-import { Parallax } from 'react-scroll-parallax';
-
 //Components.
 import Header from '../../components/welcome/Header';
 import SecondSection from '../../components/welcome/SecondSection';
