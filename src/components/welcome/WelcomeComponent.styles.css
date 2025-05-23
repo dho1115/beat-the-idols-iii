@@ -25,6 +25,11 @@
    z-index: -1;
 }
 
+.react-bootstrap-carousel {
+   max-height: 100%;
+   width: 100%;
+}
+
 .second-section {
    background-color: lightpink;
    height: 100vh;
@@ -35,6 +40,10 @@
    justify-content: center;
    align-items: center;
    background-color: antiquewhite;
+}
+
+.second-section-carousel-div {
+   width: 100%;
 }
 
 img.logo {
