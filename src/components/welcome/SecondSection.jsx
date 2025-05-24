@@ -22,12 +22,10 @@ const SecondSection = () => {
             <header>
             <h1>You are the captain!!!</h1>
             <h3>Build your own performance team</h3>
-            </header>
-            <div>
-               <ErrorBoundary fallback={<h3>Error implementing Reactstrap Carousel</h3>}>
-                  <SecondSectionCarousel images={images} />
-               </ErrorBoundary>
-            </div>
+            </header>            
+            <ErrorBoundary fallback={<h3>Error implementing Reactstrap Carousel</h3>}>
+               <SecondSectionCarousel images={images} />
+            </ErrorBoundary>            
          </ErrorBoundary>         
       </div>
    )
