@@ -12,4 +12,5 @@ section {
    overflow-x: hidden;
    overflow-y: auto;
    perspective: 10px;
+   position: relative;
 }
