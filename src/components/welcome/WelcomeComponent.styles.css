@@ -29,10 +29,10 @@
    border: 3px solid black;
    overflow: hidden;
    object-fit: cover;
+   height: 100vh;
 }
 
 .img-div > img {
-   max-height: 300px;
    width: 100%;
 }
 
