@@ -20,11 +20,11 @@ const SecondSection = () => {
       <div className='second-section my-1'>
          <ErrorBoundary fallback={<h1>Crap. Something went wrong inside {location.pathname}.</h1>}>
             <header>
-            <h1>You are the captain!!!</h1>
-            <h3>Build your own performance team</h3>
+            {/* <h1>You are the captain!!!</h1>
+            <h3>Build your own performance team</h3> */}
             </header>            
             <ErrorBoundary fallback={<h3>Error implementing Reactstrap Carousel</h3>}>
-               <SecondSectionCarousel images={images} />
+               <SecondSectionCarousel images={images} />          
             </ErrorBoundary>            
          </ErrorBoundary>         
       </div>
