@@ -15,7 +15,7 @@ const WelcomeNavbar = () => {
   const [generalRoutes, setGeneralRoutes] = useState([{name: 'welcome', path: '/'}, {name: 'home', path: '/home'}, {name: 'about', path: '/about'}, {name: 'contact', path: '/contact'}, {name: 'register', path: '/register'}])
 
   return (
-    <nav className='welcome-navbar p-1 sticky-top' style={{position: 'absolute', top: '0%', left: '0%', right: '0%'}}>
+    <nav className='welcome-navbar p-1 mb-0 sticky-top' style={{position: 'absolute', top: '0%', left: '0%', right: '0%'}}>
       <a class="navbar-brand" href="/" style={{ width: '3vw' }}><img src={logo} className='img-thumbnail welcome-nav-img' /></a>
       <div className='welcome-link-container p-0'>
         {
