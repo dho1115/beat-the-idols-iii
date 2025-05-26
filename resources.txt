@@ -10,6 +10,9 @@ https://www.youtube.com/watch?v=JU6sl_yyZqs
 Parallax Scroll: 
 https://www.youtube.com/watch?v=mxHoPYFsTuk&t=225s
 
+React Bootstrap Carousel:
+https://react-bootstrap.netlify.app/docs/components/carousel/
+
 Reactstrap Carousel:
 https://reactstrap.github.io/?path=/docs/components-carousel--carousel
 
