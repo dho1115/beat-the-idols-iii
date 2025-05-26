@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "json-server": "json-server --watch ./src/database.json -d 1.75 -p 3003"
+    "json-server": "json-server --watch ./src/database.json  -p 3003"
   },
   "dependencies": {
     "beat-the-idols-iii": "file:",
