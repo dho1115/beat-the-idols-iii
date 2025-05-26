@@ -1,3 +1,4 @@
 {
-   "profile": ["Jamie"]
+   "currentUser": {"username": null, "password": null, "email": null},
+   "current challenges": []
 }
