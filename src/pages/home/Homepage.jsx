@@ -1,17 +1,20 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import { Container } from 'reactstrap';
+
+import "./Homepage.styles.css";
 
 const Homepage = () => {
+  const location = useLocation();
+
   return (
     <div className='my-5'>
-      <header>
-         <h1>WELCOME TO THE HOME PAGE!!!</h1>
+      <header className='homepage-header'>
+        <h1>Welcome To The Home Page!!!</h1>
       </header>
-      <div>
-         <strong>
-            lorem ipsul dolor here...
-         </strong>
-      </div>
+      <Container>
+        <Outlet />
+      </Container>
     </div>
   )
 }

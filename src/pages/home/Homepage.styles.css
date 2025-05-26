@@ -1,0 +1,6 @@
+header.homepage-header {
+   display: flex;
+   margin-top: 0;
+   border-bottom: 1.5px solid black;
+   background-color: bisque;
+}
