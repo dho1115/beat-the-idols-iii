@@ -11,6 +11,13 @@
    z-index: -1;
 }
 
+.carousel-caption {
+   -webkit-text-stroke-color: maroon;
+   -webkit-text-stroke-width: 1.15px;
+   color: yellow;
+   font-size: 73px;
+}
+
 .front-img {
    transform: translateZ(-5px) scale(1.5);
 }
