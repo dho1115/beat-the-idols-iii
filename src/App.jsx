@@ -1,7 +1,10 @@
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 //Components.
+import CurrentChallenges from './components/home/CurrentChallenges';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
+
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -19,7 +22,9 @@ function App() {
       <WelcomeNavbar />
       <Routes>
         <Route path='/' element={<WelcomePage />} />
-        <Route path='/home' element={<Homepage />} />
+        <Route path='/home/*' element={<Homepage />}>
+          <Route path='current-challenges' element={<CurrentChallenges />} />
+        </Route>
         <Route path='/about' element={<AboutUsPage />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/register' element={<RegistrationPage />} />
