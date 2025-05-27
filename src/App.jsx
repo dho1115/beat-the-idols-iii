@@ -2,9 +2,10 @@ import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 //Components.
-import CurrentChallenges from './components/home/CurrentChallenges';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
+//Components - Lazy loaded.
+const CurrentChallenges = lazy(() => import("./components/home/CurrentChallenges"));
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
