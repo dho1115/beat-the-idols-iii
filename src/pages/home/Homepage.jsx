@@ -5,8 +5,13 @@ import { Container } from 'reactstrap';
 import SuspenseFallback from '../../components/suspense_fallback/SuspenseFallback';
 import ErrorBoundary from '../../components/ErrorBoundary';
 
+//Components;
+import HomeNavbar from '../../components/navigationbars/HomeNavbar/HomeNavbar';
+
+//Miscellaneous
+import { HomeNavbarLinks } from '../../components/home/HomeNavbarLinks';
+
 import "./Homepage.styles.css";
-import CurrentChallenges from '../../components/home/CurrentChallenges';
 
 const Homepage = () => {
   const location = useLocation();
@@ -14,10 +19,8 @@ const Homepage = () => {
   return (
     <ErrorBoundary fallback={<h3>Something went wrong in {location.pathname}!!!</h3>}>
       <Suspense fallback={<SuspenseFallback />}>
-        <div className='my-5'>
-          <header className='homepage-header'>
-            <h1>Welcome To The Home Page!!!</h1>
-          </header>
+        <div style={{marginTop: '2.25%'}}>
+          <HomeNavbar arrayOfLinks={[...HomeNavbarLinks]} />
           <Container>
             <Outlet />
           </Container>
