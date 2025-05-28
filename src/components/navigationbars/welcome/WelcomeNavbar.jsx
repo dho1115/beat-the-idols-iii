@@ -21,7 +21,7 @@ const WelcomeNavbar = () => {
         {
           generalRoutes
             .filter(val => val.path != location.pathname)
-            .map(route => <Link to={route.path}><strong style={{color: 'whiteSmoke'}}>{route.name}</strong></Link>)
+            .map((route, idx) => <Link to={route.path}><strong style={{color: 'whiteSmoke'}} key={idx}>{route.name}</strong></Link>)
         }
       </div>      
     </nav>
