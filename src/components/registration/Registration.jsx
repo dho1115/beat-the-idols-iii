@@ -5,11 +5,11 @@ import { Card } from 'reactstrap';
 
 import "./Registration.styles.css"
 
-const Registration = ({ title, link, mediaFormat }) => {
+const Registration = ({ title, link, mediaFormat, toggle }) => {
    
    if (mediaFormat === 'uploadedVideo') {
       return (
-         <Card className='registration-card mx-3' onClick={() => console.log("Toggle the Modal.")}>
+         <Card className='registration-card mx-3' onClick={toggle}>
             <video muted loop autoPlay className='registration-video'>
                <source src={link} type="video/mp4" />
                <source src={link} type="video/ogg" />
