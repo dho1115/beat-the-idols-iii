@@ -7,15 +7,15 @@ import "./Registration.styles.css"
 
 const Registration = ({ title, link, mediaFormat }) => {
    
-   if (mediaFormat === 'video') {
+   if (mediaFormat === 'uploadedVideo') {
       return (
-         <Card className='registration-card' onClick={() => console.log("Toggle the Modal.")}>
+         <Card className='registration-card mx-3' onClick={() => console.log("Toggle the Modal.")}>
             <video muted loop autoPlay className='registration-video'>
                <source src={link} type="video/mp4" />
                <source src={link} type="video/ogg" />
                Your browser does not support the video tag.
             </video>
-            <h3 className='registration-title'>{title}</h3>
+            <h1 className='registration-title'>{title}</h1>
          </Card>
       )
    } else if (mediaFormat === 'image') {
@@ -28,7 +28,7 @@ const Registration = ({ title, link, mediaFormat }) => {
    } else {
       return (
          <div>
-            <h1>Please enter 'video' or 'image' for the third argument (mediaFormat).</h1>
+            <h3>SORRY... YOU MUST ENTER "uploadedVideo" or "image" for mediaFormat prop.</h3>
          </div>
       )
    }
