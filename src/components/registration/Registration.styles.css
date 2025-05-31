@@ -1,12 +1,39 @@
+.registration-button-divs {
+   width: 100%;
+   margin: 1%;
+   display: flex;
+   position: relative;
+   align-items: center;
+}
+
 .registration-card {
    display: flex;
    justify-content: center;
    align-items: center;
    position: relative;
+   z-index: 0;
+   height: 100%;
+   width: 100%;
+   cursor: pointer;
+   border: 5.1px solid lightseagreen
+}
+
+.registration-card :active {
+   transform: scale(1.01);
+}
+
+.registration-video {
+   position: absolute;
+   height: 100%;
+   object-fit: cover;
+   z-index: 1;
 }
 
 .registration-title {
    position: relative;
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: white;
+   color: red;
 }
 
 .registration-video, .registration-img {
