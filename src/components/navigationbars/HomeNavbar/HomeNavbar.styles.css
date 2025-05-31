@@ -10,6 +10,7 @@
    max-width: 15%;
    object-fit: cover;
    overflow: hidden;
+   cursor: pointer;
 }
 
 .homenavbar-card:active {
