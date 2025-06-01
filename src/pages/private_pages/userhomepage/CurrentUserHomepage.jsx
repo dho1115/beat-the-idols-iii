@@ -1,16 +1,21 @@
-import React, {Suspense} from 'react'
+import React, { Suspense, useContext } from 'react'
+
+//Dependencies.
+import { dataContext } from '../../../App';
 import { Outlet } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 //Components.
 import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFallback';
 
-const CurrentUserHomepage = ({ _userID, username }) => {
+const CurrentUserHomepage = () => {
+   const { _userID, username, email } = useContext(dataContext);
+
    try {
       return (
          <div className='current-user-homepage-div'>
             <header className='current-user-homepage-header'>
-               <h1>Homepage of <span color='danger'>{username}</span>.</h1>
+               <h1>Homepage of <span color='danger'>{username} - {email}.</span>.</h1>
             </header>
 
             <Suspense fallback={<SuspenseFallback />}>
