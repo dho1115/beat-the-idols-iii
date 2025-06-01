@@ -6,7 +6,7 @@ import SuspenseFallback from '../../components/suspense_fallback/SuspenseFallbac
 import ErrorBoundary from '../../components/ErrorBoundary';
 
 //Components;
-import HomeNavbar from '../../components/navigationbars/HomeNavbar/HomeNavbar';
+import HomeNavbar from '../../components/navigationbars/home_navbar/HomeNavbar';
 
 //Miscellaneous
 import { HomeNavbarLinks } from '../../components/home/HomeNavbarLinks';
