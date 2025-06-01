@@ -41,6 +41,7 @@ function App() {
             &
             <>
               <Route path='/currentUser/:currentUser._userID/*' element={<CurrentUserHomepage />}>
+                <Route path='' element={<h3>If you are seeing this, then you don't have child pages.</h3>} />
               </Route>
             </>
           }
