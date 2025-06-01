@@ -13,7 +13,7 @@ const Signup = ({text, registrationModal, toggle}) => {
       backdrop="static"
     >
       <ModalHeader style={{ backgroundColor: 'khaki' }} toggle={toggle}>
-        <h1 style={{textAlign: 'center', width: '100%'}}>{text}</h1>     
+        {text}     
       </ModalHeader>
       <ModalBody style={{backgroundColor: 'lightgrey'}}>
          <Form onSubmit={() => console.log("Submitted information!!!")} className='signupform'>
