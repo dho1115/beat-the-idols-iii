@@ -14,7 +14,7 @@ const SecondSectionCarousel = ({ images }) => {
             images.map(({src, caption, altText}, idx) => (
               <Item key={idx}>
                 <div className='img-div'>
-                  <img src={src} altText={altText} />
+                  <img src={src} alt={altText} />
                   <Caption>
                     <h1 className='carousel-caption'>{caption}</h1>
                   </Caption>
