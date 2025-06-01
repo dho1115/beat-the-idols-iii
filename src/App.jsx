@@ -37,10 +37,10 @@ function App() {
           <Route path='/register' element={<RegistrationPage />} />
           {/* === PRIVATE ROUTES === */}
           {
-            currentUser
+            currentUser._userID
             &
             <>
-              <Route path='/currentUser/:currentUser._userID' element={<CurrentUserHomepage />}>
+              <Route path='/currentUser/:currentUser._userID/*' element={<CurrentUserHomepage />}>
               </Route>
             </>
           }
