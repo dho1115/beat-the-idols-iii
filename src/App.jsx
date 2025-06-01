@@ -1,3 +1,4 @@
+import { createContext, useState } from 'react';
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
@@ -16,21 +17,26 @@ const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
 
 import './App.css';
 
+export const dataContext = createContext()
+
 function App() {
+  const [currentUser, setCurrentUser] = useState({});
 
   return (
     <BrowserRouter>
-      <WelcomeNavbar />
-      <Routes>
-        <Route path='/' element={<WelcomePage />} />
-        <Route path='/home/*' element={<Homepage />}>
-          <Route path='current-challenges' element={<CurrentChallenges />} />
-        </Route>
-        <Route path='/about' element={<AboutUsPage />} />
-        <Route path='/contact' element={<ContactPage />} />
-        <Route path='/register' element={<RegistrationPage />} />
-        <Route path='*' element={<Navigate to="/" replace />} />
-      </Routes>
+      <dataContext.Provider value={{currentUser, setCurrentUser}}>
+        <WelcomeNavbar />
+        <Routes>
+          <Route path='/' element={<WelcomePage />} />
+          <Route path='/home/*' element={<Homepage />}>
+            <Route path='current-challenges' element={<CurrentChallenges />} />
+          </Route>
+          <Route path='/about' element={<AboutUsPage />} />
+          <Route path='/contact' element={<ContactPage />} />
+          <Route path='/register' element={<RegistrationPage />} />
+          <Route path='*' element={<Navigate to="/" replace />} />
+        </Routes>
+      </dataContext.Provider>
     </BrowserRouter>
   )
 }
