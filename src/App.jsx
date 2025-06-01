@@ -14,6 +14,7 @@ const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
 const Homepage = lazy(() => import('./pages/home/Homepage'));
 const RegistrationPage = lazy(() => import('./pages/registration/RegistrationPage'));
 const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
+const CurrentUserHomepage = lazy(() => import('./pages/private_pages/userhomepage/CurrentUserHomepage'));
 
 import './App.css';
 
@@ -34,6 +35,16 @@ function App() {
           <Route path='/about' element={<AboutUsPage />} />
           <Route path='/contact' element={<ContactPage />} />
           <Route path='/register' element={<RegistrationPage />} />
+          {/* === PRIVATE ROUTES === */}
+          {
+            currentUser
+            &
+            <>
+              <Route path='/currentUser/:currentUser._userID' element={<CurrentUserHomepage />}>
+              </Route>
+            </>
+          }
+          {/* ====================== */}
           <Route path='*' element={<Navigate to="/" replace />} />
         </Routes>
       </dataContext.Provider>
