@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 //Dependencies.
 import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { dataContext } from '../../../App';
 
 import "./registrationforms.css"
 
-const Signup = ({text, registrationModal, toggle}) => {
+const Signup = ({ text, registrationModal, toggle }) => {
+  const { currentUser, setCurrentUser } = useContext(dataContext);
+  
   return (
     <Modal
       isOpen={registrationModal.signUp}
