@@ -14,9 +14,11 @@ const CurrentUserHomepage = () => {
    try {
       return (
          <div className='current-user-homepage-div'>
-            <header className='current-user-homepage-header'>
-               <h1>Homepage of <span color='danger'>{username} - {email}.</span>.</h1>
-            </header>
+            <Suspense falllback={<SuspenseFallback />}>
+               <header className='current-user-homepage-header'>
+                  <h1>Homepage of <span color='danger'>{username} - {email}.</span>.</h1>
+               </header>
+            </Suspense>
 
             <Suspense fallback={<SuspenseFallback />}>
                <Outlet />
