@@ -1,6 +1,7 @@
 import React, {Suspense, useState} from 'react'
 
 //Dependencies.
+import Login from '../../components/forms/registration/Login';
 import Registration from '../../components/registration/Registration';
 import Signup from '../../components/forms/registration/Signup';
 import SuspenseFallback from '../../components/suspense_fallback/SuspenseFallback';
@@ -20,6 +21,7 @@ const RegistrationPage = () => {
       <div className='registration-page-div py-5'>
          <Suspense fallback={<SuspenseFallback />}>
             <Signup text="SIGN UP!!!" registrationModal={registrationModal} toggle={toggleSignupModal} />
+            <Login text="LOGIN!!!" registrationModal={registrationModal} toggle={toggleLoginModal} />
             <div className='registration-buttons-div'>
                <Registration title="REGISTER" link={singers} mediaFormat="uploadedVideo" toggle={toggleSignupModal} />
                <Registration title="LOGIN" link={musicians} mediaFormat="uploadedVideo" toggle={toggleLoginModal} />
