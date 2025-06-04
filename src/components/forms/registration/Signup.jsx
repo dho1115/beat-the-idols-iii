@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from 'react';
 
 //Dependencies.
 import { useNavigate } from 'react-router-dom';
+import { usePost } from '../../../functions/fetchapi';
 import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { v4 } from 'uuid';
 import { dataContext } from '../../../App';
+import { v4 } from 'uuid';
 
 import "./registrationforms.css"
 
@@ -15,18 +16,16 @@ const Signup = ({ text, registrationModal, toggle }) => {
   const handleSignup = e => {
     e.preventDefault();
     const _userID = v4();
-    console.log(`Submitted information for ${_userID}.`);
     setCurrentUser(prv => ({ ...prv, _userID }));
   }
 
   useEffect(() => {
-    if (currentUser._userID) navigate(`/currentUser/${currentUser._userID}/`)
-  
+    (currentUser._userID && currentUser.username) && navigate(`/currentUser/${currentUser._userID}/`);
     return () => {
-      
-    }
-  }, [currentUser._userID]) //Navigate to user's homepage only if there is a _userID.
-  
+      console.log(`ON EXIT: currentUser is ${JSON.stringify(currentUser)}.`);
+    };
+  }, [Object.values(currentUser).length])
+
   
   return (
     <Modal
