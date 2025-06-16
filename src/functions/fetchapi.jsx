@@ -1,46 +1,15 @@
-import { useEffect, useState } from "react";
+export const useFetch = async (url, setStateFnDeclaration = data => console.log(data)) => {
+   try {
+      const fetchData = await fetch(url);
+      const jsonData = await fetchData.json();
+      console.log({ message: 'Success from useFetch!!!', fetchData, jsonData });
 
-export function useFetch(url, initial=[]) {
-   const [data, setData] = useState(initial);
+      console.log('setStateFunctionDeclaration: ', setStateFnDeclaration(jsonData));
 
-   useEffect(() => {
-      fetch(url)
-         .then(res => {
-            if (!res.ok) {
-               throw new Error(`ERROR!!! ${res.status}.`)
-            }
-            return res.json()
-         }).then(result => {
-            console.log("SUCCESS!!! ", result);
-            setData(result)
-         }).catch(error => console.error({ error, errorCode: error.code, errorMessage: error.errorMessage }));
-   
-     return () => {
-     }
-   }, [])
-   
-   return [data, setData]
-}
+      return jsonData;
+   } catch (error) {
+      console.error({ message: 'useFetch error!!!', error, errorStatus: error.status, errorCode: error.code, errorMessage: error.message });
 
-export function usePost(url, data) {
-   const body = JSON.stringify(data);
-
-   useEffect(() => {
-      fetch({
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body
-      })
-         .then(res => {
-            if (!res.ok) {
-               throw new Error(`HTTP Error!!! => ${res.status}.`)
-            }
-
-            return res.json()
-         })
-         .then(result => console.log(`SUCCESS!!! Result is ${result}.`))
-         .catch(error => console.error({ message: 'ERROR CAUGHT!!!', error, errorMessage: error.message, errorCode: error.code }));
-   }, [])
-
-   return `Successfully posted ${body} to ${url}.`;
+      return { message: 'useFetch error!!!', error, errorMessage: error.message };
+   }
 }
