@@ -1,4 +1,5 @@
 {
    "currentUser": {"username": null, "password": null, "email": null},
+   "allUsers": [],
    "currentChallenges": []
 }
