@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 
 //Dependencies.
 import { useNavigate } from 'react-router-dom';
-import { usePost } from '../../../functions/fetchapi';
 import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { dataContext } from '../../../App';
 import { v4 } from 'uuid';
