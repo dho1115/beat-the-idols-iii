@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 //Components - Lazy loaded.
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
@@ -6,7 +6,7 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 //Dependencies.
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-// import { dataContext } from './contextprovider';
+import { useFetch } from './functions/fetchapi';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -23,10 +23,24 @@ export const dataContext = createContext();
   
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [allUsers, setAllUsers] = useState([]);
+  const [currentChallenges, setCurrentChallenges] = useState([]);
+
+  useEffect(() => {
+    useFetch('http://localhost:3003/currentUser', data => setCurrentUser(prv => ({ ...prv, ...data })));
+    useFetch('http://localhost:3003/allUsers', data => setAllUsers(prv => ([...prv, ...data])));
+    useFetch('http://localhost:3003/currentChallenges', data => setCurrentChallenges(prv => ([...prv, ...data])));
+
+    return () => {
+      
+    };
+  }, [])
+
+  console.log({ currentUser, currentChallenges, allUsers });
 
   return (
     <BrowserRouter>
-      <dataContext.Provider value={{currentUser, setCurrentUser}}>
+      <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges}}>
         <WelcomeNavbar />
         <Routes>
           <Route path='/' element={<WelcomePage />} />
