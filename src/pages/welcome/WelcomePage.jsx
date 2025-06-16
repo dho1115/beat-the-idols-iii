@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Suspense } from 'react';
 
 //Components.
 import Header from '../../components/welcome/Header';
 import SecondSection from '../../components/welcome/SecondSection';
 import SuspenseFallback from '../../components/suspense_fallback/SuspenseFallback';
+import { dataContext } from '../../App';
 
 import "./WelcomePage.styles.css";
 
 const WelcomePage = () => {
+  const contextProvider = useContext(dataContext);
+  console.log({ contextProvider });
 
   return (    
     <div className='welcome-page-wrapper p-0'>
