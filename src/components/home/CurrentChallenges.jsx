@@ -5,10 +5,8 @@ import SuspenseFallback from '../suspense_fallback/SuspenseFallback';
 import { Container } from 'reactstrap';
 
 const CurrentChallenges = () => {
-  const [data, setData] = useFetch("http://localhost:3003/currentChallenges", []);
-  console.log("DATA IS: ", data);
 
-  if (!data.length) {
+  if (true) {
     return (
       <div>
         <Container className='my-5' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', border: '3px solid black', backgroundColor: 'peachpuff' }}>
@@ -22,7 +20,7 @@ const CurrentChallenges = () => {
     <div>
       <Suspense fallback={<SuspenseFallback />}>
         <h1>CURRENT CHALLENGES.</h1>
-        <h3>{JSON.stringify(data)}</h3>
+        {/* <h3>{JSON.stringify(data)}</h3> */}
       </Suspense>      
     </div>
   )
