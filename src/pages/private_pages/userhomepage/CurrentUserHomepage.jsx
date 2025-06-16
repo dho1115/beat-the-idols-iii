@@ -10,10 +10,10 @@ import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFall
 
 const CurrentUserHomepage = () => {
    const { _userID, username, email } = useContext(dataContext);
-
+   console.log({_userID, username, email})
    try {
       return (
-         <div className='current-user-homepage-div'>
+         <div className='current-user-homepage-div py-5'>
             <Suspense falllback={<SuspenseFallback />}>
                <header className='current-user-homepage-header'>
                   <h1>Homepage of <span color='danger'>{username} - {email}.</span>.</h1>
