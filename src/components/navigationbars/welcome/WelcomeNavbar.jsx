@@ -17,7 +17,7 @@ const WelcomeNavbar = () => {
   const [generalRoutes, setGeneralRoutes] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }, { name: 'register', path: '/register' }])
   
   useEffect(() => {
-    if (currentUser._userID && currentUser.username) {
+    if (currentUser.id && currentUser.username) {
       setGeneralRoutes(prv => ([...prv, {name: `Welcome, ${currentUser.username}!!!`, path: '/'}]))
     }
   }, [Object.values(currentUser).length]);
