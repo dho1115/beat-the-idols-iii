@@ -30,13 +30,10 @@ function App() {
     useFetch('http://localhost:3003/currentUser', data => setCurrentUser(prv => ({ ...prv, ...data })));
     useFetch('http://localhost:3003/allUsers', data => setAllUsers(prv => ([...prv, ...data])));
     useFetch('http://localhost:3003/currentChallenges', data => setCurrentChallenges(prv => ([...prv, ...data])));
-
     return () => {
       
     };
   }, [])
-
-  console.log({ currentUser, currentChallenges, allUsers });
 
   return (
     <BrowserRouter>
