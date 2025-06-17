@@ -5,25 +5,44 @@ import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { dataContext } from '../../../App';
 import { v4 } from 'uuid';
+import { usePost } from '../../../functions/postapi';
 
 import "./registrationforms.css"
 
 const Signup = ({ text, registrationModal, toggle }) => {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useContext(dataContext);
+  const { currentUser, setCurrentUser, allUsers, setAllUsers } = useContext(dataContext);
 
   const handleSignup = e => {
     e.preventDefault();
     const _userID = v4();
-    setCurrentUser(prv => ({ ...prv, _userID }));
+    usePost(
+      'http://localhost:3003/currentUser',
+      { ...currentUser, id: _userID },
+      data => setCurrentUser(prv => ({ ...prv, ...data }))
+    )
+      .then(result => {
+        console.log({ message: 'SUCCESS MESSAGE from http://localhost:3003/currentUser', result, currentUser });
+      })
+      .catch(error => console.error({ message: 'ERROR MESSAGE from http://localhost:3003/currentUser', error, errorCode: error.code, errorMessage: error.message, currentUser }));
+    
+    usePost(
+      'http://localhost:3003/allUsers',
+      { ...currentUser, id: _userID },
+      data => setAllUsers(prv => ([...prv, data]))
+    )
+      .then(result => {
+        console.log({ message: 'SUCCESS MESSAGE from http://localhost:3003/allUsers', result, allUsers });
+      })
+      .catch(error => console.error({ message: 'ERROR MESSAGE from http://localhost:3003/allUsers', error, errorCode: error.code, errorMessage: error.message, allUsers }));
   }
 
   useEffect(() => {
-    (currentUser._userID && currentUser.username) && navigate(`/currentUser/${currentUser._userID}/`);
+    (currentUser.id && currentUser.username) && navigate(`/currentUser/${currentUser.id}/`);
     return () => {
       console.log(`ON EXIT: currentUser is ${JSON.stringify(currentUser)}.`);
     };
-  }, [Object.values(currentUser).length])
+  }, [currentUser.id, currentUser.username])
 
   
   return (
