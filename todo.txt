@@ -1,0 +1,3 @@
+1. Add a button on the homepage that will send the logged in user to his/her/their homepage.
+2. Remove the register link if the user is currently logged in (why should the user register if user is logged in?)
+3. Work in user homepage.
