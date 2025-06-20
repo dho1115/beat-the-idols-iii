@@ -9,8 +9,8 @@ import { Container } from 'reactstrap';
 import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFallback';
 
 const CurrentUserHomepage = () => {
-   const { id, username, email } = useContext(dataContext);
-   console.log({id, username, email})
+   const { currentUser } = useContext(dataContext);
+   const { id, username, email } = currentUser;
    try {
       return (
          <div className='current-user-homepage-div py-5'>
