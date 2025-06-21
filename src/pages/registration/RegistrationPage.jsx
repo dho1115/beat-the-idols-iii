@@ -13,7 +13,7 @@ import musicians from "../../media/videos/musicians.mp4"
 import "./RegistrationPage.styles.css";
 
 const RegistrationPage = () => {
-   const [registrationModal, setRegistrationModal] = useState({ signUp: false, login: false });
+   const [registrationModal, setRegistrationModal] = useState({ signUp: false, login: false }); //if false, modal is closed for that respective modal. 
    const toggleSignupModal = () => setRegistrationModal(prv => ({ ...prv, signUp: !registrationModal.signUp }));
    const toggleLoginModal = () => setRegistrationModal(prv => ({ ...prv, login: !registrationModal.login }));
 
