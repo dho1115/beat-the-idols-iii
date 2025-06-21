@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from 'reactstrap'
+import { Card } from 'reactstrap';
+import { usePost } from '../../../functions/postapi';
 
 import "./HomeNavbar.styles.css";
 
@@ -11,7 +12,7 @@ const HomeNavbar = ({ arrayOfLinks /* from Homepage.jsx */ }) => {
       return (
          <nav className='homenavbar p-3'>
             {
-               arrayOfLinks.map(({src, text}, idx) => {
+               arrayOfLinks.map(({ src, text }, idx) => {
                   return (
                      <Card className='homenavbar-card' key={idx} onClick={() => navigate("/home/current-challenges")}>
                         <img src={src} alt={text} className='homenavbar-img' />
