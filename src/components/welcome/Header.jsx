@@ -6,7 +6,7 @@ import Logo from '../../media/images/BeatTheIdols_NoBackground.png';
 
 import "./WelcomeComponent.styles.css";
 
-const Header = () => {
+const Header = ({id, username}) => {
   return (
     <div className='header'>
       <BackMedia />
