@@ -1,26 +1,32 @@
-import {useState, useEffect, useContext} from 'react'
+import {useEffect, useContext} from 'react'
 
 //Dependencies.
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { dataContext } from '../../../App';
-import { usePost } from '../../../functions/postapi';
 
 //Media.
 import logo from "../../../media/images/BeatTheIdols_NoBackground.png";
 
 import "./WelcomeNavbar.styles.css";
+import { stringify } from 'uuid';
 
 const WelcomeNavbar = () => {
   const location = useLocation();
-  const { currentUser, setCurrentUser } = useContext(dataContext);
+  const { currentUser, setCurrentUser, mainRoutes, setMainRoutes } = useContext(dataContext);
   const { id, username } = currentUser;
 
-  const [generalRoutes, setGeneralRoutes] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }, { name: 'register', path: '/register' }])
-  
   useEffect(() => {
+    const filterUniqueName = new Set()
     if (id && username) {
-      setGeneralRoutes(prv => ([...prv, {name: `Welcome, ${username}!!!`, path: '/'}]))
+      const updatedMainRoutes = [...mainRoutes, { name: `Welcome, ${username}!!!`, path: `/currentUser/${username}` }].map(val => {
+        if (filterUniqueName.has(val.name)) false;
+        else {
+          filterUniqueName.add(val.name);
+          return val
+        }
+      })
+      setMainRoutes(updatedMainRoutes);
     }
   }, [id, username]); //Checks to see if there is a current user.
 
@@ -29,25 +35,9 @@ const WelcomeNavbar = () => {
       <a class="navbar-brand" href="/" style={{ width: '3vw' }}><img src={logo} className='img-thumbnail welcome-nav-img' /></a> {/* logo on the left */}
       <div className='welcome-link-container p-0'>
         {
-          generalRoutes
+          mainRoutes
             .filter(val => val.path != location.pathname) //shows links that do not lead back to the page you are currently on.
-            .map(({name, path}, idx) => {
-              if ((name == 'register') && (id && username) && (location.pathname != "/")) {
-                return (
-                  <Link to="/" key={idx} onClick={() => alert("create logic to log out of database as well as the useContext state!!!")}><strong>LOG OUT!!!</strong></Link>
-                )
-              }
-              else if (name == 'register' && (id && username) && (location.pathname == '/')) {
-                return (
-                  <Link to={path}><strong style={{ color: 'whiteSmoke' }} key={idx}>{username}'s homepage</strong></Link>
-                )
-              }
-              else {
-                return (
-                  <Link to={path}><strong style={{ color: 'whiteSmoke' }} key={idx}>{name}</strong></Link>
-                )
-              }
-            })
+            .map(({name, path, onClick}, idx) => <Link to={path} onClick={onClick || null}><strong style={{ color: 'whiteSmoke' }} key={idx}>{name}</strong></Link>)
         }
       </div>      
     </nav>
