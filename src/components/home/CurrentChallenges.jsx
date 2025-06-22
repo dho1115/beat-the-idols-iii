@@ -1,12 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useContext } from 'react';
 
-import { useFetch } from '../../functions/fetchapi';
 import SuspenseFallback from '../suspense_fallback/SuspenseFallback';
 import { Container } from 'reactstrap';
+import { dataContext } from '../../App';
 
 const CurrentChallenges = () => {
+  const { currentChallenges } = useContext(dataContext);
 
-  if (true) {
+  if (!currentChallenges.length) {
     return (
       <div>
         <Container className='my-5' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', border: '3px solid black', backgroundColor: 'peachpuff' }}>
