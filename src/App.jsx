@@ -6,7 +6,7 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 //Dependencies.
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { useFetch } from './functions/fetchapi';
+import { fetchDataAPI } from './functions/fetchapi';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -25,11 +25,14 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [currentChallenges, setCurrentChallenges] = useState([]);
+  const [mainRoutes, setMainRoutes] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }])  
 
   useEffect(() => {
-    useFetch('http://localhost:3003/currentUser', data => setCurrentUser(prv => ({ ...prv, ...data })));
-    useFetch('http://localhost:3003/allUsers', data => setAllUsers(prv => ([...prv, ...data])));
-    useFetch('http://localhost:3003/currentChallenges', data => setCurrentChallenges(prv => ([...prv, ...data])));
+    const fetchResult = fetchDataAPI('http://localhost:3003/currentUser');
+    fetchResult
+      .then(data => setCurrentUser(prv => ({ ...prv, ...data })))
+      .catch(error => console.error({ message: '!!! ERROR !!! from fetchResult/currentUser.', errorMessage: error.message, error, errorCode: error.code, status: error.status }))
+      .finally(() => console.log(`Final result for currentUser: ${JSON.stringify(currentUser)}.`))
     return () => {
       
     };
@@ -37,7 +40,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges}}>
+      <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, mainRoutes, setMainRoutes}}>
         <WelcomeNavbar />
         <Routes>
           <Route path='/' element={<WelcomePage />} />
@@ -48,7 +51,7 @@ function App() {
           <Route path='/contact' element={<ContactPage />} />
           <Route path='/register' element={<RegistrationPage />} />
           {/* === PRIVATE ROUTES === */}
-          <Route path='/currentUser/:user/*' element={<CurrentUserHomepage />}>
+          <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
             <Route path='' element={<h3>If you are seeing this, then you don't have child pages.</h3>} />
           </Route>
           {/* ====================== */}
