@@ -1,15 +1,11 @@
-export const useFetch = async (url, setStateFnDeclaration = data => console.log(data)) => {
+export const fetchDataAPI = async url => {
    try {
-      const fetchData = await fetch(url);
-      const jsonData = await fetchData.json();
-      console.log({ message: 'Success from useFetch!!!', fetchData, jsonData });
-
-      console.log('setStateFunctionDeclaration: ', setStateFnDeclaration(jsonData));
-
+      const rawData = await fetch(url);
+      const jsonData = await rawData.json();
       return jsonData;
    } catch (error) {
-      console.error({ message: 'useFetch error!!!', error, errorStatus: error.status, errorCode: error.code, errorMessage: error.message });
+      console.error({ from: 'fetchDataAPI', error, errorCode: error.code, errorMessage: error.message, status: error.status });
 
-      return { message: 'useFetch error!!!', error, errorMessage: error.message };
+      return { from: 'fetchDataAPI', error, errorCode: error.code, errorMessage: error.message };
    }
 }
