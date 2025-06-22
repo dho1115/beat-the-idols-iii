@@ -1,16 +1,22 @@
-import React, { Suspense, useContext } from 'react'
+import React, { Suspense, useContext, useEffect } from 'react'
 
 //Dependencies.
 import { dataContext } from '../../../App';
 import { Outlet } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import { usePost } from '../../../functions/postapi';
 
 //Components.
 import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFallback';
 
 const CurrentUserHomepage = () => {
-   const { currentUser } = useContext(dataContext);
-   const { id, username, email } = currentUser;
+   const { currentUser, setCurrentUser, mainRoutes, setMainRoutes } = useContext(dataContext);
+   const { username, email } = currentUser;
+   
+   useEffect(() => {
+      !mainRoutes.filter(({name}) => name == 'LOG OUT!!!').length && setMainRoutes(prv => ([...prv, { name: 'LOG OUT!!!', path: '/', onClick: () => console.log('LOG OUT!!!') }]))
+   }, [])
+
    try {
       return (
          <div className='current-user-homepage-div py-5'>
