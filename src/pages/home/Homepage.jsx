@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Container } from 'reactstrap';
 
