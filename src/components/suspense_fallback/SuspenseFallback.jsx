@@ -1,5 +1,8 @@
 import React from 'react'
 
+//Dependencies.
+import { Container } from 'reactstrap';
+
 import "./SuspenseFallback.styles.css";
 
 const SuspenseFallback = () => {
