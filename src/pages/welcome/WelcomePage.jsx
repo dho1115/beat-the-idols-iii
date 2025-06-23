@@ -10,10 +10,12 @@ import { dataContext } from '../../App';
 import "./WelcomePage.styles.css";
 
 const WelcomePage = () => {
-  alert("From WelcomePage.jsx (route = '/'): PLEASE CHECK YOUR todo.txt!!!")
+  // alert("From WelcomePage.jsx (route = '/'): PLEASE CHECK YOUR todo.txt!!!")
   const contextProvider = useContext(dataContext);
   const { currentUser } = contextProvider;
   const { id, username } = currentUser;
+
+  console.log({currentUser})
 
   return (    
     <div className='welcome-page-wrapper p-0'>
