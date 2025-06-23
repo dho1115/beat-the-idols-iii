@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'reactstrap';
-import { usePost } from '../../../functions/postapi';
 
 import "./HomeNavbar.styles.css";
 
