@@ -5,36 +5,48 @@ import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { dataContext } from '../../../App';
 import { v4 } from 'uuid';
-import { usePost } from '../../../functions/postapi';
-
+import { PostDataAPI } from '../../../functions/postapi';
 import "./registrationforms.css"
 
 const Signup = ({ text, registrationModal, toggle }) => {
+  const _userID = v4();
   const navigate = useNavigate();
   const { currentUser, setCurrentUser, allUsers, setAllUsers } = useContext(dataContext);
 
+  //Promises
+  const addIDToCurrentUser = () => new Promise(
+    (res, rej) => {
+    setCurrentUser(prv => ({ ...prv, id: _userID }));
+    if (currentUser.id) res({ from: 'addIDToCurrentUser', result: 'SUCCESS!!!', currentUser })
+    else rej({ from: 'addIDToCurrentUser', result: 'FAILED (or not yet).', currentUser });
+    }
+  );
+
+  const addUserToAllUsers = () => new Promise(
+    (res, rej) => {
+    const oldLengthAllUsers = allUsers.length;
+    setAllUsers(prv => ([...prv, currentUser]));
+    if (allUsers.length > oldLengthAllUsers) res({ from: 'AddUserToAllUsers', result: 'SUCCESS!!!', allUsers });
+    else rej({ from: 'addIDToCurrentUser', result: 'FAILED (or not yet)', allUsers, currentUser });
+    }
+  );
+
   const handleSignup = e => {
     e.preventDefault();
-    const _userID = v4();
-    usePost(
-      'http://localhost:3003/currentUser',
-      { ...currentUser, id: _userID },
-      data => setCurrentUser(prv => ({ ...prv, ...data }))
-    )
-      .then(result => {
-        console.log({ message: 'SUCCESS MESSAGE from http://localhost:3003/currentUser', result, currentUser });
+
+    addIDToCurrentUser()
+      .then(data => {
+        console.log({ data });
+        return PostDataAPI('http://localhost:3003/currentUser', data.currentUser)
+      }).then(addIDToCurrentUserResult => {
+        console.log({ addIDToCurrentUserResult });
+        return addUserToAllUsers()
       })
-      .catch(error => console.error({ message: 'ERROR MESSAGE from http://localhost:3003/currentUser', error, errorCode: error.code, errorMessage: error.message, currentUser }));
-    
-    usePost(
-      'http://localhost:3003/allUsers',
-      { ...currentUser, id: _userID },
-      data => setAllUsers(prv => ([...prv, data]))
-    )
-      .then(result => {
-        console.log({ message: 'SUCCESS MESSAGE from http://localhost:3003/allUsers', result, allUsers });
+      .then(addUserToAllUsersResult => {
+        console.log({ addUserToAllUsersResult });
+        return PostDataAPI('http://localhost:3003/allUsers', { ...currentUser })
       })
-      .catch(error => console.error({ message: 'ERROR MESSAGE from http://localhost:3003/allUsers', error, errorCode: error.code, errorMessage: error.message, allUsers }));
+      .catch(error => console.error({ from: "addIDToCurrentUser", message: "ERROR!!!", error, errorCode: error.code, errorMessage: error.message, status: error.status }));
   }
 
   useEffect(() => {
