@@ -28,11 +28,14 @@ function App() {
   const [mainRoutes, setMainRoutes] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }])  
 
   useEffect(() => {
+    console.log("*** USE EFFECT(fn, []) IN APP.JSX HAS RAN!!! ***");
+
     const fetchResult = fetchDataAPI('http://localhost:3003/currentUser');
     fetchResult
       .then(data => setCurrentUser(prv => ({ ...prv, ...data })))
       .catch(error => console.error({ message: '!!! ERROR !!! from fetchResult/currentUser.', errorMessage: error.message, error, errorCode: error.code, status: error.status }))
       .finally(() => console.log(`Final result for currentUser: ${JSON.stringify(currentUser)}.`))
+    
     return () => {
       
     };
