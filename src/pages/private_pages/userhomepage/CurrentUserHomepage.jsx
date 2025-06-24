@@ -19,7 +19,7 @@ const CurrentUserHomepage = () => {
       else rej({ message: "ERROR TRYING TO LOG OUT CURRENT USER FROM STATE!!!", currentUser });
    })
 
-   const logoutpromise = () => Promise.all([logoutCurrentUserPromise, PostDataAPI("http://localhost:3003/currentUser", { username: "", password: "", id: "", email: "" })])
+   const logoutpromise = () => Promise.all([logoutCurrentUserPromise(), PostDataAPI("http://localhost:3003/currentUser", { username: "", password: "", id: "", email: "" })])
       .then(result => console.log(result))
       .catch(error => console.error({ message: "logoutpromise ERROR!!!", error, errorMessage: error.message, errorCode: error.code }));
 
