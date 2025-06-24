@@ -9,26 +9,29 @@ import { dataContext } from '../../../App';
 import logo from "../../../media/images/BeatTheIdols_NoBackground.png";
 
 import "./WelcomeNavbar.styles.css";
-import { stringify } from 'uuid';
 
 const WelcomeNavbar = () => {
   const location = useLocation();
-  const { currentUser, setCurrentUser, mainRoutes, setMainRoutes } = useContext(dataContext);
+  const { currentUser, allUsers, currentChallenges, mainRoutes, setMainRoutes } = useContext(dataContext);
   const { id, username } = currentUser;
 
   useEffect(() => {
     const filterUniqueName = new Set()
-    if (id && username) {
-      const updatedMainRoutes = [...mainRoutes, { name: `Welcome, ${username}!!!`, path: `/currentUser/${username}` }].map(val => {
+    const updatedMainRoutes =
+      (id && username) ?
+        [...mainRoutes, { name: `Welcome, ${username}!!!`, path: `/currentUser/${username}` }]
+        :
+        [...mainRoutes, { name: "LOGIN/SIGN UP!!!", path: '/register' }]
+      .map(val => {
         if (filterUniqueName.has(val.name)) false;
         else {
           filterUniqueName.add(val.name);
           return val
         }
       })
-      setMainRoutes(updatedMainRoutes);
-    }
-  }, [id, username]); //Checks to see if there is a current user.
+    setMainRoutes(updatedMainRoutes)
+    
+  }, []); //Checks to see if there is a current user.
 
   return (
     <nav className='welcome-navbar p-1 mb-0 sticky-top' style={{position: 'absolute', top: '0%', left: '0%', right: '0%'}}>
