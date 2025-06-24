@@ -28,14 +28,22 @@ function App() {
   const [mainRoutes, setMainRoutes] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }])  
 
   useEffect(() => {
-    console.log("*** USE EFFECT(fn, []) IN APP.JSX HAS RAN!!! ***");
+    fetchDataAPI('http://localhost:3003/currentUser')
+      .then(_currentUser => {
+        console.log({ message: "fetch currentUser *** SUCCESS!!! ***", _currentUser });
+        setCurrentUser(prv => ({ ...prv, ..._currentUser }));
+        return fetchDataAPI("http://localhost:3003/allUsers");
+      })
+      .then(_allUsers => {
+        console.log({ message: "fetch allUsers *** SUCCESS!!! ***", _allUsers });
+        setAllUsers(prv => ([...prv, ..._allUsers]));
 
-    const fetchResult = fetchDataAPI('http://localhost:3003/currentUser');
-    fetchResult
-      .then(data => setCurrentUser(prv => ({ ...prv, ...data })))
-      .catch(error => console.error({ message: '!!! ERROR !!! from fetchResult/currentUser.', errorMessage: error.message, error, errorCode: error.code, status: error.status }))
-      .finally(() => console.log(`Final result for currentUser: ${JSON.stringify(currentUser)}.`))
-    
+        return fetchDataAPI("http://localhost:3003/currentChallenges");
+      }).then(_currentChallenges => {
+        console.log({ message: "fetch currentChallenges *** SUCCESS!!! ***", _currentChallenges });
+        setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
+      })
+      .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));    
     return () => {
       
     };
