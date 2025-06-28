@@ -1,5 +1,6 @@
 FIX THE DYNAMIC ROUTES FOR <WelcomeNavbar /> so that:
 1. When there is NO currentUser: LOGIN/SIGNUP shows.
 2. When there IS a currentUser: {currentUser}'s homepage and LOGOUT shows.
+* Consider using a combination of useEffect(fn, [id, username]), setState(curentUser) and setState(routes.filter(currentUser or !currentUser))
 
 ADD A CONDITIONAL INSIDE app.js so that the private routes ONLY show when there is a currentUser. Right now, the private routes show EVEN if nobody is logged in!!!
