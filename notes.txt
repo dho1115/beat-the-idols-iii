@@ -1,1 +1,5 @@
-json-server news: https://json-server.dev/json-server-delay-option-on-cli/
+FIX THE DYNAMIC ROUTES FOR <WelcomeNavbar /> so that:
+1. When there is NO currentUser: LOGIN/SIGNUP shows.
+2. When there IS a currentUser: {currentUser}'s homepage and LOGOUT shows.
+
+ADD A CONDITIONAL INSIDE app.js so that the private routes ONLY show when there is a currentUser. Right now, the private routes show EVEN if nobody is logged in!!!
