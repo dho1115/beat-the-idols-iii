@@ -16,12 +16,15 @@ const WelcomeNavbar = () => {
   const { id, username } = currentUser;
 
   useEffect(() => {
-    const filterUniqueName = new Set()
+    const filterUniqueName = new Set();
+
+    const dynamicRoutes = (id && username) ? { name: `Welcome, ${username}!!!`, path: `/currentUser/${username}` } : { name: "LOGIN/SIGN UP!!!", path: '/register' };
+
     const updatedMainRoutes =
       (id && username) ?
-        [...mainRoutes, { name: `Welcome, ${username}!!!`, path: `/currentUser/${username}` }]
+        [...mainRoutes, dynamicRoutes]
         :
-        [...mainRoutes, { name: "LOGIN/SIGN UP!!!", path: '/register' }]
+        [...mainRoutes, dynamicRoutes]
       .map(val => {
         if (filterUniqueName.has(val.name)) false;
         else {
