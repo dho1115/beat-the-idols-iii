@@ -11,16 +11,17 @@ const Login = ({ text, registrationModal, toggle }) => {
   const { currentUser, setCurrentUser, allUsers } = useContext(dataContext);
   const [currentUserNotFound, setCurrentUserNotFound] = useState(false);
   const [dataEntered, setDataEntered] = useState({ username: "", password: "" });
+  console.log(dataEntered)
   const navigate = useNavigate()
 
   const onHandleSubmit = e => {
     e.preventDefault();
-    const loggedInUserExists = allUsers.find(({ username, password }) => (username == dataEntered.username && password == dataEntered.password));    
+    const loggedInUserExists = allUsers.find((val) => ((val.username == dataEntered.username) && (val.password == dataEntered.password)));
+    
     try {
-      if (!(loggedInUserExists.username && loggedInUserExists.password)) throw new Error(`There is no such user with username and password of ${JSON.stringify(dataEntered)}!!!`);
+      if (!loggedInUserExists || !(loggedInUserExists.username && loggedInUserExists.password)) throw new Error(`There is no such user with username and password of ${JSON.stringify(dataEntered)}!!!`);
       else {
         setCurrentUserNotFound(false);
-        console.log("FOUND THIS USER: ", loggedInUserExists);
         setCurrentUser(prv => ({ ...prv, ...loggedInUserExists }));
       }
     } catch (error) {
@@ -32,7 +33,7 @@ const Login = ({ text, registrationModal, toggle }) => {
   useEffect(() => {
     if (currentUser.id && currentUser.username) navigate(`/currentUser/${currentUser.id}`);
     toggle();
-    
+
     return () => {
       setCurrentUserNotFound(false);
       setDataEntered({ username: "", password: "" });
@@ -54,6 +55,7 @@ const Login = ({ text, registrationModal, toggle }) => {
     >
       <ModalHeader style={{ backgroundColor: 'khaki' }} toggle={toggle}>
         {text}
+        {currentUserNotFound && <Alert color='danger'>There is no user that matches your entry of {JSON.stringify(dataEntered)}!!!</Alert>}
       </ModalHeader>
       <ModalBody style={{backgroundColor: 'lightgrey'}}>
         <Form onSubmit={onHandleSubmit}>
