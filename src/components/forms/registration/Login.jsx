@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 //Dependencies.
 import { Form, Modal, ModalHeader, ModalBody, FormGroup, Input, Label, Alert } from 'reactstrap'
 import { dataContext } from '../../../App'
+import { PostDataAPI } from '../../../functions/postapi';
 
 import "./registrationforms.css"
 
 const Login = ({ text, registrationModal, toggle }) => {
-  const { currentUser, setCurrentUser, allUsers } = useContext(dataContext);
+  const { currentUser, setCurrentUser, allUsers, welcomeLinks, setWelcomeLinks } = useContext(dataContext);
   const [currentUserNotFound, setCurrentUserNotFound] = useState(false);
   const [dataEntered, setDataEntered] = useState({ username: "", password: "" });
   console.log(dataEntered)
@@ -19,10 +20,29 @@ const Login = ({ text, registrationModal, toggle }) => {
     const loggedInUserExists = allUsers.find((val) => ((val.username == dataEntered.username) && (val.password == dataEntered.password)));
     
     try {
-      if (!loggedInUserExists || !(loggedInUserExists.username && loggedInUserExists.password)) throw new Error(`There is no such user with username and password of ${JSON.stringify(dataEntered)}!!!`);
+      if (!loggedInUserExists) throw new Error(`There is no such user with username and password of ${JSON.stringify(dataEntered)}!!!`);
+      //Also, remember to setState for the welcomeLinks!!!
       else {
-        setCurrentUserNotFound(false);
-        setCurrentUser(prv => ({ ...prv, ...loggedInUserExists }));
+        PostDataAPI("http://localhost:3003/currentUser", loggedInUserExists)
+          .then(result => {
+            setCurrentUserNotFound(false)
+            console.log({ result });
+            return currentUser;
+          })
+          .then(currentUser => {
+            if (currentUser.id && currentUser.username) {
+              const updateWelcomeLinks = [...welcomeLinks.filter(({ path }) => path == 'register'), { name: `${currentUser.username}'s homepage`, path: `/currentUser/${currentUser.id}` }];
+      
+              setWelcomeLinks([...updateWelcomeLinks])
+
+              if (!welcomeLinks.filter(({ path }) => path == `/currentUser/${currentUser.id}`)) throw new Error(`welcomeLinks have not updated yet. They are still ${JSON.stringify(welcomeLinks)}.`);
+
+              return currentUser;
+            }
+            else throw new Error(`currentUser has not populated (yet). It is currently ${JSON.stringify(currentUser)}!!!`)
+          })
+          .then(() => navigate(`/currentUser/${currentUser.id}`))
+          .catch(error => console.error({ from: "Login.jsx", message: "Error inside onHandleSubmit!!!", error, errorMessage: error.message }));
       }
     } catch (error) {
       console.error({ message: "error in onHandleSubmit function in Login.jsx!!!", error, errorMessage: error.message })
@@ -41,11 +61,11 @@ const Login = ({ text, registrationModal, toggle }) => {
   }, [currentUser.id && currentUser.username])
 
   useEffect(() => {
-    return () => {
+    if (!registrationModal.login || !registrationModal.signUp) {
       setCurrentUserNotFound(false);
       setDataEntered({ username: "", password: "" });
     }
-  }, []);
+  }, [registrationModal.login, registrationModal.signUp]);
 
   return (
     <Modal
