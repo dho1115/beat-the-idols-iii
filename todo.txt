@@ -1,3 +1,0 @@
-1. change usePost to another name (no longer a custom function).
-2. Redo the renamed usePost to make it do one thing: post new data.
-3. Make appropriate adjustments on pages that emply usePost
