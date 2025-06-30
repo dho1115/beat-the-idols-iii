@@ -10,7 +10,7 @@ import { PostDataAPI } from '../../../functions/postapi';
 import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFallback';
 
 const CurrentUserHomepage = () => {
-   const { currentUser, setCurrentUser, mainRoutes, setMainRoutes } = useContext(dataContext);
+   const { currentUser, setCurrentUser, welcomeLinks, setWelcomeLinks } = useContext(dataContext);
    const { username, email } = currentUser;
 
    const logoutCurrentUserPromise = () => new Promise((res, rej) => {
@@ -22,10 +22,12 @@ const CurrentUserHomepage = () => {
    const logoutpromise = () => Promise.all([logoutCurrentUserPromise(), PostDataAPI("http://localhost:3003/currentUser", { username: "", password: "", id: "", email: "" })])
       .then(result => console.log(result))
       .catch(error => console.error({ message: "logoutpromise ERROR!!!", error, errorMessage: error.message, errorCode: error.code }));
-
+   
    useEffect(() => {
-      !mainRoutes.filter(({name}) => name == 'LOG OUT!!!').length && setMainRoutes(prv => ([...prv, { name: 'LOG OUT!!!', path: '/', onClick: logoutpromise }]))
-   }, []) //This prevents duplication of LOG OUT link. If there is no logout (!mainroutes.filter), it will add a LOG OUT link.
+      const welcomeLinksUpdated = [...welcomeLinks].filter(({ name }) => name == "LOGIN/SIGN UP!!!");
+      setWelcomeLinks([...welcomeLinksUpdated, { name: 'LOGOUT', path: '/', onClick: () => console.log('LOG OUT LOGIC!!!') }]);
+   }, [])
+
 
    try {
       return (
