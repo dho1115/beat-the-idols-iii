@@ -22,10 +22,11 @@ import './App.css';
 export const dataContext = createContext();
   
 function App() {
+  // alert("READ notes.txt!!!")
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [currentChallenges, setCurrentChallenges] = useState([]);
-  const [mainRoutes, setMainRoutes] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }])  
+  const [welcomeLinks, setWelcomeLinks] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }, {name: 'LOGIN/SIGN UP!!!', path: '/register'}]);
 
   useEffect(() => {
     fetchDataAPI('http://localhost:3003/currentUser')
@@ -51,7 +52,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, mainRoutes, setMainRoutes}}>
+      <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks}}>
         <WelcomeNavbar />
         <Routes>
           <Route path='/' element={<WelcomePage />} />
