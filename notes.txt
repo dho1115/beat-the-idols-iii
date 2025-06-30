@@ -4,3 +4,5 @@ FIX THE DYNAMIC ROUTES FOR <WelcomeNavbar /> so that:
 * Consider using a combination of useEffect(fn, [id, username]), setState(curentUser) and setState(routes.filter(currentUser or !currentUser))
 
 ADD A CONDITIONAL INSIDE app.js so that the private routes ONLY show when there is a currentUser. Right now, the private routes show EVEN if nobody is logged in!!!
+
+*** READ THE NOTE IN LOGIN.JSX!!! ***
