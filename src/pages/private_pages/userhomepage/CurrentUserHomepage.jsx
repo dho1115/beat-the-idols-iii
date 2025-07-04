@@ -20,12 +20,17 @@ const CurrentUserHomepage = () => {
    })
 
    const logoutpromise = () => Promise.all([logoutCurrentUserPromise(), PostDataAPI("http://localhost:3003/currentUser", { username: "", password: "", id: "", email: "" })])
-      .then(result => console.log(result))
+      .then(result => {
+         console.log({ result });
+         const updatedWelcomeLinks = [...welcomeLinks].filter(({ name }) => name.endsWith("'s homepage"));
+         setWelcomeLinks([...updatedWelcomeLinks, { name: 'LOGIN/SIGN UP!!!', path: '/register' }]);
+      })
       .catch(error => console.error({ message: "logoutpromise ERROR!!!", error, errorMessage: error.message, errorCode: error.code }));
    
    useEffect(() => {
-      const welcomeLinksUpdated = [...welcomeLinks].filter(({ name }) => name == "LOGIN/SIGN UP!!!");
-      setWelcomeLinks([...welcomeLinksUpdated, { name: 'LOGOUT', path: '/', onClick: () => console.log('LOG OUT LOGIC!!!') }]);
+      console.log({welcomeLinks})
+      const welcomeLinksUpdated = [...welcomeLinks].filter(({ name }) => name != "LOGIN/SIGN UP!!!");
+      setWelcomeLinks([...welcomeLinksUpdated, { name: 'LOGOUT', path: '/', onClick: logoutpromise }]);
    }, [])
 
 
