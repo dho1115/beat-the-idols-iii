@@ -15,26 +15,6 @@ const WelcomeNavbar = () => {
   const { currentUser, welcomeLinks, setWelcomeLinks } = useContext(dataContext);
   const { id, username } = currentUser;
 
-  useEffect(() => {
-    const filterUniqueName = new Set();
-
-    // const dynamicRoutes = (id && username) ? { name: `Welcome, ${username}!!!`, path: `/currentUser/${username}` } : { name: (id && username) ? `${username}'s homepage.`:"LOGIN/SIGN UP!!!", path: '/register' }; //Replaced by restrictedRoutes.
-
-    // const updatedMainRoutes =
-    //   (id && username) ?
-    //     [...mainRoutes, dynamicRoutes]
-    //     :
-    //     [...mainRoutes, dynamicRoutes]
-    //   .map(val => {
-    //     if (filterUniqueName.has(val.name)) false;
-    //     else {
-    //       filterUniqueName.add(val.name);
-    //       return val
-    //     }
-    //   })
-    
-  }, [id, username]); //Checks to see if there is a current user.
-
   return (
     <nav className='welcome-navbar p-1 mb-0 sticky-top' style={{position: 'absolute', top: '0%', left: '0%', right: '0%'}}>
       <a class="navbar-brand" href="/" style={{ width: '3vw' }}><img src={logo} className='img-thumbnail welcome-nav-img' /></a> {/* logo on the left */}
