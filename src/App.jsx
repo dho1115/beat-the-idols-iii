@@ -31,8 +31,8 @@ function App() {
   useEffect(() => {
     fetchDataAPI('http://localhost:3003/currentUser')
       .then(_currentUser => {
-        console.log({ message: "fetch currentUser *** SUCCESS!!! ***", _currentUser });
         setCurrentUser(prv => ({ ...prv, ..._currentUser }));
+  
         return fetchDataAPI("http://localhost:3003/allUsers");
       })
       .then(_allUsers => {
@@ -50,6 +50,17 @@ function App() {
     };
   }, [])
 
+  useEffect(() => {
+    const updatedWelcomeLinks = (currentUser.id && currentUser.username) ?
+      [...welcomeLinks.filter(({ path }) => path != '/register'), { name: `${currentUser.username}'s homepage`, path: `/currentUser/${currentUser.username}` }]
+      :
+      welcomeLinks;
+      setWelcomeLinks(updatedWelcomeLinks);
+    return () => {
+      
+    };
+  }, [currentUser.id, currentUser.username])
+
   return (
     <BrowserRouter>
       <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks}}>
@@ -63,9 +74,13 @@ function App() {
           <Route path='/contact' element={<ContactPage />} />
           <Route path='/register' element={<RegistrationPage />} />
           {/* === PRIVATE ROUTES === */}
-          <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
-            <Route path='' element={<h3>If you are seeing this, then you don't have child pages.</h3>} />
-          </Route>
+          {
+            (currentUser.id && currentUser.username)
+            &&
+            <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
+              <Route path='' element={<h3>If you are seeing this, then you don't have child pages.</h3>} />
+            </Route>
+          }          
           {/* ====================== */}
           <Route path='*' element={<Navigate to="/" replace />} />
         </Routes>
