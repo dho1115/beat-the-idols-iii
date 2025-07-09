@@ -26,12 +26,6 @@ const CurrentUserHomepage = () => {
          setWelcomeLinks([...updatedWelcomeLinks, { name: 'LOGIN/SIGN UP!!!', path: '/register' }]);
       })
       .catch(error => console.error({ message: "logoutpromise ERROR!!!", error, errorMessage: error.message, errorCode: error.code }));
-   
-   // useEffect(() => {
-   //    const welcomeLinksUpdated = [...welcomeLinks].filter(({ name }) => name == "LOGIN/SIGN UP!!!");
-
-   //    if (!welcomeLinksUpdated.length) setWelcomeLinks([...welcomeLinks, { name: 'LOGOUT', path: '/', onClick: logoutpromise }]);
-   // }, []) //THIS code is giving me the extra logout. Now That I made changes in the welcome_navbar_links, I do not need it anymore!!!
 
 
    try {
