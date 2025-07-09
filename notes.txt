@@ -1,0 +1,4 @@
+1. When I log out, I STILL see 'jamiesmith's homepage'.
+2. jamiesmith's homepage does not lead anywhere.
+3. When I click on 'jamiesmith's homepage', the number of logout increases by ONE!!!
+Make the WelcomeNavbar so that: 1. When the user is logged in AND on his homepage, the LOGOUT shows. 2. When the user is logged in AND on any other page, [username]'s homepage AND LOGOUT shows. 3. When the user is logged out, ONLY LOGIN/SIGN UP shows.
