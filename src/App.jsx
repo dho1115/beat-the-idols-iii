@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, Suspense } from 'react';
 
 //Components - Lazy loaded.
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
@@ -7,6 +7,7 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
+import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -26,7 +27,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [currentChallenges, setCurrentChallenges] = useState([]);
-  const [welcomeLinks, setWelcomeLinks] = useState([{ name: 'welcome', path: '/' }, { name: 'home', path: '/home' }, { name: 'about', path: '/about' }, { name: 'contact', path: '/contact' }, {name: 'LOGIN/SIGN UP!!!', path: '/register'}]);
+  const [welcomeLinks, setWelcomeLinks] = useState([]);
 
   useEffect(() => {
     fetchDataAPI('http://localhost:3003/currentUser')
@@ -46,16 +47,14 @@ function App() {
       })
       .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));    
     return () => {
-      
     };
   }, [])
 
   useEffect(() => {
-    const updatedWelcomeLinks = (currentUser.id && currentUser.username) ?
-      [...welcomeLinks.filter(({ path }) => path != '/register'), { name: `${currentUser.username}'s homepage`, path: `/currentUser/${currentUser.username}` }]
-      :
-      welcomeLinks;
-      setWelcomeLinks(updatedWelcomeLinks);
+    console.log("Inside useEffect")
+    if (currentUser.id && currentUser.username) {
+      setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id)])
+    } else setWelcomeLinks([...welcomeNavbarLinks()])
     return () => {
       
     };
@@ -63,7 +62,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <dataContext.Provider value={{currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks}}>
+      <dataContext.Provider value={{ currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks }}>
         <WelcomeNavbar />
         <Routes>
           <Route path='/' element={<WelcomePage />} />
