@@ -8,6 +8,7 @@ import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
+import { PostDataAPI } from './functions/postapi';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -53,7 +54,7 @@ function App() {
   useEffect(() => {
     console.log("Inside useEffect")
     if (currentUser.id && currentUser.username) {
-      setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id)])
+      setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id, { setCurrentUser }, { currentUser }, { PostDataAPI })]);
     } else setWelcomeLinks([...welcomeNavbarLinks()])
     return () => {
       
