@@ -7,19 +7,7 @@ export const welcomeNavbarLinks = (username = null, id = null, ...args) => {
       }, {})
    };
 
-   const logoutLogic = async () => {
-      try {
-         const { PostDataAPI, setCurrentUser, currentUser } = options;
-         const postCurrentUser = await PostDataAPI("http://localhost:3003/currentUser", {});
-         setCurrentUser({});
 
-         return `Successfully updated currentUser: ${JSON.stringify(currentUser)}. postCurrentUser is ${postCurrentUser}.`
-      } catch (err) {
-         console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
-
-         return { err, errMessage: err.message };
-      }
-   } //function and logic for log out.
 
    const baseRoutes= [
       { name: 'welcome', path: '/' },
@@ -29,7 +17,7 @@ export const welcomeNavbarLinks = (username = null, id = null, ...args) => {
    ];
    const loggedInRoutes = (id && username)
       ? 
-      [{ name: `${username}'s homepage`, path: `/currentUser/${username}` }, {name: 'LOGOUT', path: "/", onClick: logoutLogic}]
+      [{ name: `${username}'s homepage`, path: `/currentUser/${username}` }, {name: 'LOGOUT', path: "/", onClick: options.logoutLogic}]
       :
       [{ name: 'LOGIN/SIGN UP!!!', path: '/register' }]
    
