@@ -11,8 +11,7 @@ import "./WelcomePage.styles.css";
 
 const WelcomePage = () => {
   // alert("From WelcomePage.jsx (route = '/'): PLEASE CHECK YOUR todo.txt!!!")
-  const contextProvider = useContext(dataContext);
-  const { currentUser } = contextProvider;
+  const {currentUser} = useContext(dataContext);
   const { id, username } = currentUser;
 
   console.log({currentUser})
