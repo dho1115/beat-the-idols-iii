@@ -14,12 +14,12 @@ const CurrentUserHomepage = () => {
    const { username, email } = currentUser;
 
    const logoutCurrentUserPromise = () => new Promise((res, rej) => {
-      setCurrentUser({ username: "", password: "", id: "", email: "" });
+      setCurrentUser({});
       if (!currentUser.username && !currentUser.id) res({ message: "SUCCESSFULLY LOGGED OUT CURRENT USER FROM STATE!!!", currentUser });
       else rej({ message: "ERROR TRYING TO LOG OUT CURRENT USER FROM STATE!!!", currentUser });
    })
 
-   const logoutpromise = () => Promise.all([logoutCurrentUserPromise(), PostDataAPI("http://localhost:3003/currentUser", { username: "", password: "", id: "", email: "" })])
+   const logoutpromise = () => Promise.all([logoutCurrentUserPromise(), PostDataAPI("http://localhost:3003/currentUser", { })])
       .then(result => {
          console.log({ result });
          const updatedWelcomeLinks = [...welcomeLinks].filter(({ name }) => name.endsWith("'s homepage"));
@@ -27,11 +27,11 @@ const CurrentUserHomepage = () => {
       })
       .catch(error => console.error({ message: "logoutpromise ERROR!!!", error, errorMessage: error.message, errorCode: error.code }));
    
-   useEffect(() => {
-      console.log({welcomeLinks})
-      const welcomeLinksUpdated = [...welcomeLinks].filter(({ name }) => name != "LOGIN/SIGN UP!!!");
-      setWelcomeLinks([...welcomeLinksUpdated, { name: 'LOGOUT', path: '/', onClick: logoutpromise }]);
-   }, [])
+   // useEffect(() => {
+   //    const welcomeLinksUpdated = [...welcomeLinks].filter(({ name }) => name == "LOGIN/SIGN UP!!!");
+
+   //    if (!welcomeLinksUpdated.length) setWelcomeLinks([...welcomeLinks, { name: 'LOGOUT', path: '/', onClick: logoutpromise }]);
+   // }, []) //THIS code is giving me the extra logout. Now That I made changes in the welcome_navbar_links, I do not need it anymore!!!
 
 
    try {
