@@ -1,11 +1,11 @@
-import { createContext, useState, useEffect, Suspense } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 //Components - Lazy loaded.
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
 import { lazy } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { PostDataAPI } from './functions/postapi';
@@ -24,12 +24,24 @@ import './App.css';
 export const dataContext = createContext();
   
 function App() {
-  // alert("READ notes.txt!!!")
+  const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [currentChallenges, setCurrentChallenges] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
+  const logoutLogic = async () => {
+    try {
+       const postCurrentUser = await PostDataAPI("http://localhost:3003/currentUser", {});
+       setCurrentUser({});
 
+       return `Successfully updated currentUser: ${JSON.stringify(currentUser)}. postCurrentUser is ${postCurrentUser}.`
+    } catch (err) {
+       console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
+
+       return { err, errMessage: err.message };
+    }
+  } //logout logic.
+  
   useEffect(() => {
     fetchDataAPI('http://localhost:3003/currentUser')
       .then(_currentUser => {
@@ -52,9 +64,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log("Inside useEffect")
     if (currentUser.id && currentUser.username) {
-      setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id, { setCurrentUser }, { currentUser }, { PostDataAPI })]);
+      setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id, { logoutLogic })].filter(({ path }) => path != location.pathname));
     } else setWelcomeLinks([...welcomeNavbarLinks()])
     return () => {
       
@@ -62,7 +73,7 @@ function App() {
   }, [currentUser.id, currentUser.username])
 
   return (
-    <BrowserRouter>
+    <>
       <dataContext.Provider value={{ currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks }}>
         <WelcomeNavbar />
         <Routes>
@@ -85,7 +96,7 @@ function App() {
           <Route path='*' element={<Navigate to="/" replace />} />
         </Routes>
       </dataContext.Provider>
-    </BrowserRouter>
+    </>
   )
 }
 
