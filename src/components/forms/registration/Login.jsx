@@ -9,41 +9,41 @@ import { PostDataAPI } from '../../../functions/postapi';
 import "./registrationforms.css"
 
 const Login = ({ text, registrationModal, toggle }) => {
-  const { currentUser, allUsers, welcomeLinks, setWelcomeLinks } = useContext(dataContext);
+  const { currentUser, setCurrentUser, allUsers, welcomeLinks, setWelcomeLinks } = useContext(dataContext);
   const [currentUserNotFound, setCurrentUserNotFound] = useState(false);
   const [dataEntered, setDataEntered] = useState({ username: "", password: "" });
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   const onHandleSubmit = e => {
     e.preventDefault();
-    const loggedInUserExists = allUsers.find((val) => ((val.username == dataEntered.username) && (val.password == dataEntered.password)))
+    const loggedInUserExists = allUsers.find((val) => ((val.username == dataEntered.username) && (val.password == dataEntered.password))) //Check to see if what the user entered matches the list of users (allUsers).
     
     try {
-      if (!loggedInUserExists) throw new Error(`There is no such user with username and password of ${JSON.stringify(dataEntered)}!!!`);
-      //Also, remember to setState for the welcomeLinks!!!
-      else {
-        PostDataAPI("http://localhost:3003/currentUser", loggedInUserExists)
-          .then(result => {
-            setCurrentUserNotFound(false)
-            console.log({ result });
-            return currentUser;
-          })
-          .then(currentUser => {
-            if (currentUser.id && currentUser.username) {
-              const updateWelcomeLinks = [...welcomeLinks.filter(({ path }) => path == 'register'), { name: `${currentUser.username}'s homepage`, path: `/currentUser/${currentUser.id}` }];
-      
-              setWelcomeLinks([...updateWelcomeLinks])
+      if (!loggedInUserExists) throw new Error(`There is no such user in allUsers that matches ${JSON.stringify(dataEntered)}. loggedInUserExists returned ${JSON.stringify(loggedInUserExists)}.`) //If logged in user does NOT exist.
 
-              if (!welcomeLinks.filter(({ path }) => path == `/currentUser/${currentUser.id}`)) throw new Error(`welcomeLinks have not updated yet. They are still ${JSON.stringify(welcomeLinks)}.`);
+      PostDataAPI("http://localhost:3003/currentUser", loggedInUserExists)
+      .then(result => {
+        setCurrentUserNotFound(false);
+        setCurrentUser(prv => ({ ...prv, ...loggedInUserExists })); //setCurrentUser
+        return currentUser;
+      })
+      .then(currentUser => {
+        if (currentUser.id && currentUser.username) {
+          const updateWelcomeLinks = [...welcomeLinks.filter(({ path }) => path != 'register'), { name: `${currentUser.username}'s homepage`, path: `/currentUser/${currentUser.id}` }]; //This is where we (re)set the links for currentUser.
+  
+          setWelcomeLinks([...updateWelcomeLinks])
 
-              return currentUser;
-            }
-            else throw new Error(`currentUser has not populated (yet). It is currently ${JSON.stringify(currentUser)}!!!`)
-          })
-          .then(() => navigate(`/currentUser/${currentUser.id}`))
-          .catch(error => console.error({ from: "Login.jsx", message: "Error inside onHandleSubmit!!!", error, errorMessage: error.message }));
-      }
+          if (!welcomeLinks.filter(({ path }) => path == `/currentUser/${currentUser.id}`)) throw new Error(`welcomeLinks have not updated yet. They are still ${JSON.stringify(welcomeLinks)}.`);
+
+          return currentUser;
+        }
+        else throw new Error(`currentUser has not populated (yet). It is currently ${JSON.stringify(currentUser)}!!!`)
+      })
+      .then(() => navigate(`/currentUser/${currentUser.id}`))
+      .catch(error => console.error({ from: "Login.jsx", message: "Error inside onHandleSubmit!!!", error, errorMessage: error.message }));
     }
+
     catch (error) {
       console.error({ message: "error in onHandleSubmit function in Login.jsx!!!", error, errorMessage: error.message })
       setCurrentUserNotFound(true);
