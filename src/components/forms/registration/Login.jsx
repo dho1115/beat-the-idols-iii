@@ -30,7 +30,7 @@ const Login = ({ text, registrationModal, toggle }) => {
       })
       .then(currentUser => {
         if (currentUser.id && currentUser.username) {
-          const updateWelcomeLinks = [...welcomeLinks.filter(({ path }) => path != 'register'), { name: `${currentUser.username}'s homepage`, path: `/currentUser/${currentUser.id}` }]; //This is where we (re)set the links for currentUser.
+          const updateWelcomeLinks = [...welcomeLinks.filter(({ path }) => path != 'register')]; //This is where we (re)set the links for currentUser.
   
           setWelcomeLinks([...updateWelcomeLinks])
 
