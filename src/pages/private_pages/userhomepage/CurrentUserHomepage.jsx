@@ -27,7 +27,6 @@ const CurrentUserHomepage = () => {
       })
       .catch(error => console.error({ message: "logoutpromise ERROR!!!", error, errorMessage: error.message, errorCode: error.code }));
 
-
    try {
       return (
          <div className='current-user-homepage-div py-5'>
