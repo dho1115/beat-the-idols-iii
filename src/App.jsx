@@ -32,13 +32,12 @@ function App() {
   const logoutLogic = async () => {
     try {
        const postCurrentUser = await PostDataAPI("http://localhost:3003/currentUser", {});
+       
        setCurrentUser({});
-
+              
        return `Successfully updated currentUser: ${JSON.stringify(currentUser)}. postCurrentUser is ${postCurrentUser}.`
     } catch (err) {
-       console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
-
-       return { err, errMessage: err.message };
+      console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
     }
   } //logout logic.
   
@@ -66,11 +65,11 @@ function App() {
   useEffect(() => {
     if (currentUser.id && currentUser.username) {
       setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id, { logoutLogic })].filter(({ path }) => path != location.pathname));
-    } else setWelcomeLinks([...welcomeNavbarLinks()])
+    } else setWelcomeLinks([...welcomeNavbarLinks()].filter(({ path }) => path != location.pathname));
     return () => {
-      
+
     };
-  }, [currentUser.id, currentUser.username])
+  }, [currentUser.id, currentUser.username, location.pathname])
 
   return (
     <>
