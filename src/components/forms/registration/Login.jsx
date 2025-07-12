@@ -28,18 +28,6 @@ const Login = ({ text, registrationModal, toggle }) => {
         setCurrentUser(prv => ({ ...prv, ...loggedInUserExists })); //setCurrentUser
         return currentUser;
       })
-      .then(currentUser => {
-        if (currentUser.id && currentUser.username) {
-          const updateWelcomeLinks = [...welcomeLinks.filter(({ path }) => path != 'register')]; //This is where we (re)set the links for currentUser.
-  
-          setWelcomeLinks([...updateWelcomeLinks])
-
-          if (!welcomeLinks.filter(({ path }) => path == `/currentUser/${currentUser.id}`)) throw new Error(`welcomeLinks have not updated yet. They are still ${JSON.stringify(welcomeLinks)}.`);
-
-          return currentUser;
-        }
-        else throw new Error(`currentUser has not populated (yet). It is currently ${JSON.stringify(currentUser)}!!!`)
-      })
       .then(() => navigate(`/currentUser/${currentUser.id}`))
       .catch(error => console.error({ from: "Login.jsx", message: "Error inside onHandleSubmit!!!", error, errorMessage: error.message }));
     }
