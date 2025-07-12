@@ -6,9 +6,6 @@ export const welcomeNavbarLinks = (username = null, id = null, ...args) => {
          return accumulator;
       }, {})
    };
-
-
-
    const baseRoutes= [
       { name: 'welcome', path: '/' },
       { name: 'home', path: '/home' },
@@ -17,7 +14,7 @@ export const welcomeNavbarLinks = (username = null, id = null, ...args) => {
    ];
    const loggedInRoutes = (id && username)
       ? 
-      [{ name: `${username}'s homepage`, path: `/currentUser/${username}` }, {name: 'LOGOUT', path: "/", onClick: options.logoutLogic}]
+      [{ name: `${username}'s homepage`, path: `/currentUser/${id}` }, {name: 'LOGOUT', path: "/", onClick: options.logoutLogic}]
       :
       [{ name: 'LOGIN/SIGN UP!!!', path: '/register' }]
    
