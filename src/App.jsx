@@ -24,6 +24,7 @@ import './App.css';
 export const dataContext = createContext();
   
 function App() {
+  alert("New Notes. Read!!!")
   const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
