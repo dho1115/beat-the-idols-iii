@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 
 //Components - Lazy loaded.
+import ChallengeForm from './components/forms/challenge/ChallengeForm';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
@@ -24,7 +25,7 @@ import './App.css';
 export const dataContext = createContext();
   
 function App() {
-  alert("New Notes. Read!!!")
+  // alert("New Notes. Read!!!")
   const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
@@ -89,7 +90,7 @@ function App() {
             (currentUser.id && currentUser.username)
             &&
             <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
-              <Route path='' element={<h3>If you are seeing this, then you don't have child pages.</h3>} />
+              <Route path="challenge-form" element={<ChallengeForm />} />
             </Route>
           }          
           {/* ====================== */}
