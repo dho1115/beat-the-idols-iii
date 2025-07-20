@@ -6,6 +6,7 @@ import { Outlet } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 //Components.
+import LoggedInNavbar from '../../../components/navigationbars/logged_in_navbar/LoggedInNavbar';
 import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFallback';
 
 const CurrentUserHomepage = () => {
@@ -16,6 +17,7 @@ const CurrentUserHomepage = () => {
       return (
          <div className='current-user-homepage-div py-5'>
             <Suspense falllback={<SuspenseFallback />}>
+               <LoggedInNavbar />
                <header className='current-user-homepage-header'>
                   <h1>Homepage of <span color='danger'>{username} - {email}.</span>.</h1>
                </header>
