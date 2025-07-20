@@ -13,7 +13,7 @@ export const welcomeNavbarLinks = (username = null, id = null, ...args) => {
       { name: 'contact', path: '/contact' }
    ];
    const loggedInRoutes = (id && username)
-      ? 
+      ?
       [{ name: `${username}'s homepage`, path: `/currentUser/${id}` }, {name: 'LOGOUT', path: "/", onClick: options.logoutLogic}]
       :
       [{ name: 'LOGIN/SIGN UP!!!', path: '/register' }]
