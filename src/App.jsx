@@ -6,7 +6,7 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
 import { lazy } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { PostDataAPI } from './functions/postapi';
@@ -29,6 +29,7 @@ function App() {
   const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
+  const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
   const logoutLogic = async () => {
@@ -75,7 +76,7 @@ function App() {
 
   return (
     <>
-      <dataContext.Provider value={{ currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks }}>
+      <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks }}>
         <WelcomeNavbar />
         <Routes>
           <Route path='/' element={<WelcomePage />} />
