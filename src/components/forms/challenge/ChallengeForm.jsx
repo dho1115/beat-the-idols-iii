@@ -4,7 +4,9 @@ import React, { useContext, useState } from 'react';
 import { Container, Form } from 'reactstrap';
 import { Carousel } from 'react-bootstrap';
 import { dataContext } from '../../../App';
-import SlideOne from './components/SlideOne';
+import ItemDiv from './components/ItemDiv';
+import SlideOne from './components/slides/SlideOne';
+import SlideTwo from './components/slides/SlideTwo';
 
 import './ChallengeForm.styles.css';
 
@@ -14,7 +16,7 @@ const ChallengeForm = () => {
   const handleSelect = selectedIndex => setIndex(selectedIndex);
   const { Item } = Carousel;
 
-  const slides = [<SlideOne />, <SlideOne />, <SlideOne />]
+  const slides = [<SlideOne />, <SlideTwo />]
   
   const handleSubmit = e => {
     e.preventDefault;
@@ -34,7 +36,7 @@ const ChallengeForm = () => {
             slides.map((val, idx) => {
               return (
                 <Item className="carousel-item"  key={idx}>
-                  {val}
+                  <ItemDiv slide={val} />
                 </Item>
               )
             })

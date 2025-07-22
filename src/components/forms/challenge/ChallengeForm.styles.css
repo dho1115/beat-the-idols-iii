@@ -3,6 +3,7 @@
    background-color: antiquewhite;
    overflow: hidden;
    width: 100%;
+   height: 35vh;
 }
 
 .carousel-control-next-icon {
