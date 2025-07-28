@@ -5,21 +5,23 @@ import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { dataContext } from '../../../App';
 import YouTubeUpload from './video_type_formgroup/type_youtube/YouTubeUpload';
 import ComputerUpload from './video_type_formgroup/type_upload/ComputerUpload';
+import { v4 } from 'uuid';
 
 import "./AddVideo.styles.css";
 
 
 const AddVideo = () => {
-  const [video, setVideo] = useState({ title: '', description: '', videoType: '' });
-  const { videos, setVideos } = useContext(dataContext);
+  const [video, setVideo] = useState({ _userID: currentUser.id, username: currentUser.username, title: '', description: '', videoType: '' });
+  const { currentUser, videos, setVideos } = useContext(dataContext);
 
   const onHandleAddVideo = e => {
     e.preventDefault();
-    console.log(`About to add ${JSON.stringify(video)} to ${[...videos]}.`);
+    const _videoID = v4();
+    console.log(`About to add ${JSON.stringify({ ...video, _videoID })} to ${[...videos]}.`);
 
-    setVideos(prv => ([...prv, { ...video }]));
+    setVideos(prv => ({...prv, [_videoID]: {...video, _videoID}}));
 
-    console.log("RESULT:", { video });
+    console.log("RESULT:", { videos });
   }
 
   useEffect(() => {

@@ -32,7 +32,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState({});
   const [welcomeLinks, setWelcomeLinks] = useState([]);
   const logoutLogic = async () => {
     try {
