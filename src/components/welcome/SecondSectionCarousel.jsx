@@ -12,7 +12,7 @@ const SecondSectionCarousel = ({ images }) => {
         <Carousel className='react-bootstrap-carousel'>
           {
             images.map(({src, caption, altText}, idx) => (
-              <Item key={idx}>
+              <Item key={idx} style={{height: '100%'}}>
                 <div className='img-div'>
                   <img src={src} alt={altText} />
                   <Caption>

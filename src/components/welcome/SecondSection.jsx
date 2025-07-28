@@ -7,6 +7,7 @@ import ErrorBoundary from "../ErrorBoundary"
 import { images } from "./CarouselItems"
 
 import "./WelcomeComponent.styles.css"
+
 import { Carousel } from "reactstrap"
 import { useState } from "react"
 
@@ -15,11 +16,13 @@ const SecondSection = () => {
 
    return (
       <div className='second-section my-1'>
-         <ErrorBoundary fallback={<h1>Crap. Something went wrong inside {location.pathname}.</h1>}>            
-            <ErrorBoundary fallback={<h3>Error implementing Reactstrap Carousel</h3>}>
-               <SecondSectionCarousel images={images} />          
-            </ErrorBoundary>            
-         </ErrorBoundary>         
+         <div className="second-section-carousel">
+            <ErrorBoundary fallback={<h1>Crap. Something went wrong inside {location.pathname}.</h1>}>            
+               <ErrorBoundary fallback={<h3>Error implementing Reactstrap Carousel</h3>}>
+                  <SecondSectionCarousel images={images} />          
+               </ErrorBoundary>            
+            </ErrorBoundary>
+         </div>         
       </div>
    )
 }
