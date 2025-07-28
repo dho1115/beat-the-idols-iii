@@ -3,11 +3,11 @@ import React from 'react'
 //Dependencies & components.
 import { Card, CardText, CardTitle } from 'reactstrap';
 
-const VideoWrapper = ({video, title, description, button_text, clickLogic}) => {
+const VideoWrapper = ({video_component, title, description, button_text, clickLogic}) => {
   return (
     <Card style={{border: '1.5px solid black', borderRadius: '15px'}}>
       <div className='w-100 p-0 card-video-div'>
-         {video}
+         {video_component}
       </div>
       <CardTitle>
          <strong>{title}</strong>
