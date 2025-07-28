@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 
 //Components - Lazy loaded.
+import AddVideo from './components/forms/add_video/AddVideo';
 import ChallengeForm from './components/forms/challenge/ChallengeForm';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
@@ -14,11 +15,11 @@ import { PostDataAPI } from './functions/postapi';
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
 const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
+const CurrentUserHomepage = lazy(() => import('./pages/private_pages/userhomepage/CurrentUserHomepage'));
+const CurrentChallenges = lazy(() => import("./components/home/CurrentChallenges"));
 const Homepage = lazy(() => import('./pages/home/Homepage'));
 const RegistrationPage = lazy(() => import('./pages/registration/RegistrationPage'));
 const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
-const CurrentUserHomepage = lazy(() => import('./pages/private_pages/userhomepage/CurrentUserHomepage'));
-const CurrentChallenges = lazy(() => import("./components/home/CurrentChallenges"));
 
 import './App.css';
 
@@ -31,6 +32,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
   const logoutLogic = async () => {
     try {
@@ -76,7 +78,7 @@ function App() {
 
   return (
     <>
-      <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, welcomeLinks, setWelcomeLinks }}>
+      <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
         <WelcomeNavbar />
         <Routes>
           <Route path='/' element={<WelcomePage />} />
@@ -92,6 +94,7 @@ function App() {
             &&
             <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
               <Route path="challenge-form" element={<ChallengeForm />} />
+              <Route path="add-challenge-video" element={<AddVideo />} />
             </Route>
           }          
           {/* ====================== */}
