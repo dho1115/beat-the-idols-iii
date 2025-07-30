@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from 'react';
 //Components - Lazy loaded.
 import AddVideo from './components/forms/add_video/AddVideo';
 import ChallengeForm from './components/forms/challenge/ChallengeForm';
+import ChallengeVideos from './components/view_videos/ChallengeVideos';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
@@ -32,7 +33,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
-  const [videos, setVideos] = useState({});
+  const [videos, setVideos] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
   const logoutLogic = async () => {
     try {
@@ -95,6 +96,7 @@ function App() {
             <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
               <Route path="challenge-form" element={<ChallengeForm />} />
               <Route path="add-challenge-video" element={<AddVideo />} />
+              <Route path="/view/challengeVideos/:filter" element={<ChallengeVideos />} />
             </Route>
           }          
           {/* ====================== */}
