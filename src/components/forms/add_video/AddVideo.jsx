@@ -11,17 +11,16 @@ import "./AddVideo.styles.css";
 
 
 const AddVideo = () => {
-  const [video, setVideo] = useState({ _userID: currentUser.id, username: currentUser.username, title: '', description: '', videoType: '' });
   const { currentUser, videos, setVideos } = useContext(dataContext);
-
+  const [video, setVideo] = useState({ _userID: currentUser.id, username: currentUser.username, title: '', description: '', videoType: '' });
+  
   const onHandleAddVideo = e => {
     e.preventDefault();
     const _videoID = v4();
-    console.log(`About to add ${JSON.stringify({ ...video, _videoID })} to ${[...videos]}.`);
 
-    setVideos(prv => ({...prv, [_videoID]: {...video, _videoID}}));
+    setVideos(prv => ([...prv, { ...video, id:_videoID }]));
 
-    console.log("RESULT:", { videos });
+    console.log("RESULT:", {videos});
   }
 
   useEffect(() => {
