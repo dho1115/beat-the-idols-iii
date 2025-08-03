@@ -1,17 +1,19 @@
 import React, { useContext } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+//Components and Dependencies.
+import { useParams } from 'react-router-dom';
 import { Container } from 'reactstrap'
+import VideoWrapper from '../templates/video_wrapper/VideoWrapper';
 import { dataContext } from '../../App'
 
 import './ChallengeVideos.styles.css';
 
 const ChallengeVideos = () => {
    const { videos } = useContext(dataContext);
-   const {user, filter} = useParams();
+   const {user, filter} = useParams(); //Allows the user to either see [user] videos only or "all" videos (see filterQuery).
 
    const filterQuery = {
-      all: videos.map(video => video),
-      [user]: videos.filter(video => video._userID == user)
+      all: videos.map(video => video), //all videos.
+      [user]: videos.filter(video => video._userID == user) //videos for currentUser.
    }
 
    return (
