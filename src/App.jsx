@@ -12,6 +12,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { PostDataAPI } from './functions/postapi';
+import { UpdateDataAPI } from './functions/updateapi';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -35,13 +36,12 @@ function App() {
   const [currentChallenges, setCurrentChallenges] = useState([]);
   const [videos, setVideos] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
+
   const logoutLogic = async () => {
     try {
-       const postCurrentUser = await PostDataAPI("http://localhost:3003/currentUser", {});
+      const updateCurrentUser = await UpdateDataAPI("http://localhost:3003/currentUser", {});
        
        setCurrentUser({});
-              
-       return `Successfully updated currentUser: ${JSON.stringify(currentUser)}. postCurrentUser is ${postCurrentUser}.`
     } catch (err) {
       console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
     }
@@ -65,12 +65,20 @@ function App() {
       })
       .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));    
     return () => {
+      
     };
   }, [])
 
   useEffect(() => {
     if (currentUser.id && currentUser.username) {
-      setWelcomeLinks([...welcomeNavbarLinks(currentUser.username, currentUser.id, { logoutLogic })].filter(({ path }) => path != location.pathname));
+      setWelcomeLinks(
+        [
+          ...welcomeNavbarLinks(
+            currentUser.username, //username
+            currentUser.id, //id
+            { logoutLogic, all: 'all' } //options
+          )
+        ].filter(({ path }) => path != location.pathname));
     } else setWelcomeLinks([...welcomeNavbarLinks()].filter(({ path }) => path != location.pathname));
     return () => {
 
@@ -96,7 +104,7 @@ function App() {
             <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
               <Route path="challenge-form" element={<ChallengeForm />} />
               <Route path="add-challenge-video" element={<AddVideo />} />
-              <Route path="/view/challengeVideos/:filter" element={<ChallengeVideos />} />
+              <Route path="view/challengeVideos/:filter" element={<ChallengeVideos />} />
             </Route>
           }          
           {/* ====================== */}
