@@ -21,7 +21,11 @@ const WelcomeNavbar = () => {
         {
           welcomeLinks
             .filter(val => val.path != location.pathname || !val.name.endsWith("'s homepage")) //shows links that do not lead back to the page you are currently on.
-            .map(({name, path, onClick}, idx) => <Link to={path} onClick={onClick || null}><strong style={{ color: 'whiteSmoke' }} key={idx}>{name}</strong></Link>)
+            .map(({ name, path, onClick }, idx) =>
+              <Link to={path} onClick={onClick || null}>
+                <strong style={{ color: 'whiteSmoke' }} key={idx}>{name}</strong>
+              </Link>
+            )
         }
       </div>      
     </nav>
