@@ -59,10 +59,7 @@ function App() {
       .then(_currentChallenges => {
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
         return fetchDataAPI("http://localhost:3003/videos");
-      }).then(allVideos => {
-        console.log({ message: "Successfully retrieved all videos!!!" });
-        setVideos(prv => ([...prv, ...allVideos]));
-      })
+      }).then(allVideos => setVideos(prv => ([...prv, ...allVideos])))
       .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));    
     return () => {
       setVideos([]);
