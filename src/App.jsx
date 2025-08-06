@@ -11,7 +11,6 @@ import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
-import { PostDataAPI } from './functions/postapi';
 import { UpdateDataAPI } from './functions/updateapi';
 
 //Pages - Lazy loaded.
@@ -50,22 +49,24 @@ function App() {
   useEffect(() => {
     fetchDataAPI('http://localhost:3003/currentUser')
       .then(_currentUser => {
-        setCurrentUser(prv => ({ ...prv, ..._currentUser }));
-  
+        setCurrentUser(prv => ({ ...prv, ..._currentUser }));  
         return fetchDataAPI("http://localhost:3003/allUsers");
       })
       .then(_allUsers => {
-        console.log({ message: "fetch allUsers *** SUCCESS!!! ***", _allUsers });
         setAllUsers(prv => ([...prv, ..._allUsers]));
-
         return fetchDataAPI("http://localhost:3003/currentChallenges");
-      }).then(_currentChallenges => {
-        console.log({ message: "fetch currentChallenges *** SUCCESS!!! ***", _currentChallenges });
+      })
+      .then(_currentChallenges => {
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
+        return fetchDataAPI("http://localhost:3003/videos");
+      }).then(allVideos => {
+        console.log({ message: "Successfully retrieved all videos!!!" });
+        setVideos(prv => ([...prv, ...allVideos]));
       })
       .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));    
     return () => {
-      
+      setVideos([]);
+      setCurrentChallenges([])
     };
   }, [])
 
