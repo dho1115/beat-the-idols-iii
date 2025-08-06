@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 //Components and dependencies.
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
@@ -6,26 +7,39 @@ import { dataContext } from '../../../App';
 import YouTubeUpload from './video_type_formgroup/type_youtube/YouTubeUpload';
 import ComputerUpload from './video_type_formgroup/type_upload/ComputerUpload';
 import { v4 } from 'uuid';
+import { PostDataAPI } from '../../../functions/postapi';
 
 import "./AddVideo.styles.css";
 
 
 const AddVideo = () => {
-  const { currentUser, videos, setVideos } = useContext(dataContext);
+  const { currentUser, setVideos } = useContext(dataContext);
+  const navigate = useNavigate();
   const [video, setVideo] = useState({ _userID: currentUser.id, username: currentUser.username, title: '', description: '', videoType: '' });
   
   const onHandleAddVideo = e => {
     e.preventDefault();
     const _videoID = v4();
-
-    setVideos(prv => ([...prv, { ...video, id:_videoID }]));
-
-    console.log("RESULT:", {videos});
+    PostDataAPI("http://localhost:3003/videos", { ...video, id: _videoID })
+      .then(result => {
+        console.log({ message: 'From onHandleAddVideo: PostDataAPI success!!!', result });
+        setVideo(prv => ({ ...prv, id: _videoID }));
+        return "About to set videos (context)"
+      })
+      .then(successMessage => {
+        console.log({ successMessage: successMessage });
+        setVideos(prv => ([...prv, { ...video, id: _videoID }]))
+      })
+      .catch(error => ({ message: "PostDataAPI error!!!", error, errorCode: error.code, errorMessage: error.message }))
+      .finally(() => {
+        setVideo({ title: '', description: '', videoType: '', urlOrFile: ''});
+        navigate(`/currentUser/${currentUser.id}/view/challengeVideos/all`)
+      })
   }
 
   useEffect(() => {
-    return () => setVideo({ title: '', description: '', videoType: '', urlOrFile: ''});
-  }, []);
+    return () => setVideo({ _userID: currentUser.id, username: currentUser.username, title: '', description: '', videoType: '' })
+  }, [])
 
   return (
     <Form onSubmit={onHandleAddVideo} className='add-video-form p-3 m-5'>
