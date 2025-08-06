@@ -1,4 +1,6 @@
 .challenge-videos-container {
-   border: 3px solid maroon;
-   background-color: wheat;
+   border: 3px solid hotpink;
+   background-color: #333;
+   display: grid;
+   grid-template-columns: 19%;
 }
