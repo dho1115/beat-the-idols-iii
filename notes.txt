@@ -1,1 +1,1 @@
-WORK ON THE welcome_navbar_links.jsx LOGOUT. The function is okay, but it is NOT logging out!!!
+Work on current challenges: http://localhost:3001/home/current-challenges
