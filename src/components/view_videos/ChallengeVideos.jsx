@@ -8,7 +8,6 @@ import YouTubeVideo from '../templates/video/you_tube/YouTubeVideo';
 import { dataContext } from '../../App'
 
 import './ChallengeVideos.styles.css';
-import { desc } from 'motion/react-client';
 
 
 const ChallengeVideos = () => {
@@ -27,13 +26,13 @@ const ChallengeVideos = () => {
                filterQuery[filter].map(({ id, _userID, username, title, description, urlOrFile, videoType }, idx) => {
                   return (
                      <div className='p-1 m-1' style={{ border: '1.5px solid firebrick', backgroundColor: idx%2 == 1 ? 'white' : 'lightgreen' }}>
-                        <h5>video id: {id}</h5>
+                        {/* <h5>video id: {id}</h5>
                         <h5>_userID: {_userID}</h5>
                         <h5>username: {username}</h5>
                         <h3>title: {title}</h3>
                         <h5>file or url: {urlOrFile}</h5>
                         <h5>videoType: {videoType}</h5>
-                        <h5>description: {description}</h5>
+                        <h5>description: {description}</h5> */}
                      </div>
                   )
                })
