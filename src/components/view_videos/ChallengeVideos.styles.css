@@ -1,8 +1,10 @@
 .challenge-videos-container {
    border: 3px solid hotpink;
    background-color: #333;
+   width: 100%;
    display: grid;
-   grid-template-columns: 19%;
+   grid-template-columns: 19% 19% 19% 19% 19%;
+   justify-content: space-around;
 }
 
 .no-videos {
