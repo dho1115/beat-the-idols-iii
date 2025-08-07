@@ -37,8 +37,6 @@ function App() {
   const [videos, setVideos] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
 
-  const currentUserVideos = videos.filter(({ _userID }) => _userID == currentUser.id);
-
   const logoutLogic = async () => {
     try {
       const updateCurrentUser = await UpdateDataAPI("http://localhost:3003/currentUser", {});
@@ -102,7 +100,7 @@ function App() {
           (currentUser.id && currentUser.username)
           &&
           <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
-            <Route path="challenge-form" element={currentUserVideos.length ? <ChallengeForm /> : <ChallengeFormError />} />
+            <Route path="challenge-form" element={(videos.length > 1) ? <ChallengeForm /> : <ChallengeFormError videos={videos} />} />
             <Route path="add-challenge-video" element={<AddVideo />} />
             <Route path="view/challengeVideos/:filter" element= {<ChallengeVideos />} />
           </Route>
