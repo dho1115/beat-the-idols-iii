@@ -5,22 +5,23 @@ import { Container, Form } from 'reactstrap';
 import { Carousel } from 'react-bootstrap';
 import { dataContext } from '../../../App';
 import ItemDiv from './components/ItemDiv';
+import AddVideosSlide from './components/slides/AddVideosSlide';
 import SlideOne from './components/slides/SlideOne';
 import SlideTwo from './components/slides/SlideTwo';
-import SlideThree from './components/slides/SlideThree';
+import SlideSubmit from './components/slides/SlideSubmit';
 
 export const ChallengeFormContext = createContext();
 
 import './ChallengeForm.styles.css';
 
 const ChallengeForm = () => {
-  const { challengeAnnouncements, setChallengeAnnouncements, currentChallenges, setCurrentChallenges, currentUser } = useContext(dataContext);
+  const { setChallengeAnnouncements, currentChallenges, setCurrentChallenges, currentUser } = useContext(dataContext);
   const [challengeFormDetails, setChallengeFormDetails] = useState({});
   const [index, setIndex] = useState(0);
   const handleSelect = selectedIndex => setIndex(selectedIndex);
   const { Item } = Carousel;
 
-  const slides = [<SlideOne />, <SlideTwo />, <SlideThree />]
+  const slides = [<SlideOne />, <SlideTwo />, <AddVideosSlide />, <SlideSubmit />]
   
   useEffect(() => {
     console.log({ challengeFormDetails });
