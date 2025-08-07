@@ -17,11 +17,13 @@ const CurrentChallenges = () => {
     )
   }
 
+  const challenges = currentChallenges.map(val => val);
+
   return (
     <div>
       <Suspense fallback={<SuspenseFallback />}>
         <h1>CURRENT CHALLENGES.</h1>
-        {/* <h3>{JSON.stringify(data)}</h3> */}
+        <strong>{JSON.stringify(challenges)}</strong>
       </Suspense>      
     </div>
   )
