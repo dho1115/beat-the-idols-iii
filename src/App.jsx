@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from 'react';
 //Components - Lazy loaded.
 import AddVideo from './components/forms/add_video/AddVideo';
 import ChallengeForm from './components/forms/challenge/ChallengeForm';
+import ChallengeFormError from './components/forms/challenge/ChallengeFormError';
 import ChallengeVideos from './components/view_videos/ChallengeVideos';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
@@ -25,7 +26,7 @@ const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
 import './App.css';
 
 export const dataContext = createContext();
-  
+
 function App() {
   // alert("New Notes. Read!!!")
   const location = useLocation();
@@ -35,6 +36,8 @@ function App() {
   const [currentChallenges, setCurrentChallenges] = useState([]);
   const [videos, setVideos] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
+
+  const currentUserVideos = videos.filter(({ _userID }) => _userID == currentUser.id);
 
   const logoutLogic = async () => {
     try {
@@ -84,32 +87,30 @@ function App() {
   }, [currentUser.id, currentUser.username, location.pathname])
 
   return (
-    <>
-      <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
-        <WelcomeNavbar />
-        <Routes>
-          <Route path='/' element={<WelcomePage />} />
-          <Route path='/home/*' element={<Homepage />}>
-            <Route path='current-challenges' element={<CurrentChallenges />} />
+    <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
+      <WelcomeNavbar />
+      <Routes>
+        <Route path='/' element={<WelcomePage />} />
+        <Route path='/home/*' element={<Homepage />}>
+          <Route path='current-challenges' element={<CurrentChallenges />} />
+        </Route>
+        <Route path='/about' element={<AboutUsPage />} />
+        <Route path='/contact' element={<ContactPage />} />
+        <Route path='/register' element={<RegistrationPage />} />
+        {/* === PRIVATE ROUTES === */}
+        {
+          (currentUser.id && currentUser.username)
+          &&
+          <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
+            <Route path="challenge-form" element={currentUserVideos.length ? <ChallengeForm /> : <ChallengeFormError />} />
+            <Route path="add-challenge-video" element={<AddVideo />} />
+            <Route path="view/challengeVideos/:filter" element= {<ChallengeVideos />} />
           </Route>
-          <Route path='/about' element={<AboutUsPage />} />
-          <Route path='/contact' element={<ContactPage />} />
-          <Route path='/register' element={<RegistrationPage />} />
-          {/* === PRIVATE ROUTES === */}
-          {
-            (currentUser.id && currentUser.username)
-            &&
-            <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
-              <Route path="challenge-form" element={<ChallengeForm />} />
-              <Route path="add-challenge-video" element={<AddVideo />} />
-              <Route path="view/challengeVideos/:filter" element={<ChallengeVideos />} />
-            </Route>
-          }          
-          {/* ====================== */}
-          <Route path='*' element={<Navigate to="/" replace />} />
-        </Routes>
-      </dataContext.Provider>
-    </>
+        }          
+        {/* ====================== */}
+        <Route path='*' element={<Navigate to="/" replace />} />
+      </Routes>
+    </dataContext.Provider>
   )
 }
 
