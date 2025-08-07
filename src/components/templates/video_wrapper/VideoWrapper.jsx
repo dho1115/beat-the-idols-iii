@@ -6,9 +6,9 @@ import { Card, CardText, CardTitle } from 'reactstrap';
 import "./VideoWrapper.styles.css";
 
 const VideoWrapper = ({ video_component, title, description, button_text, clickLogic, ...args }) => {
-   const { username } = args;
+   const { username, idx } = args;
    return (
-      <Card style={{border: '3.5px solid lightseagreen', borderRadius: '15px'}}>
+      <Card style={{border: idx%2==1 ? '3.5px solid lightseagreen' : '3.5px solid yellow', borderRadius: '15px'}}>
          <div className='w-100 p-0 card-video-div'>
             {video_component}
          </div>
