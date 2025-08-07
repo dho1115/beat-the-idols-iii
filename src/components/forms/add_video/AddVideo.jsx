@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { DateTime } from "luxon";
 
 //Components and dependencies.
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
@@ -20,15 +21,17 @@ const AddVideo = () => {
   const onHandleAddVideo = e => {
     e.preventDefault();
     const _videoID = v4();
+    const dateObject = DateTime.now().startOf("day")
+    const datePosted = dateObject.toFormat("MM-dd-yyyy");
     PostDataAPI("http://localhost:3003/videos", { ...video, id: _videoID })
       .then(result => {
         console.log({ message: 'From onHandleAddVideo: PostDataAPI success!!!', result });
-        setVideo(prv => ({ ...prv, id: _videoID }));
+        setVideo(prv => ({ ...prv, id: _videoID, datePosted }));
         return "About to set videos (context)"
       })
       .then(successMessage => {
         console.log({ successMessage: successMessage });
-        setVideos(prv => ([...prv, { ...video, id: _videoID }]))
+        setVideos(prv => ([...prv, { ...video }]))
       })
       .catch(error => ({ message: "PostDataAPI error!!!", error, errorCode: error.code, errorMessage: error.message }))
       .finally(() => {
