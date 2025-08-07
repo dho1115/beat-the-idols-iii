@@ -4,3 +4,11 @@
    display: grid;
    grid-template-columns: 19%;
 }
+
+.no-videos {
+   border: 3.5px solid firebrick;
+   display: flex;
+   justify-content: center;
+   background-color: lightyellow;
+   align-items: center;
+}

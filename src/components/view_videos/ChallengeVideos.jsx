@@ -19,7 +19,7 @@ const ChallengeVideos = () => {
    }
 
    return (
-      <Container className='challenge-videos-container p-3'>
+      <Container className={ filterQuery[filter].length? 'challenge-videos-container p-3' : 'no-videos'}>
          {
             filterQuery[filter].length ?
                filterQuery[filter].map(({ id, _userID, username, title, description, urlOrFile, videoType }, idx) => {
