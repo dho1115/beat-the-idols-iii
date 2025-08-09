@@ -12,7 +12,7 @@ const ChallengeForm = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form className='challenge-form p-3 m-1' onSubmit={handleSubmit}>
       <FormGroup>
         <Label for='title'>TITLE OF CHALLENGE</Label>
         <Input type='text' id='title' value={challengeDetails.title} placeholder='TITLE OF CHALLENGE' onChange={e => setChallengeDetails(prv => ({...prv, title: e.target.value}))} required />
@@ -33,7 +33,7 @@ const ChallengeForm = () => {
       }
       <FormGroup>
         <Label for='description'>DESCRIPTION</Label>
-        <Input type='textarea' id='description' placeholder='DESCRIPTION' maxLength={107} />
+        <Input type='textarea' id='description' placeholder='Briefly describe your challenge here.' maxLength={107} />
       </FormGroup>
     </Form>
   )
