@@ -1,0 +1,22 @@
+.carousel-item {
+   border: 1.5px solid black;
+   background-color: antiquewhite;
+   overflow: hidden;
+   width: 100%;
+   height: auto;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+   background-color: black
+}
+
+.challenge-form {
+   border: 3px solid black;
+   border-radius: 15px;
+}
+
+.challenge-form-container {
+   border: 5px solid firebrick;
+   position: relative;
+   height: 50vh
+}
