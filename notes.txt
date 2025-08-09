@@ -1,1 +1,1 @@
-Work on current challenges: http://localhost:3001/home/current-challenges
+Work on ChallengeVideos.jsx. Add an intermediary useRef where any videos TEMPORARILY selected will be added to this intermediary useRef. That way, you don't always have to rerender the state when the user selects/unselects the video.
