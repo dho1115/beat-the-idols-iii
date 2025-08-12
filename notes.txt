@@ -1,3 +1,4 @@
-Work on ChallengeVideos.jsx. Add an intermediary useRef where any videos TEMPORARILY selected will be added to this intermediary useRef. That way, you don't always have to rerender the state when the user selects/unselects the video.
-
-Test the new link to see if it works!!!
+Inside AddChallengeVideos:
+1. Wrap each video inside <VideoWrapper />.
+2. Add an expiration date <Input /> for the Challenge. When would the challenge expire?
+3. After the ChallengeForm is completed: (a) Navigate to http://localhost:3001/home/current-challenges or... (b) Create a CHALLENGE ANNOUNCEMENT page and navigate to there inside the onSubmit logic.
