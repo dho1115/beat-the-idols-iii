@@ -1,17 +1,19 @@
-import React, { useState, createContext } from 'react';
-import ErrorBoundary from '../../../ErrorBoundary';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 import { DateTime } from 'luxon';
 import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import Deadline from './input_invite_others/Deadline';
-
-export const ChallengeDetailsContext = createContext();
+import { dataContext } from '../../../../App';
+import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 
 import './ChallengeForm.styles.css';
 
 const ChallengeForm = () => {
-  const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", challengeExpires: '', challengeVideos: []});
-  
+  const navigate = useNavigate();
+  const { challengeDetails, setChallengeDetails } = useContext(ChallengeDetailsContext);
+  const { currentUser } = useContext(dataContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const posted = DateTime.local().toFormat('yyyy-MM-dd');
@@ -19,14 +21,10 @@ const ChallengeForm = () => {
     let submitChallengeDetails = { posted, id: _videoID, ...challengeDetails, _videoID };
     if (!challengeDetails.inviteOthers) delete submitChallengeDetails.deadline;
     console.log("Successfully submitted the following:", challengeDetails);
+    navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`)
   }
 
   return (
-    <ErrorBoundary fallback={
-      <div style={{height: '100vh', backgroundColor: 'lightgoldenrodyellow', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <h1 className='text-danger'>SOMETHING WENT WRONG INSIDE CHALLENGEFORM.JSX!!!</h1>
-      </div>}
-    >
       <ChallengeDetailsContext.Provider value={{challengeDetails, setChallengeDetails}}>
         <Form className='challenge-form p-3 m-1' onSubmit={handleSubmit}>
           <FormGroup>
@@ -56,7 +54,6 @@ const ChallengeForm = () => {
           </FormGroup>
         </Form>
       </ChallengeDetailsContext.Provider>
-    </ErrorBoundary>
   )
 }
 
