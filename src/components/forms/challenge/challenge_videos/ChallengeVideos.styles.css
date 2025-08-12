@@ -1,0 +1,8 @@
+.challenge-videos-form {
+   border: 3.5px solid firebrick;
+}
+
+.challenge-videos-form-container {
+   display: grid;
+   grid-template-columns: 19% 19% 19% 19% 19%;
+}
