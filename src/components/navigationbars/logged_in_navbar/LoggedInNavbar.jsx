@@ -10,7 +10,7 @@ const LoggedInNavbar = () => {
    const { id } = currentUser;
    return (
       <nav className='logged-in-navbar m-0'>
-         <Link to= {`/currentUser/${id}/challenge-form`}><strong>START A CHALLENGE!!!</strong></Link>
+         <Link to= {`/currentUser/${id}/challenge-form/details`}><strong>START A CHALLENGE!!!</strong></Link>
          <Link to= {`/currentUser/${id}/add-challenge-video`}><strong>ADD CHALLENGE VIDEO!!!</strong></Link>
       </nav>
    )
