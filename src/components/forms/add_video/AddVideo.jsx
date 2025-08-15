@@ -70,7 +70,7 @@ const AddVideo = () => {
       {video.videoType == 'you-tube' && <YouTubeUpload currentState={video.urlOrFile} setStateFunction={setVideo}  />}
       {video.videoType == 'upload' && <ComputerUpload currentState={video.urlOrFile} setStateFunction={setVideo} />}
       <FormGroup className='p-1'>
-        <Button size='lg' color='danger' className='w-100'>SUBMIT MY VIDEO!!!</Button>
+        <Button type='submit' size='lg' color='danger' className='w-100'>SUBMIT MY VIDEO!!!</Button>
       </FormGroup>
     </Form>
   )
