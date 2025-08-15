@@ -49,6 +49,10 @@ const ChallengeForm = () => {
             <Label for='description'><strong>DESCRIPTION</strong></Label>
             <Input type='textarea' id='description' placeholder='Briefly describe your challenge here.' maxLength={107} />
           </FormGroup>
+          <FormGroup>
+            <Label for='challengeEnds'><strong>CHALLENGE END DATE</strong></Label>
+            <Input type='date' id='challengeEnds' placeholder='Select a date for when your challenge ends' />
+          </FormGroup>
           <FormGroup className='w-100'>
             <Button type='submit' className='w-100' color='danger' size='lg'>NEXT</Button>
           </FormGroup>
