@@ -8,7 +8,7 @@ const Deadline = ({ challengeDetails, setChallengeDetails, ...args }) => {
    return (
       <FormGroup>
          <Label for='deadline'>SELECT A DEADLINE FOR PEOPLE TO APPLY.</Label>
-         <Input type='date' id='deadline' value={challengeDetails.Deadline} min={currentDate} max={add5months} onChange={e => setChallengeDetails(prv => ({...prv, deadline: e.target.value}))} required/>
+         <Input type='date' id='deadline' value={challengeDetails.deadline} min={currentDate} max={add5months} onChange={e => setChallengeDetails(prv => ({...prv, deadline: e.target.value}))} required/>
       </FormGroup>
    )
 }
