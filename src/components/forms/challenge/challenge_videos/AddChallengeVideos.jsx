@@ -16,6 +16,7 @@ const AddChallengeVideos = () => {
 
    const onHandleSubmitChallengeVideos = e => {
       e.preventDefault();
+      console.log("About to submit:", selectedVideos);
       setChallengeDetails(prv => ({ ...prv, challengeVideos: [...challengeDetails.challengeVideos, ...selectedVideos] }));
    }
 
@@ -24,7 +25,7 @@ const AddChallengeVideos = () => {
    }, [])
 
    return (
-      <Form className="challenge-videos-form p-3 m-3" onSubmit={onHandleSubmitChallengeVideos}>
+      <Container className="challenge-videos-form p-3 m-3" onSubmit={onHandleSubmitChallengeVideos}>
          <FormGroup>
             <Label><strong>SELECT CHALLENGE VIDEOS!!!</strong></Label>
             <Container className='challenge-videos-form-container'>
@@ -39,9 +40,9 @@ const AddChallengeVideos = () => {
             </Container>
          </FormGroup>
          <FormGroup>
-            <Button type='submit' color='danger' className='w-100'>FINISHED SELECTING VIDEOS.</Button>
+            <Button type='button' color='danger' className='w-100' onClick={onHandleSubmitChallengeVideos}>FINISHED SELECTING VIDEOS.</Button>
          </FormGroup>
-      </Form>      
+      </Container>      
    )
 }
 
