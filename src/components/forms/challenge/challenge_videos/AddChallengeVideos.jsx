@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Form, Label, Button, Container, FormGroup } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
@@ -12,14 +12,19 @@ import "./ChallengeVideos.styles.css";
 const AddChallengeVideos = () => {
    const [selectedVideos, setSelectedVideos] = useState([])
    const { videos } = useContext(dataContext);
-   const { setChallengeDetails } = useContext(ChallengeDetailsContext);
+   const { challengeDetails, setChallengeDetails } = useContext(ChallengeDetailsContext);
 
    const onHandleSubmitChallengeVideos = e => {
       e.preventDefault();
+      setChallengeDetails(prv => ({ ...prv, challengeVideos: [...challengeDetails.challengeVideos, ...selectedVideos] }));
    }
 
+   useEffect(() => {
+      return () => setSelectedVideos([])
+   }, [])
+
    return (
-      <Form className="challenge-videos-form p-3 m-3">
+      <Form className="challenge-videos-form p-3 m-3" onSubmit={onHandleSubmitChallengeVideos}>
          <FormGroup>
             <Label><strong>SELECT CHALLENGE VIDEOS!!!</strong></Label>
             <Container className='challenge-videos-form-container'>
@@ -32,6 +37,9 @@ const AddChallengeVideos = () => {
                   ))
                }
             </Container>
+         </FormGroup>
+         <FormGroup>
+            <Button type='submit' color='danger' className='w-100'>FINISHED SELECTING VIDEOS.</Button>
          </FormGroup>
       </Form>      
    )
