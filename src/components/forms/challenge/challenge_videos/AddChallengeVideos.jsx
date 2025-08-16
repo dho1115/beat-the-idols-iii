@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState, useRef } from 'react'
 import { Form, Label, Button, Container, FormGroup, Alert } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
-import ErrorBoundary from '../../../ErrorBoundary';
 import UploadVideo from '../../../templates/video/upload/UploadVideo';
 import VideoWrapper from '../../../templates/video_wrapper/VideoWrapper';
 import YouTubeVideo from '../../../templates/video/you_tube/YouTubeVideo';
@@ -26,7 +25,10 @@ const AddChallengeVideos = () => {
    }
 
    useEffect(() => {
-      const setGridTemplateColumns = videos.length >= 5 ? "auto auto auto auto auto" : videos.map(val => "auto").join(" ");
+      const setGridTemplateColumns = videos.length >= 5 ?
+         "auto auto auto auto auto"
+         :
+         videos.map(val => `${(100/(videos.length))}%`).join(" ");
 
       videosContainerRef.current.style.gridTemplateColumns = setGridTemplateColumns
       return () => {
@@ -42,13 +44,33 @@ const AddChallengeVideos = () => {
          }
          <FormGroup>
             <Label><strong>SELECT CHALLENGE VIDEOS!!!</strong></Label>
-            <Container className='challenge-videos-form-container' ref={videosContainerRef}>
+            <Container
+               className='challenge-videos-form-container'
+               ref={videosContainerRef}
+            >
                {
-                  videos.map((val, idx) => (
-                     <div key={idx} className='p-1 m-1' style={{border: `5px solid ${idx%2==1 ? "#333" : "red"}`, backgroundColor: idx%2==1 ? 'beige' : 'floralwhite', overflow: "scroll", textWrap: 'pretty'}}>
-                        <h5>{JSON.stringify(val)}</h5>
-                        <Button color={selectedVideos.includes(val.id) ? "danger" : "success"} className='w-100' size='lg' onClick={() => selectedVideos.includes(val.id) ? setSelectedVideos(selectedVideos.filter(id => id != val.id)) : setSelectedVideos(prv=> ([...prv, val.id]))}>{selectedVideos.includes(val.id) ? "UNSELECT THIS VIDEO" : "SELECT THIS VIDEO!!!"}</Button>
-                     </div>
+                  videos.map(({id, title, videoType, description, urlOrFile}, idx) => (
+                     <VideoWrapper
+                        key={idx}
+                        video_component={
+                           videoType == 'you-tube' ?
+                              <YouTubeVideo title={title} url={urlOrFile} />
+                              :
+                              <UploadVideo file={urlOrFile} />
+                        }
+                        title={title}
+                        description={description}
+                        button_text={selectedVideos.includes(id) ? "UNSELECT THIS VIDEO" :"SELECT THIS VIDEO!!!"}
+                        color = {selectedVideos.includes(id) ? 'danger' : 'success'}
+                        clickLogic={
+                           () => selectedVideos.includes(id) ?
+                              setSelectedVideos(selectedVideos.filter(id => id != id))
+                              :
+                              setSelectedVideos(prv => ([...prv, id]))
+                        }
+                        className='w-100'
+                        size='lg'
+                     />
                   ))
                }
             </Container>
