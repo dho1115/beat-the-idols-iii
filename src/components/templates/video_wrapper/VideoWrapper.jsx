@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react'
 import SuspenseFallback from '../../suspense_fallback/SuspenseFallback';
 //Dependencies & components.
-import { Card, CardBody, CardFooter, CardText, CardTitle } from 'reactstrap';
+import { Card, CardBody, CardFooter, CardText, CardTitle, Button } from 'reactstrap';
 
 import "./VideoWrapper.styles.css";
 
 const VideoWrapper = ({ video_component, title, description, button_text, clickLogic, ...args }) => {
-   const { username, idx } = args;
+   const { color, username, idx } = args;
+
    return (
       <Card className='m-1' style={{ border: idx % 2 == 1 ? '3.5px solid lightseagreen' : '3.5px solid red', height: '100%', borderRadius: '15.3px' }}>
          <Suspense fallback={<SuspenseFallback />}>
@@ -31,7 +32,7 @@ const VideoWrapper = ({ video_component, title, description, button_text, clickL
                (button_text && clickLogic)
                &&
                <CardFooter className='w-100' style={{backgroundColor: 'black'}}>
-                  <button type="button" className="btn btn-danger btn-block w-100" onClick={clickLogic || null}>{button_text}</button>
+                  <Button type="button" className= {`btn btn-${color ? color : 'danger'} btn-block w-100`} onClick={clickLogic || null}>{button_text}</Button>
                </CardFooter>
             }
          </Suspense>
