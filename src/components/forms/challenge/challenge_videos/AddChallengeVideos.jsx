@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import { Form, Label, Button, Container, FormGroup, Alert } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+import { Label, Button, Container, FormGroup, Alert } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
 import UploadVideo from '../../../templates/video/upload/UploadVideo';
@@ -9,27 +10,31 @@ import YouTubeVideo from '../../../templates/video/you_tube/YouTubeVideo';
 import "./ChallengeVideos.styles.css";
 
 const AddChallengeVideos = () => {
+   const navigate = useNavigate();
    const videosContainerRef = useRef();
    const [selectedVideos, setSelectedVideos] = useState([])
    const [addVideoAlert, setAddVideoAlert] = useState(false)
-   const { videos } = useContext(dataContext);
+   const { videos, currentUser } = useContext(dataContext);
    const { challengeDetails, setChallengeDetails } = useContext(ChallengeDetailsContext);
+   const { inviteOthers } = challengeDetails;
+   const currentUsersVideos = videos.filter(({ _userID }) => _userID == currentUser.id); //We only want current user to select his/her/their own videos.
 
    const onHandleSubmitChallengeVideos = e => {
       e.preventDefault();
-      console.log("About to submit:", selectedVideos);
-      if (!selectedVideos.length) {
+      if ((!inviteOthers && (selectedVideos < 2)) || !selectedVideos.length) {
          setAddVideoAlert(true)
+         return;
       }
+      console.log("About to submit:", selectedVideos);
       setChallengeDetails(prv => ({ ...prv, challengeVideos: [...challengeDetails.challengeVideos, ...selectedVideos] }));
    }
 
    useEffect(() => {
-      const setGridTemplateColumns = videos.length >= 5 ?
+      const setGridTemplateColumns = currentUsersVideos.length >= 5 ?
          "auto auto auto auto auto"
          :
-         videos.map(val => `${(100/(videos.length))}%`).join(" ");
-
+         currentUsersVideos.map(() => `${(100 / (currentUsersVideos.length))}%`).join(" ");
+      
       videosContainerRef.current.style.gridTemplateColumns = setGridTemplateColumns
       return () => {
          setSelectedVideos([])
@@ -40,7 +45,7 @@ const AddChallengeVideos = () => {
    return (
       <div className="challenge-videos-form p-3 m-3">
          {
-            addVideoAlert && <Alert color='danger'><h3>PLEASE SELECT AT LEAST 1 VIDEO (you currently have {selectedVideos.length} videos)!!!</h3></Alert>
+            addVideoAlert && <Alert color='danger'><h3>PLEASE SELECT AT LEAST 2 VIDEO2 (you currently have {selectedVideos.length} videos) OR SELECT 1 VIDEO <i>AND</i> SELECT "INVITE OTHERS"!!!</h3></Alert>
          }
          <FormGroup>
             <Label><strong>SELECT CHALLENGE VIDEOS!!!</strong></Label>
@@ -49,7 +54,7 @@ const AddChallengeVideos = () => {
                ref={videosContainerRef}
             >
                {
-                  videos.map(({id, title, videoType, description, urlOrFile}, idx) => (
+                  currentUsersVideos.map(({id, title, videoType, description, urlOrFile}, idx) => (
                      <VideoWrapper
                         key={idx}
                         video_component={
@@ -68,8 +73,6 @@ const AddChallengeVideos = () => {
                               :
                               setSelectedVideos(prv => ([...prv, id]))
                         }
-                        className='w-100'
-                        size='lg'
                      />
                   ))
                }
