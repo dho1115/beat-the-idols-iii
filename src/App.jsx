@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from 'react';
 //Components - Lazy loaded.
 import AddChallengeVideos from './components/forms/challenge/challenge_videos/AddChallengeVideos';
 import AddVideo from './components/forms/add_video/AddVideo';
+import ChallengeAnnouncementForm from './components/forms/challenge-announcement/challenge_announcement_form/ChallengeAnnouncementForm';
 import ChallengeAnnouncementFormComponent from './components/forms/challenge-announcement/ChallengeAnnouncementFormComponent';
 import ChallengeForm from './components/forms/challenge/challenge_form/ChallengeForm';
 import ChallengeFormComponent from './components/forms/challenge/ChallengeFormComponent';
@@ -103,7 +104,7 @@ function App() {
           &&
           <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
             <Route path='challenge-announcement-form/*' element={<ChallengeAnnouncementFormComponent />}>
-              
+              <Route path='details' element={<ChallengeAnnouncementForm />} />
             </Route>
             <Route path="challenge-form/*" element={<ChallengeFormComponent />}>
               <Route path='details' element={<ChallengeForm />} />
