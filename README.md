@@ -1,6 +1,6 @@
 BEAT THE IDOLS:
-
-An online "reality-show"-like app where you:
+SIDE NOTE: I am updating and redoing this project from a previous project (https://internet-idol-faceoff-beta-v1a.netlify.app/challenges/actives/all). It's kind of complicated, but I plan to add more features to this new one and as for the old one, the code is REALLY, REALLY, REALLY BAD (not that this is any better, but...).
+Anyway, about THIS project. So, this is an online "reality-show"-like app where you:
 1. Create your profile (via registration).
 2. Once registered, you will be taken to your own home-page. From there...
 3. You can create your own "team" of singers (though, you can do other performers as well) by:
