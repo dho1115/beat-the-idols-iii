@@ -1,3 +1,5 @@
 Inside AddChallengeVideos:
 1. After the ChallengeForm is completed: (a) Navigate to http://localhost:3001/home/current-challenges or... (b) Create a CHALLENGE ANNOUNCEMENT page and navigate to there inside the onSubmit logic.
-2. Work on Challenge Announcement!!!
+2. Work on Challenge Announcement!!! 
+3. Inside the handleSubmit function of ChallengeFormComponent, consider adding a "token" inside the option where you navigate to the challenge announcement. This token would serve as a way to prevent someone from just typing in the url and automatically going to the challenge announcement page.
+4. You may want to add a "token" to the add-video page as well.
