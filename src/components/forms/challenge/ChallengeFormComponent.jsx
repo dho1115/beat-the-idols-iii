@@ -16,7 +16,7 @@ import './ChallengeFormComponent.styles.css';
 const ChallengeFormComponent = () => {
    const navigate = useNavigate();
    const { currentUser } = useContext(dataContext);
-   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", challengeExpires: '', challengeVideos: [] });
+   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '', deadline: "0000-00-00", challengeExpires: '', challengeVideos: [] });
 
    const { videos } = useContext(dataContext);
 
