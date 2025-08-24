@@ -28,7 +28,7 @@ const ChallengeForm = () => {
     return { min, max };
   }
 
-  const onButtonClick = () => navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`)
+  const onButtonClick = () => navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
 
   return (
     <>
