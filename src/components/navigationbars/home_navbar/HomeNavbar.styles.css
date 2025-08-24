@@ -3,6 +3,7 @@
    border-bottom: 1.75px solid black;
    background-color: beige;
    display: flex;
+   /* justify-content: space-between; */
 }
 
 .homenavbar-card {
