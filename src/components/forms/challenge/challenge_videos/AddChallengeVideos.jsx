@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Label, Button, Container, FormGroup, Alert } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
@@ -24,12 +24,12 @@ const AddChallengeVideos = () => {
       if ((!inviteOthers && (selectedVideos < 2)) || !selectedVideos.length) {
          setAddVideoAlert(true)
          return;
-      }
+      } //If you are NOT inviting others, you must select at least 2 videos.
       console.log("About to submit:", selectedVideos);
       setChallengeDetails(prv => ({ ...prv, challengeVideos: [...challengeDetails.challengeVideos, ...selectedVideos] }));
    }
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       const setGridTemplateColumns = currentUsersVideos.length >= 5 ?
          "auto auto auto auto auto"
          :
