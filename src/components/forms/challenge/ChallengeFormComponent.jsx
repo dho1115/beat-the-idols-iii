@@ -14,9 +14,7 @@ export const ChallengeDetailsContext = createContext();
 import './ChallengeFormComponent.styles.css';
 
 const ChallengeFormComponent = () => {
-   const navigate = useNavigate();
-   const { currentUser } = useContext(dataContext);
-   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '', deadline: "0000-00-00", challengeExpires: '', challengeVideos: [] });
+   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '', deadline: "0000-00-00", challengeCoverType: '', challengeCoverImage: '', challengeExpires: '', challengeVideos: [] });
 
    const { videos } = useContext(dataContext);
 
@@ -29,7 +27,7 @@ const ChallengeFormComponent = () => {
    }
 
    useEffect(() => {
-      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", challengeExpires: '', challengeVideos: [] });
+      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", challengeCoverType: '', challengeExpires: '', challengeVideos: [] });
    }, [])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
