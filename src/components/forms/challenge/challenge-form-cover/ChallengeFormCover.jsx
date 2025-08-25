@@ -36,17 +36,14 @@ const ChallengeFormCover = () => {
             </FormGroup>
          </FormGroup>
          {
-            challengeDetails.challengeCoverType == 'online' ?
-               <OnlineImage
-                  challengeCoverImage={challengeDetails.challengeCoverImage}
-                  setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.value }))} 
-               />
-               :
-               <ComputerUpload
-                  challengeCoverImage={challengeDetails.challengeCoverImage}
-                  setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.files[0] }))}
-               />
+            challengeDetails.challengeCoverType == 'online' && <OnlineImage challengeCoverImage={challengeDetails.challengeCoverImage} setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.value }))}
+            />
          }
+
+         {
+            challengeDetails.challengeCoverType == 'upload' && <ComputerUpload challengeCoverImage={challengeDetails.challengeCoverImage} setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.files[0] }))} />
+         }
+         
          <FormGroup>
             <Button type='submit' className='w-100' color='danger'>SUBMIT MY CHALLENGE!!!</Button>
          </FormGroup>
