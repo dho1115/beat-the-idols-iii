@@ -8,6 +8,7 @@ import ChallengeAnnouncementForm from './components/forms/challenge-announcement
 import ChallengeAnnouncementFormComponent from './components/forms/challenge-announcement/ChallengeAnnouncementFormComponent';
 import ChallengeForm from './components/forms/challenge/challenge_form/ChallengeForm';
 import ChallengeFormComponent from './components/forms/challenge/ChallengeFormComponent';
+import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
 import ChallengeVideos from './components/view_videos/ChallengeVideos';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
@@ -111,6 +112,7 @@ function App() {
             <Route path="challenge-form/*" element={<ChallengeFormComponent />}>
               <Route path='details' element={<ChallengeForm />} />
               <Route path='add-video' element={<AddChallengeVideos />} />
+              <Route path='cover' element={<ChallengeFormCover />} />
             </Route>
             <Route path="add-challenge-video" element={<AddVideo />} />
             <Route path="view/challengeVideos/:filter" element= {<ChallengeVideos />} />
