@@ -27,6 +27,7 @@ const AddChallengeVideos = () => {
       } //If you are NOT inviting others, you must select at least 2 videos.
       console.log("About to submit:", selectedVideos);
       setChallengeDetails(prv => ({ ...prv, challengeVideos: [...challengeDetails.challengeVideos, ...selectedVideos] }));
+      navigate(`/currentUser/${currentUser.id}/challenge-form/cover`);
    }
 
    useLayoutEffect(() => {
