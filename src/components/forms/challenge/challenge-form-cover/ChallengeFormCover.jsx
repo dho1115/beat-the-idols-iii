@@ -35,6 +35,7 @@ const ChallengeFormCover = () => {
                <Input name='coverImage' type='radio' value={challengeDetails.challengeCoverType} onChange={() => setChallengeDetails(prv => ({...prv, challengeCoverType: 'upload'}))} /> {' '} <Label check>COMPUTER UPLOAD.</Label>
             </FormGroup>
          </FormGroup>
+         
          {
             challengeDetails.challengeCoverType == 'online' && <OnlineImage challengeCoverImage={challengeDetails.challengeCoverImage} setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.value }))}
             />
@@ -43,7 +44,7 @@ const ChallengeFormCover = () => {
          {
             challengeDetails.challengeCoverType == 'upload' && <ComputerUpload challengeCoverImage={challengeDetails.challengeCoverImage} setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.files[0] }))} />
          }
-         
+
          <FormGroup>
             <Button type='submit' className='w-100' color='danger'>SUBMIT MY CHALLENGE!!!</Button>
          </FormGroup>
