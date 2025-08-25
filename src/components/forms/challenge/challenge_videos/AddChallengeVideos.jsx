@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useContext, useState, useRef, useLayoutEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Label, Button, Container, FormGroup, Alert } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
