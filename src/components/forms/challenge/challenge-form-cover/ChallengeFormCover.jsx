@@ -5,19 +5,19 @@ import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 
 const OnlineImage = ({challengeCoverImage, setstate}) => {
   return (
-    <>
+    <FormGroup>
       <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW.</Label>
       <Input type='text' id='url' value={challengeCoverImage} onChange={setstate} placeholder='You-Tube URL' required />
-    </>
+    </FormGroup>
   )
 }
 
 const ComputerUpload = ({challengeCoverImage, setstate}) => {
   return (
-    <>
+    <FormGroup>
       <Label for='upload'>UPLOAD FILE</Label>
       <Input type='file' id='upload' value={challengeCoverImage} onChange={setstate} required />
-    </>
+    </FormGroup>
   )
 }
 
