@@ -3,10 +3,10 @@ import { Input, Label, Button, FormGroup } from 'reactstrap';
 
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 
-const YouTubeURLInput = ({challengeCoverImage, setstate}) => {
+const OnlineImage = ({challengeCoverImage, setstate}) => {
   return (
     <>
-      <Label for='url'>COPY/PASTE YOUTUBE URL</Label>
+      <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW.</Label>
       <Input type='text' id='url' value={challengeCoverImage} onChange={setstate} placeholder='You-Tube URL' required />
     </>
   )
@@ -27,17 +27,17 @@ const ChallengeFormCover = () => {
    return (
       <>
          <FormGroup tag='fieldset'>
-            <legend>Where Will You Get Your Video (type)?</legend>
+            <legend>Where Do You Plan To Get The Cover Image For Your Challenge?</legend>
             <FormGroup check>
-               <Input name='videoType' type='radio' value={challengeDetails.challengeCoverType} onChange={() => setChallengeDetails(prv => ({...prv, challengeCoverType: 'you-tube'}))} required /> {' '} <Label check>FROM YOU-TUBE.</Label>
+               <Input name='coverImage' type='radio' value={challengeDetails.challengeCoverType} onChange={() => setChallengeDetails(prv => ({...prv, challengeCoverType: 'online'}))} required /> {' '} <Label check>ONLINE IMAGE.</Label>
             </FormGroup>
             <FormGroup check>
-               <Input name='videoType' type='radio' value={challengeDetails.challengeCoverType} onChange={() => setChallengeDetails(prv => ({...prv, challengeCoverType: 'upload'}))} /> {' '} <Label check>COMPUTER UPLOAD.</Label>
+               <Input name='coverImage' type='radio' value={challengeDetails.challengeCoverType} onChange={() => setChallengeDetails(prv => ({...prv, challengeCoverType: 'upload'}))} /> {' '} <Label check>COMPUTER UPLOAD.</Label>
             </FormGroup>
          </FormGroup>
          {
-            challengeDetails.challengeCoverType == 'you-tube' ?
-               <YouTubeURLInput
+            challengeDetails.challengeCoverType == 'online' ?
+               <OnlineImage
                   challengeCoverImage={challengeDetails.challengeCoverImage}
                   setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.value }))} 
                />
