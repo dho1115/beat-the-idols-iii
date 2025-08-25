@@ -1,5 +1,5 @@
 Inside AddChallengeVideos:
 1. After the ChallengeForm is completed: (a) Navigate to http://localhost:3001/home/current-challenges or... (b) Create a CHALLENGE ANNOUNCEMENT page and navigate to there inside the onSubmit logic.
 2. Work on Challenge Announcement!!! 
-3. Inside the handleSubmit function of ChallengeFormComponent, consider adding a "token" inside the option where you navigate to the challenge announcement. This token would serve as a way to prevent someone from just typing in the url and automatically going to the challenge announcement page.
-4. You may want to add a "token" to the add-video page as well.
+3. Work on challenge-ends-option > WinningVotesOption.jsx & challenge-ends-option > ExpirationDateOption b/c you want the user to choose whether his/her/their challenge ends with the FIRST person reaching a certain vote OR when a certain date is reached.
+4. If certain date is reached, then add option for a tie.
