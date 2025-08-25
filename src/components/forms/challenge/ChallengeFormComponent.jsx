@@ -14,7 +14,7 @@ export const ChallengeDetailsContext = createContext();
 import './ChallengeFormComponent.styles.css';
 
 const ChallengeFormComponent = () => {
-   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '', deadline: "0000-00-00", challengeCoverType: '', challengeCoverImage: '', challengeExpires: '', challengeVideos: [] });
+   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '', deadline: "0000-00-00", challengeCoverType: '', challengeCoverImage: '', challengeExpires: "0000-00-00", challengeVideos: [] /* each video should have a record prop */, howChallengeEnds: '' });
 
    const { videos } = useContext(dataContext);
 
