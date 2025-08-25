@@ -7,7 +7,7 @@ const OnlineImage = ({challengeCoverImage, setstate}) => {
   return (
     <FormGroup>
       <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW.</Label>
-      <Input type='text' id='url' value={challengeCoverImage} onChange={setstate} placeholder='You-Tube URL' required />
+      <Input type='text' id='url' value={challengeCoverImage} onChange={setstate} placeholder="Right click online photo, select 'Copy Image Address' & paste here." required />
     </FormGroup>
   )
 }
@@ -15,7 +15,7 @@ const OnlineImage = ({challengeCoverImage, setstate}) => {
 const ComputerUpload = ({challengeCoverImage, setstate}) => {
   return (
     <FormGroup>
-      <Label for='upload'>UPLOAD FILE</Label>
+      <Label for='upload'>UPLOAD IMAGE FROM YOUR COMPUTER TO BE USED FOR YOUR COVER.</Label>
       <Input type='file' id='upload' value={challengeCoverImage} onChange={setstate} required />
     </FormGroup>
   )
