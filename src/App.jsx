@@ -107,7 +107,7 @@ function App() {
           &&
           <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
             <Route path='challenge-announcement-form/*' element={<ChallengeAnnouncementFormComponent />}>
-              
+              <Route path='form' element={<ChallengeAnnouncementForm />} />
             </Route>
             <Route path="challenge-form/*" element={<ChallengeFormComponent />}>
               <Route path='details' element={<ChallengeForm />} />
