@@ -56,7 +56,7 @@ const ChallengeForm = () => {
       </FormGroup>
       <FormGroup>
         <Label for='challengeEnds'><strong>CHALLENGE END DATE</strong></Label>
-        <Input type='date' id='challengeEnds' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' />
+        <Input type='date' id='challengeEnds' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' onChange={e => setChallengeDetails(prv => ({...prv, challengeExpires: e.target.value}))} required />
       </FormGroup>
       <FormGroup className='w-100'>
         <Button type='button' className='w-100' color='danger' size='lg' onClick={onButtonClick}>NEXT</Button>
