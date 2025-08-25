@@ -24,10 +24,11 @@ const ChallengeFormComponent = () => {
       const _videoID = v4();
       let submitChallengeDetails = { posted, id: _videoID, ...challengeDetails, _videoID };
       if (!challengeDetails.inviteOthers) delete submitChallengeDetails.deadline;
+      alert(`About to submit the following: ${JSON.stringify(challengeDetails)}.`)
    }
 
    useEffect(() => {
-      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", challengeCoverType: '', challengeExpires: '', challengeVideos: [] });
+      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', challengeExpires: '', challengeVideos: [] });
    }, [])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
