@@ -24,7 +24,7 @@ const ChallengeFormComponent = () => {
       const _videoID = v4();
       let submitChallengeDetails = { posted, id: _videoID, ...challengeDetails, _videoID };
       if (!challengeDetails.inviteOthers) delete submitChallengeDetails.deadline;
-      alert(`About to submit the following: ${JSON.stringify({ ...challengeDetails, _videoID, posted })}.`)
+      alert(`About to submit the following: ${JSON.stringify({ ...challengeDetails, id: _videoID, posted })}.`)
    }
 
    useEffect(() => {
