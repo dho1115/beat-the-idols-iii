@@ -44,14 +44,17 @@ const ChallengeForm = () => {
       <FormGroup tag="fieldset">
         <legend>HOW DO YOU WANT YOUR CHALLENGE TO END?</legend>
         <FormGroup check>
-          <Label for='date' check><strong>DATE</strong></Label>{' '}<Input type='radio' id='date' name='end-conditions' value={challengeDetails.challengeEndsCondition} onChange={() => setChallengeDetails(prv => ({...prv, challengeEndsCondition: 'date'}))}/>
+          <Label for='date' check><strong>DATE</strong></Label>{' '}<Input type='radio' id='date' name='end-conditions' value={challengeDetails.howChallengeEnds} onChange={() => setChallengeDetails(prv => ({...prv, howChallengeEnds: 'date'}))}/>
         </FormGroup>
         <FormGroup check>
-          <Label for='votes' check><strong>VOTES</strong></Label>{' '}<Input type='radio' name='end-conditions' value={challengeDetails.challengeEndsCondition} onChange={() => setChallengeDetails(prv => ({...prv, challengeEndsCondition: 'votes'}))}/>
+          <Label for='votes' check><strong>VOTES</strong></Label>{' '}<Input type='radio' name='end-conditions' value={challengeDetails.howChallengeEnds} onChange={() => setChallengeDetails(prv => ({...prv, howChallengeEnds: 'votes'}))}/>
         </FormGroup>
       </FormGroup>
       {
-        challengeDetails.challengeEndsCondition == 'date' && <ExpirationDateOption />
+        challengeDetails.howChallengeEnds == 'date' && <ExpirationDateOption />
+      }
+      {
+        challengeDetails.howChallengeEnds == 'votes' && <WinningVotesOption />
       }
       <FormGroup className='w-100'>
         <Button type='button' className='w-100' color='danger' size='lg' onClick={onButtonClick}>NEXT</Button>
