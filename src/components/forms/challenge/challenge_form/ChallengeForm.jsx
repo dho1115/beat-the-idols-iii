@@ -54,9 +54,18 @@ const ChallengeForm = () => {
         <Label for='description'><strong>DESCRIPTION</strong></Label>
         <Input type='textarea' id='description' placeholder='Briefly describe your challenge here.' value={challengeDetails.description} maxLength={107} onChange={e => setChallengeDetails(prv => ({...prv, description: e.target.value}))}/>
       </FormGroup>
+      <FormGroup tag="fieldset">
+        <legend>HOW DO YOU WANT YOUR CHALLENGE TO END?</legend>
+        <FormGroup check>
+          <Input type='radio' name='end-conditions' value={challengeDetails.challengeEndsCondition} onChange={() => setChallengeDetails(prv => ({...prv, challengeEndsCondition: 'date'}))}/>
+        </FormGroup>
+        <FormGroup check>
+          <Input type='radio' name='end-conditions' value={challengeDetails.challengeEndsCondition} onChange={() => setChallengeDetails(prv => ({...prv, challengeEndsCondition: 'votes'}))}/>
+        </FormGroup>
+      </FormGroup>
       <FormGroup>
-        <Label for='challengeEnds'><strong>CHALLENGE END DATE</strong></Label>
-        <Input type='date' id='challengeEnds' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' onChange={e => setChallengeDetails(prv => ({...prv, challengeExpires: e.target.value}))} required />
+        <Label for='endbydate'><strong>CHALLENGE END DATE</strong></Label>
+        <Input type='date' id='endbydate' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' onChange={e => setChallengeDetails(prv => ({...prv, challengeExpires: e.target.value}))} required />
       </FormGroup>
       <FormGroup className='w-100'>
         <Button type='button' className='w-100' color='danger' size='lg' onClick={onButtonClick}>NEXT</Button>
