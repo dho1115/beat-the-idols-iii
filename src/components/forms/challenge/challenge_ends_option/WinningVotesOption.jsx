@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { FormGroup, Label, Input } from 'reactstrap';
 
 const WinningVotesOption = () => {
   return (
-    <div>WinningVotesOption</div>
+    <FormGroup>
+      <Label for='votes'>WINNING VOTES</Label>
+    </FormGroup>
   )
 }
 
