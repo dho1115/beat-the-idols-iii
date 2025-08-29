@@ -23,10 +23,6 @@ const ChallengeVideos = () => {
       if (filterQuery[filter].length > 1) {
          videosContainerRef.current.style.gridTemplateColumns = videos.length < 5 ? videos.map(val => `${(100/videos.length)-0.5}%`).join(" ") : "19% 19% 19% 19% 19%"
       }
-      
-      return () => {
-         
-      };
    }, [])
 
    return (
