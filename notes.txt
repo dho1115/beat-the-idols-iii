@@ -1,2 +1,2 @@
 Inside AddChallengeVideos:
-1. Work on the onSubmit for challengeForm and challengeAnnouncement.
+1. Do a Test Challenge to see if the challenge announcement work (does the submit lead to challenge announcement if the user wants challenge announcement) and also if it leads to the current challenges page if the user does NOT want a challenge announcement.
