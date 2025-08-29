@@ -14,23 +14,23 @@ export const ChallengeDetailsContext = createContext();
 import './ChallengeFormComponent.styles.css';
 
 const ChallengeFormComponent = () => {
-   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '', deadline: "0000-00-00", challengeCoverType: '', challengeCoverImage: '', challengeExpires: "0000-00-00", winningVotes: 0, challengeVideos: [] /* each video should have a record prop */, howChallengeEnds: '' });
+   const navigate = useNavigate()
+   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '' /* challenge announcement */, announcementDeadline: "0000-00-00", challengeCoverType: '', challengeCoverImage: '', challengeExpires: "0000-00-00", winningVotes: 0, challengeVideos: [] /* each video should have a record prop */, howChallengeEnds: '' });
+   const { videos, currentUser } = useContext(dataContext);
 
-   const { videos } = useContext(dataContext);
+   const defaultExpirationDate = () => {
+      if (challengeDetails.inviteOthers) {
+      const deadlineString = challengeDetails.announcementDeadline; //DEADLINE FOR PEOPLE TO APPLY (announcementDeadline).
+      const deadline = DateTime.fromISO(deadlineString)
+      const defaultExpiration = deadline.plus({ months: 5 }).toFormat('yyyy-MM-dd');
+         
+         return defaultExpiration;
+      }
 
-     const defaultExpirationDate = () => {
-       if (challengeDetails.inviteOthers) {
-         const deadlineString = challengeDetails.deadline; //DEADLINE FOR PEOPLE TO APPLY.
-         const deadline = DateTime.fromISO(deadlineString)
-         const defaultExpiration = deadline.plus({ months: 5 }).toFormat('yyyy-MM-dd');
-          
-          return defaultExpiration;
-       }
-   
-       const defaultExpiration = DateTime.local().plus({ months: 5 }).toFormat("yyyy-MM-dd");
-       
-        return defaultExpiration;
-     }
+      const defaultExpiration = DateTime.local().plus({ months: 5 }).toFormat("yyyy-MM-dd");
+      
+      return defaultExpiration;
+   }
 
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -41,12 +41,16 @@ const ChallengeFormComponent = () => {
          :
          { posted, id: _videoID, ...challengeDetails, _videoID }
 
-      if (!challengeDetails.inviteOthers) delete submitChallengeDetails.deadline;
-      alert(`About to submit the following: ${JSON.stringify({ ...challengeDetails, id: _videoID, posted })}.`)
+      if (!challengeDetails.inviteOthers) {
+         delete submitChallengeDetails.announcementDeadline;
+         navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
+      } else {
+         navigate(`/currentUser/${currentUser.id}/challenge-announcement-form`) //navigate to announcement form if user inviting others.
+      }
    }
 
    useEffect(() => {
-      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', deadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [] });
+      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [] });
    }, [])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
