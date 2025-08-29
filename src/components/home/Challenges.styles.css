@@ -1,0 +1,4 @@
+.challenges-container {
+   display: grid;
+   border: 3.5px solid red;
+}
