@@ -2,6 +2,10 @@ import React, { useContext } from 'react'
 import { Form, FormGroup, Button, Input, Label } from 'reactstrap'
 import { ChallengeAnnouncementFormContext } from '../ChallengeAnnouncementFormComponent';
 
+//Cover Image Components.
+import Upload from '../cover-img-component/Upload';
+import Online from '../cover-img-component/Online';
+
 import "./ChallengeAnnouncementForm.styles.css";
 
 const ChallengeAnnouncementForm = () => {
@@ -11,23 +15,29 @@ const ChallengeAnnouncementForm = () => {
       <>
          <FormGroup>
             <Label for='title'>TITLE FOR YOUR ANNOUNCEMENT!!!</Label>
-            <Input type='text' placeholder='This will be shown in the card' maxLength={51} onChange={e => setChallengeAnnouncementDetails(prv => ({...prv, title: e.target.value}))} required />
+            <Input type='text' value={challengeAnnouncementDetails.title} placeholder='This will be shown in the card' maxLength={51} onChange={e => setChallengeAnnouncementDetails(prv => ({...prv, title: e.target.value}))} required />
          </FormGroup>
          <FormGroup>
             <Label for='description'>BRIEF DESCRIPTON OF YOUR CHALLENGE.</Label>
-            <Input type='textarea' placeholder='Description of your challenge' onChange={e => setChallengeAnnouncementDetails(prv => ({...prv, description: e.target.value}))} />
+            <Input type='textarea' value={challengeAnnouncementDetails.description} placeholder='Description of your challenge' onChange={e => setChallengeAnnouncementDetails(prv => ({...prv, description: e.target.value}))} />
          </FormGroup>
          <FormGroup tag={'fieldset'}>
             <legend>WHERE WILL THE FRONT COVER IMAGE FOR YOUR CHALLENGE COME FROM?</legend>
             <FormGroup check>
-               <Input type='radio' name='coverImageSource' value={challengeAnnouncementDetails.coverImageSource} required onChange={() => setChallengeAnnouncementDetails(prv => ({...prv, coverImageSource: 'you-tube'}))} /> {' '} <Label check>YOU-TUBE</Label>
+               <Input type='radio' name='coverImageSource' value={challengeAnnouncementDetails.coverImageSource} required onChange={() => setChallengeAnnouncementDetails(prv => ({...prv, coverImageSource: 'online'}))} /> {' '} <Label check>ONLINE</Label>
             </FormGroup>
             <FormGroup check>
                <Input type='radio' name='coverImageSource' value={challengeAnnouncementDetails.coverImageSource} required onChange={() => setChallengeAnnouncementDetails(prv => ({...prv, coverImageSource: 'upload'}))} /> {' '} <Label check>UPLOAD</Label>
             </FormGroup>
          </FormGroup>
+         {
+            challengeAnnouncementDetails.coverImageSource == "online" && <Online />
+         }
+         {
+            challengeAnnouncementDetails.coverImageSource == "upload" && <Upload />
+         }
          <FormGroup>
-            <Button type='submit' color='danger' size='lg'>SUBMIT!!!</Button>
+            <Button type='submit' color='danger' size='lg' className='w-100'>SUBMIT!!!</Button>
          </FormGroup>
       </>
    )
