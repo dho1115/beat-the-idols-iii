@@ -1,6 +1,6 @@
 import React, {createContext, useState} from 'react'
-import { Outlet } from 'react-router-dom'
-import { Form } from 'reactstrap';
+import { Outlet, useNavigate } from 'react-router-dom'
+import { Container, Form } from 'reactstrap';
 import ErrorBoundary from '../../ErrorBoundary';
 
 import "./ChallengeAnnouncementFormComponent.styles.css";
@@ -8,10 +8,12 @@ import "./ChallengeAnnouncementFormComponent.styles.css";
 export const ChallengeAnnouncementFormContext = createContext();
 
 const ChallengeAnnouncementFormComponent = () => {
-   const [challengeAnnouncementDetails, setChallengeAnnouncementDetails] = useState({ title: '', description: '', coverImageSource: '' });
+   const navigate = useNavigate();
+   const [challengeAnnouncementDetails, setChallengeAnnouncementDetails] = useState({ title: '', description: '', coverImageSource: '', coverImageLink: '', challengers: [] });
 
    const onHandleSubmitChallengeAnnouncement = e => {
       e.preventDefault();
+      alert(`=====CHALLENGE ANNOUNCEMENT SUBMITTED!!!=====${'\n'} ${'\t'}${JSON.stringify(challengeAnnouncementDetails)}. ${'\n'}=============================================`)
    }
 
    return (
@@ -19,9 +21,11 @@ const ChallengeAnnouncementFormComponent = () => {
          <ErrorBoundary fallback={
             <h1 className='text-danger'>SHIT... Something Went Wrong Rendering Challenge Ann. Form Component!!!</h1>
          }>
-            <Form onSubmit={onHandleSubmitChallengeAnnouncement}  className='challenge-announcement-form-component'>
-               <Outlet />
-            </Form>
+            <Container className='challengeAnnouncementForm-container'>
+               <Form onSubmit={onHandleSubmitChallengeAnnouncement}  className='challenge-announcement-form-component p-3'>
+                  <Outlet />
+               </Form>
+            </Container>            
          </ErrorBoundary>
       </ChallengeAnnouncementFormContext.Provider>
    )
