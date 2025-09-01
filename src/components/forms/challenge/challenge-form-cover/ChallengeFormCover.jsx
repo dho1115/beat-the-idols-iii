@@ -6,7 +6,7 @@ import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 const OnlineImage = ({challengeCoverImage, setstate}) => {
   return (
     <FormGroup>
-      <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW.</Label>
+      <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW (<strong>ACTIVE CHALLENGE</strong>).</Label>
       <Input type='text' id='url' value={challengeCoverImage} onChange={setstate} placeholder="Right click online photo, select 'Copy Image Address' & paste here." required />
     </FormGroup>
   )
@@ -15,7 +15,7 @@ const OnlineImage = ({challengeCoverImage, setstate}) => {
 const ComputerUpload = ({challengeCoverImage, setstate}) => {
   return (
     <FormGroup>
-      <Label for='upload'>UPLOAD IMAGE FROM YOUR COMPUTER TO BE USED FOR YOUR COVER.</Label>
+      <Label for='upload'>UPLOAD IMAGE FROM YOUR COMPUTER TO BE USED FOR YOUR (<strong>ACTIVE CHALLENGE</strong>)COVER.</Label>
       <Input type='file' id='upload' value={challengeCoverImage} onChange={setstate} required />
     </FormGroup>
   )
@@ -27,7 +27,7 @@ const ChallengeFormCover = () => {
    return (
       <>
          <FormGroup tag='fieldset'>
-            <legend>Where Do You Plan To Get The Cover Image For Your Challenge?</legend>
+            <legend>Where Do You Plan To Get The Cover Image For Your <strong>ACTIVE</strong> Challenge?</legend>
             <FormGroup check>
                <Input name='coverImage' type='radio' value={challengeDetails.challengeCoverType} onChange={() => setChallengeDetails(prv => ({...prv, challengeCoverType: 'online'}))} required /> {' '} <Label check>ONLINE IMAGE.</Label>
             </FormGroup>
