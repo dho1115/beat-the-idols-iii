@@ -3,7 +3,8 @@ import { ChallengeAnnouncementFormContext } from '../ChallengeAnnouncementFormCo
 import { FormGroup, Input, Label } from 'reactstrap';
 
 export const Online = () => {
-  const { challengeAnnouncementDetails, setChallengeAnnouncementDetails } = useContext(ChallengeAnnouncementFormContext);
+   const { challengeAnnouncementDetails, setChallengeAnnouncementDetails } = useContext(ChallengeAnnouncementFormContext);
+   
    return (
       <FormGroup>
          <Label for='online'>COPY IMAGE ADDRESS ONLINE & PASTE IMAGE ADDRESS BELOW.</Label>
