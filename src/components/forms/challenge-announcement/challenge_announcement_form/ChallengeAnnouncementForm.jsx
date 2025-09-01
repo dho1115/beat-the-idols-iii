@@ -3,8 +3,7 @@ import { Form, FormGroup, Button, Input, Label } from 'reactstrap'
 import { ChallengeAnnouncementFormContext } from '../ChallengeAnnouncementFormComponent';
 
 //Cover Image Components.
-import Upload from '../cover-img-component/Upload';
-import Online from '../cover-img-component/Online';
+import { Online, Upload } from './CoverImgComponents';
 
 import "./ChallengeAnnouncementForm.styles.css";
 
