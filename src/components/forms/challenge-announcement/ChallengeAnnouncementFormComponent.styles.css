@@ -1,4 +1,10 @@
 .challenge-announcement-form-component {
    border: 3.5px solid firebrick;
-   background-color: rgb(221, 167, 146)
+   background-color: antiquewhite;
+}
+
+.challengeAnnouncementForm-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
