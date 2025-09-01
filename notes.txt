@@ -1,2 +1,9 @@
-Inside AddChallengeVideos:
-1. Do a Test Challenge to see if the challenge announcement work (does the submit lead to challenge announcement if the user wants challenge announcement) and also if it leads to the current challenges page if the user does NOT want a challenge announcement.
+1. Inside ChallengeAnnouncementForm.jsx: Make sure the selected videos go into the ChallengeVideo property of ChallengeAnnouncementDetails IF the user wants to invite others.
+
+2. Add an expiration date as to when the challenge ANNOUNCEMENT ends!!!
+
+3. Consider merging the cover image Input from ChallengeForm and ChallengeAnnouncementForm into one (why use 2 cover images???).
+
+4. If the user selects "Invite Others To Challenge", the videos should go into the ChallengeAnnouncementDetails state. Otherwise, it should go into challengeDetails state inside ChallengeFormComponent.jsx!!!
+
+4. Continue to test Challenge form with and without announcement!!!
