@@ -4,11 +4,11 @@ import { DateTime } from 'luxon';
 import { FormGroup, Label, Input } from 'reactstrap';
 
 const ExpirationDateOption = () => {
-  const { challengeDetails, setChallengeDetails } = useContext(ChallengeDetailsContext)
+  const { challengeDetails, setChallengeDetails, challengeAnnouncement } = useContext(ChallengeDetailsContext)
   
   const challengeExpiration = () => {
-    if (challengeDetails.inviteOthers) {
-      const deadlineString = challengeDetails.deadline; //DEADLINE FOR PEOPLE TO APPLY.
+    if (challengeDetails.challengeAnouncementID) {
+      const deadlineString = challengeAnnouncement.announcementEndsOn;
       const ISOmin = DateTime.fromISO(deadlineString)
       const min = ISOmin.plus({ days: 3 }).toFormat('yyyy-MM-dd');
       const max = ISOmin.plus({ months: 5 }).toFormat('yyyy-MM-dd');
