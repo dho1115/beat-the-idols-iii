@@ -15,42 +15,42 @@ import './ChallengeFormComponent.styles.css';
 
 const ChallengeFormComponent = () => {
    const navigate = useNavigate()
-   const [challengeDetails, setChallengeDetails] = useState({ id: null, posted: null, title: '', description: '', inviteOthers: '' /* challenge announcement */, announcementDeadline: "0000-00-00", challengeCoverType: '', challengeCoverImage: '', challengeExpires: "0000-00-00", winningVotes: 0, challengeVideos: [] /* each video should have a record prop */, howChallengeEnds: '' });
+
+   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: null, headline: '', description: '', announcementEndsOn: '0000-00-00' })
+   
+   const [challengeDetails, setChallengeDetails] = useState({ id: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
+
+   const _challengeID = v4();
+
    const { videos, currentUser } = useContext(dataContext);
 
    const defaultExpirationDate = () => {
-      if (challengeDetails.inviteOthers) {
-      const deadlineString = challengeDetails.announcementDeadline; //DEADLINE FOR PEOPLE TO APPLY (announcementDeadline).
-      const deadline = DateTime.fromISO(deadlineString)
-      const defaultExpiration = deadline.plus({ months: 5 }).toFormat('yyyy-MM-dd');
+      if (challengeDetails.challengeAnnouncementID) {
+         const deadlineString = challengeAnnouncement.announcementEndsOn;
+         const deadline = DateTime.fromISO(deadlineString)
+         const defaultChallengeExpiration = deadline.plus({ months: 5 }).toFormat('yyyy-MM-dd');
          
-         return defaultExpiration;
+         return defaultChallengeExpiration;
       }
 
-      const defaultExpiration = DateTime.local().plus({ months: 5 }).toFormat("yyyy-MM-dd");
+      const defaultChallengeExpiration = DateTime.local().plus({ months: 5 }).toFormat("yyyy-MM-dd");
       
-      return defaultExpiration;
+      return defaultChallengeExpiration;
    }
 
    const handleSubmit = (e) => {
       e.preventDefault();
       const posted = DateTime.local().toFormat('yyyy-MM-dd');
-      const _videoID = v4();
-      let submitChallengeDetails = challengeDetails.howChallengeEnds == 'votes' ?
-         { posted, id: _videoID, ...challengeDetails, _videoID, challengeExpires: defaultExpirationDate() /* If user selects 'votes', we do NOT want the challenge to never expire, so this is the default expiration date */ }
+      challengeDetails.howChallengeEnds == 'votes' ?
+         { id: _challengeID, posted, ...challengeDetails, _challengeID, challengeEndsOn: defaultExpirationDate() /* default expiration date */ }
          :
-         { posted, id: _videoID, ...challengeDetails, _videoID }
-
-      if (!challengeDetails.inviteOthers) {
-         delete submitChallengeDetails.announcementDeadline;
-         navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
-      } else {
-         navigate(`/currentUser/${currentUser.id}/challenge-announcement-form`) //navigate to announcement form if user inviting others.
-      }
+         { posted, id: _challengeID, ...challengeDetails, _challengeID }
+      
+      navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
    }
 
    useEffect(() => {
-      return () => setChallengeDetails({ id: null, posted: null, title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [] });
+      return () => setChallengeDetails({ id: '', posted: null, title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
    }, [])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
@@ -63,7 +63,7 @@ const ChallengeFormComponent = () => {
                </div>
             }
          >
-            <ChallengeDetailsContext.Provider value={{ challengeDetails, setChallengeDetails }}>
+            <ChallengeDetailsContext.Provider value={{ challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement, _challengeID }}>
                <Form className='challenge-component-form p-3 m-1' onSubmit={handleSubmit}>
                   <Outlet />
                </Form>               
