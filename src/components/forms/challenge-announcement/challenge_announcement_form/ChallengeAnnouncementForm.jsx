@@ -13,15 +13,15 @@ const ChallengeAnnouncementForm = () => {
    return (
       <>
          <FormGroup>
-            <Label for='title'>TITLE FOR YOUR ANNOUNCEMENT!!!</Label>
+            <Label for='title'>ANNOUNCEMENT HEADLINE!!!</Label>
             <Input type='text' value={challengeAnnouncementDetails.title} placeholder='This will be shown in the card' maxLength={51} onChange={e => setChallengeAnnouncementDetails(prv => ({...prv, title: e.target.value}))} required />
          </FormGroup>
          <FormGroup>
-            <Label for='description'>BRIEF DESCRIPTON OF YOUR CHALLENGE.</Label>
+            <Label for='description'>DETAILS OF YOUR CHALLENGE (BODY).</Label>
             <Input type='textarea' value={challengeAnnouncementDetails.description} placeholder='Description of your challenge' onChange={e => setChallengeAnnouncementDetails(prv => ({...prv, description: e.target.value}))} />
          </FormGroup>
          <FormGroup tag={'fieldset'}>
-            <legend>WHERE WILL THE FRONT COVER IMAGE FOR YOUR CHALLENGE COME FROM?</legend>
+            <legend>SOURCE OF YOUR COVER IMAGE?</legend>
             <FormGroup check>
                <Input type='radio' name='coverImageSource' value={challengeAnnouncementDetails.coverImageSource} required onChange={() => setChallengeAnnouncementDetails(prv => ({...prv, coverImageSource: 'online'}))} /> {' '} <Label check>ONLINE</Label>
             </FormGroup>
