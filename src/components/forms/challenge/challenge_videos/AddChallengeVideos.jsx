@@ -16,12 +16,12 @@ const AddChallengeVideos = () => {
    const [addVideoAlert, setAddVideoAlert] = useState(false)
    const { videos, currentUser } = useContext(dataContext);
    const { challengeDetails, setChallengeDetails } = useContext(ChallengeDetailsContext);
-   const { inviteOthers } = challengeDetails;
+   const { challengeAnnouncementID } = challengeDetails;
    const currentUsersVideos = videos.filter(({ _userID }) => _userID == currentUser.id); //We only want current user to select his/her/their own videos.
 
    const onHandleSubmitChallengeVideos = e => {
       e.preventDefault();
-      if ((!inviteOthers && (selectedVideos < 2)) || !selectedVideos.length) {
+      if ((!challengeAnnouncementID && (selectedVideos < 2)) || !selectedVideos.length) {
          setAddVideoAlert(true)
          return;
       } //If you are NOT inviting others, you must select at least 2 videos.
