@@ -13,7 +13,7 @@ import './ChallengeForm.styles.css';
 
 const ChallengeForm = () => {
   const navigate = useNavigate();
-  const { challengeDetails, setChallengeDetails, _challengeID } = useContext(ChallengeDetailsContext);
+  const { challengeDetails, setChallengeDetails, setChallengeAnnouncement, _challengeID } = useContext(ChallengeDetailsContext);
   const { currentUser } = useContext(dataContext);
 
   const onButtonClick = () => navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
@@ -28,10 +28,16 @@ const ChallengeForm = () => {
         <legend className="col-form-label col-sm-5"><strong>INVITE OTHERS TO CHALLENGE?</strong></legend>
         <Col sm={7}>
           <FormGroup check>
-            <Input type='radio' name='inviteOthers' id='YES' value={challengeDetails.challengeAnnouncementID} onChange={() => setChallengeDetails(prv => ({...prv, challengeAnnouncementID: _challengeID}))} required />{' '}<Label for='YES' check><strong>YES</strong></Label>
+            <Input type='radio' name='inviteOthers' id='YES' value={challengeDetails.challengeAnnouncementID} onChange={() => {
+              setChallengeDetails(prv => ({ ...prv, challengeAnnouncementID: _challengeID })); //for the challenge.
+              setChallengeAnnouncement(prv => ({ ...prv, id: _challengeID, _challengeAnnouncementID: _challengeID })); //for the announcement.
+            }} required />{' '}<Label for='YES' check><strong>YES</strong></Label>
           </FormGroup>
           <FormGroup check>
-            <Input type='radio' name='inviteOthers' id='NO' value={challengeDetails.challengeAnnouncementID} onChange={() => setChallengeDetails(prv => ({...prv, challengeAnnouncementID: ''}))} />{' '}<Label for='NO' check><strong>NO</strong></Label>
+            <Input type='radio' name='inviteOthers' id='NO' value={challengeDetails.challengeAnnouncementID} onChange={() => {
+              setChallengeDetails(prv => ({ ...prv, challengeAnnouncementID: '' }));
+              setChallengeAnnouncement(prv => ({ ...prv, id: '', _challengeAnnouncementID: '' }));
+            }} />{' '}<Label for='NO' check><strong>NO</strong></Label>
           </FormGroup>
         </Col>
       </FormGroup>
