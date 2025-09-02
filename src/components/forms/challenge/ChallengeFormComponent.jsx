@@ -16,7 +16,7 @@ import './ChallengeFormComponent.styles.css';
 const ChallengeFormComponent = () => {
    const navigate = useNavigate()
 
-   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: null, headline: '', description: '', announcementEndsOn: '0000-00-00' })
+   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
    
    const [challengeDetails, setChallengeDetails] = useState({ id: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
 
@@ -50,7 +50,11 @@ const ChallengeFormComponent = () => {
    }
 
    useEffect(() => {
-      return () => setChallengeDetails({ id: '', posted: null, title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
+      return () => {
+         setChallengeDetails({ id: '', posted: null, title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
+
+         setChallengeAnnouncement({ id: '', headline: '', description: '', announcementEndsOn: '0000-00-00' })
+      }
    }, [])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
