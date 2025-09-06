@@ -15,7 +15,7 @@ import './ChallengeFormComponent.styles.css';
 
 const ChallengeFormComponent = () => {
    const navigate = useNavigate();
-   const { videos, currentUser } = useContext(dataContext);
+   const { videos, currentUser, setChallengeAnnouncements, setCurrentChallenges } = useContext(dataContext);
 
    const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
    
@@ -45,16 +45,20 @@ const ChallengeFormComponent = () => {
          { ...challengeDetails, posted };
       
       setChallengeDetails(prv => ({ ...prv, ...form_content }));
-      
-      const form_challenge_announcement = challengeAnnouncement._challengeAnnouncementID ?
-         { ...challengeAnnouncement, posted, challengeVideos: [...challengeDetails.challengeVideos], _announcementOwnerID: challengeDetails._challengeOwnerID }
-         :
-         { ...challengeAnnouncement };
 
-      challengeAnnouncement._challengeAnnouncementID && (setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement }))); //set challengeAnnouncement only if user selected it.
+      if (challengeAnnouncement._challengeAnnouncementID) {
+         const form_challenge_announcement = { ...challengeAnnouncement, posted, challengeVideos: [...challengeDetails.challengeVideos], _announcementOwnerID: challengeDetails._challengeOwnerID }
 
-      alert(`===== CHALLENGE DETAILS: =====${'\n'}${'\t'}${JSON.stringify(form_content)}${'\n'}===== ANNOUNCEMENT DETAILS: ====={'\n'}${JSON.stringify(form_challenge_announcement)}`);
-      // navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
+         setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement })); //set challengeAnnouncement only if user selected it.
+
+         setChallengeAnnouncements(prv => ([...prv, challengeAnnouncement])); //from dataContext in App.jsx.
+
+         navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`)
+      } else {
+         setCurrentChallenges(prv => ([...prv, challengeDetails])); //from dataContext in App.jsx.
+
+         navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
+      }
    }
 
    useEffect(() => {
@@ -67,10 +71,6 @@ const ChallengeFormComponent = () => {
          setChallengeAnnouncement({ id: '', _announcementOwner: currentUser.id, headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
       }
    }, [])
-
-   useEffect(() => {
-      challengeDetails.id && console.log({ challengeDetails, challengeAnnouncement });
-   }, [challengeDetails.id])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
    return (      
