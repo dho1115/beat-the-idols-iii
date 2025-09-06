@@ -1,9 +1,1 @@
-1. After the changes, consider merging the challenge announcement form with the actual challenge form so the useContext can be used for both.
-
-2. Consider removing ChallengeAnnouncementFormComponent.
-
-3. Decide whether or not to have the user fill out the announcement form FIRST as soon as user wants to invite others or after.
-
-4. Consider using the challengeCover for BOTH the challenge and the challenge announcement.
-
-5. TEST!!!
+1. The _challengeAnnouncementID and the _id for the challenge (the challenge id) are NOT the same, even though both are based on _challengeID. Please fix!!!
