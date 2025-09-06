@@ -14,15 +14,12 @@ export const ChallengeDetailsContext = createContext();
 import './ChallengeFormComponent.styles.css';
 
 const ChallengeFormComponent = () => {
-   const navigate = useNavigate()
-
-   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
-   
-   const [challengeDetails, setChallengeDetails] = useState({ id: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
-
-   const _challengeID = v4();
-
+   const navigate = useNavigate();
    const { videos, currentUser } = useContext(dataContext);
+
+   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
+   
+   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
 
    const defaultExpirationDate = () => {
       if (challengeDetails.challengeAnnouncementID) {
@@ -41,21 +38,39 @@ const ChallengeFormComponent = () => {
    const handleSubmit = (e) => {
       e.preventDefault();
       const posted = DateTime.local().toFormat('yyyy-MM-dd');
-      challengeDetails.howChallengeEnds == 'votes' ?
-         { id: _challengeID, posted, ...challengeDetails, _challengeID, challengeEndsOn: defaultExpirationDate() /* default expiration date */ }
+
+      const form_content = challengeDetails.howChallengeEnds == 'votes' ?
+         { ...challengeDetails, posted, challengeEndsOn: defaultExpirationDate() /* default expiration date */ }
          :
-         { posted, id: _challengeID, ...challengeDetails, _challengeID }
+         { ...challengeDetails, posted };
       
-      navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
+      setChallengeDetails(prv => ({ ...prv, ...form_content }));
+      
+      const form_challenge_announcement = challengeAnnouncement._challengeAnnouncementID ?
+         { ...challengeAnnouncement, posted, challengeVideos: [...challengeDetails.challengeVideos], _announcementOwnerID: challengeDetails._challengeOwnerID }
+         :
+         { ...challengeAnnouncement };
+
+      challengeAnnouncement._challengeAnnouncementID && (setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement }))); //set challengeAnnouncement only if user selected it.
+
+      alert(`===== CHALLENGE DETAILS: =====${'\n'}${'\t'}${JSON.stringify(form_content)}${'\n'}===== ANNOUNCEMENT DETAILS: ====={'\n'}${JSON.stringify(form_challenge_announcement)}`);
+      // navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
    }
 
    useEffect(() => {
-      return () => {
-         setChallengeDetails({ id: '', posted: null, title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
+      const _challengeID = v4();
+      setChallengeDetails(prv => ({ ...prv, _challengeID, id: _challengeID, _challengeOwnerID: currentUser.id }));
 
-         setChallengeAnnouncement({ id: '', headline: '', description: '', announcementEndsOn: '0000-00-00' })
+      return () => {
+         setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
+
+         setChallengeAnnouncement({ id: '', _announcementOwner: currentUser.id, headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
       }
    }, [])
+
+   useEffect(() => {
+      challengeDetails.id && console.log({ challengeDetails, challengeAnnouncement });
+   }, [challengeDetails.id])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
    return (      
@@ -67,7 +82,7 @@ const ChallengeFormComponent = () => {
                </div>
             }
          >
-            <ChallengeDetailsContext.Provider value={{ challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement, _challengeID }}>
+            <ChallengeDetailsContext.Provider value={{ challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement }}>
                <Form className='challenge-component-form p-3 m-1' onSubmit={handleSubmit}>
                   <Outlet />
                </Form>               
