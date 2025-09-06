@@ -5,6 +5,7 @@ import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
 
 //Modules-Components.
+import ChallengeAnnouncementForm from '../../challenge-announcement/challenge_announcement_form/ChallengeAnnouncementForm';
 import Deadline from './input_invite_others/Deadline';
 import ExpirationDateOption from '../challenge_ends_option/ExpirationDateOption';
 import WinningVotesOption from '../challenge_ends_option/WinningVotesOption';
@@ -13,7 +14,7 @@ import './ChallengeForm.styles.css';
 
 const ChallengeForm = () => {
   const navigate = useNavigate();
-  const { challengeDetails, setChallengeDetails, setChallengeAnnouncement, _challengeID } = useContext(ChallengeDetailsContext);
+  const { challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement } = useContext(ChallengeDetailsContext);
   const { currentUser } = useContext(dataContext);
 
   const onButtonClick = () => navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
@@ -24,26 +25,6 @@ const ChallengeForm = () => {
         <Label for='title'><strong>TITLE OF CHALLENGE</strong></Label>
         <Input type='text' id='title' value={challengeDetails.title} placeholder='TITLE OF CHALLENGE' onChange={e => setChallengeDetails(prv => ({...prv, title: e.target.value}))} required />
       </FormGroup>
-      <FormGroup row tag="fieldset">
-        <legend className="col-form-label col-sm-5"><strong>INVITE OTHERS TO CHALLENGE?</strong></legend>
-        <Col sm={7}>
-          <FormGroup check>
-            <Input type='radio' name='inviteOthers' id='YES' value={challengeDetails.challengeAnnouncementID} onChange={() => {
-              setChallengeDetails(prv => ({ ...prv, challengeAnnouncementID: _challengeID })); //for the challenge.
-              setChallengeAnnouncement(prv => ({ ...prv, id: _challengeID, _challengeAnnouncementID: _challengeID })); //for the announcement.
-            }} required />{' '}<Label for='YES' check><strong>YES</strong></Label>
-          </FormGroup>
-          <FormGroup check>
-            <Input type='radio' name='inviteOthers' id='NO' value={challengeDetails.challengeAnnouncementID} onChange={() => {
-              setChallengeDetails(prv => ({ ...prv, challengeAnnouncementID: '' }));
-              setChallengeAnnouncement(prv => ({ ...prv, id: '', _challengeAnnouncementID: '' }));
-            }} />{' '}<Label for='NO' check><strong>NO</strong></Label>
-          </FormGroup>
-        </Col>
-      </FormGroup>
-      {
-        challengeDetails.challengeAnnouncementID && <Deadline challengeDetails={challengeDetails} setChallengeDetails={setChallengeDetails} />
-      }
       <FormGroup>
         <Label for='description'><strong>DESCRIPTION</strong></Label>
         <Input type='textarea' id='description' placeholder='Briefly describe your challenge here.' value={challengeDetails.description} maxLength={107} onChange={e => setChallengeDetails(prv => ({...prv, description: e.target.value}))}/>
@@ -62,6 +43,26 @@ const ChallengeForm = () => {
       }
       {
         challengeDetails.howChallengeEnds == 'votes' && <WinningVotesOption />
+      }
+      <FormGroup row tag="fieldset">
+        <legend className="col-form-label col-sm-5"><strong>INVITE OTHERS TO CHALLENGE?</strong></legend>
+        <Col sm={7}>
+          <FormGroup check>
+            <Input type='radio' name='inviteOthers' id='YES' value={challengeDetails.challengeAnnouncementID} onChange={() => {
+              setChallengeDetails(prv => ({ ...prv, challengeAnnouncementID: challengeDetails._challengeID })); //for the challenge.
+              setChallengeAnnouncement(prv => ({ ...prv, id: challengeDetails._challengeID, _challengeAnnouncementID: challengeDetails._challengeID })); //for the announcement.
+            }} required />{' '}<Label for='YES' check><strong>YES</strong></Label>
+          </FormGroup>
+          <FormGroup check>
+            <Input type='radio' name='inviteOthers' id='NO' value={challengeDetails.challengeAnnouncementID} onChange={() => {
+              setChallengeDetails(prv => ({ ...prv, challengeAnnouncementID: '' }));
+              setChallengeAnnouncement(prv => ({ ...prv, id: '', _challengeAnnouncementID: '' }));
+            }} />{' '}<Label for='NO' check><strong>NO</strong></Label>
+          </FormGroup>
+        </Col>
+      </FormGroup>
+      {
+        challengeAnnouncement._challengeAnnouncementID && <ChallengeAnnouncementForm />
       }
       <FormGroup className='w-100'>
         <Button type='button' className='w-100' color='danger' size='lg' onClick={onButtonClick}>NEXT</Button>
