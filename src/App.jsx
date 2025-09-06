@@ -4,8 +4,6 @@ import { createContext, useState, useEffect } from 'react';
 import AddChallengeVideos from './components/forms/challenge/challenge_videos/AddChallengeVideos';
 import AddVideo from './components/forms/add_video/AddVideo';
 import ChallengeAnnouncements from './components/home/ChallengeAnnouncements';
-import ChallengeAnnouncementForm from './components/forms/challenge-announcement/challenge_announcement_form/ChallengeAnnouncementForm';
-import ChallengeAnnouncementFormComponent from './components/forms/challenge-announcement/ChallengeAnnouncementFormComponent';
 import ChallengeForm from './components/forms/challenge/challenge_form/ChallengeForm';
 import ChallengeFormComponent from './components/forms/challenge/ChallengeFormComponent';
 import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
@@ -106,9 +104,6 @@ function App() {
           (currentUser.id && currentUser.username)
           &&
           <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
-            <Route path='challenge-announcement-form/*' element={<ChallengeAnnouncementFormComponent />}>
-              <Route path='' element={<ChallengeAnnouncementForm />} />
-            </Route>
             <Route path="challenge-form/*" element={<ChallengeFormComponent />}>
               <Route path='details' element={<ChallengeForm />} />
               <Route path='add-video' element={<AddChallengeVideos />} />
