@@ -1,15 +1,20 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Form, FormGroup, Button, Input, Label } from 'reactstrap'
 import { ChallengeDetailsContext } from '../../challenge/ChallengeFormComponent';
 
 //Cover Image Components.
-import { Online, Upload } from './CoverImgComponents';
 import Deadline from '../../challenge/challenge_form/input_invite_others/Deadline';
 
 import "./ChallengeAnnouncementForm.styles.css";
 
 const ChallengeAnnouncementForm = () => {
+   const { user } = useParams();
    const { challengeAnnouncement, setChallengeAnnouncement } = useContext(ChallengeDetailsContext);
+
+   useEffect(() => {
+      setChallengeAnnouncement(prv => ({ ...prv, _announcementOwnerID: user }));
+   }, [])
 
    return (
       <div className='challenge-announcement-details p-3 m-1'>
