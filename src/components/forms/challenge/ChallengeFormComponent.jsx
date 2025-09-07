@@ -47,7 +47,7 @@ const ChallengeFormComponent = () => {
       setChallengeDetails(prv => ({ ...prv, ...form_content }));
 
       if (challengeAnnouncement._challengeAnnouncementID) {
-         const form_challenge_announcement = { ...challengeAnnouncement, posted, challengeVideos: [...challengeDetails.challengeVideos], _announcementOwnerID: challengeDetails._challengeOwnerID }
+         const form_challenge_announcement = { posted, challengeVideos: [...challengeDetails.challengeVideos], _announcementOwnerID: currentUser.id }
 
          setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement })); //set challengeAnnouncement only if user selected it.
 
@@ -68,7 +68,7 @@ const ChallengeFormComponent = () => {
       return () => {
          setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
 
-         setChallengeAnnouncement({ id: '', _announcementOwner: currentUser.id, headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
+         setChallengeAnnouncement({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
       }
    }, [])
 
