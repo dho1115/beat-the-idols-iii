@@ -1,1 +1,18 @@
-1. The _challengeAnnouncementID and the _id for the challenge (the challenge id) are NOT the same, even though both are based on _challengeID. Please fix!!!
+1. Inside ChallengeForm.jsx: For this component...
+{
+   challengeDetails.howChallengeEnds == 'date' && <ExpirationDateOption />
+}
+You may want to reconsider putting this in the ChallengeForm.jsx.
+
+THE REASON: If the user wants to add a challenge announcement (challengeAnnouncementForm.jsx), then:
+
+1a: You MUST ensure that the Expiration date for <ExpirationDateOption /> should be AFTER the challengeAnnouncement ends!!!
+
+1b: Otherwise, what you have currently is fine.
+
+2. Consider adding a dynamic statement. Maybe:
+{
+   (challengeDetails.howChallengeEnds && !challengeDetails._challengeAnnouncementID) == 'date' && <ExpirationDateOption />
+}
+
+3. Then, INSIDE ChallengeAnnouncementForm.jsx, you can add another <ExpirationDateOption /> where the MINIMUM DATE (min= after announcement expiration date) should be after the Expiration Date Option and the MAX should be 5 months after the announcement Expiratin Date.

@@ -51,6 +51,7 @@ function App() {
   } //logout logic.
   
   useEffect(() => {
+    alert("THIS IS INSIDE useEffect([]) of App.jsx: PLEASE READ NOTES IN notes.txt!!!!!")
     fetchDataAPI('http://localhost:3003/currentUser')
       .then(_currentUser => {
         setCurrentUser(prv => ({ ...prv, ..._currentUser }));  
