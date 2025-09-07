@@ -24,7 +24,7 @@ const SelectVideosComponent = () => {
                currentUserVideos.map(video => "auto").join(" ")
                :
                currentUserVideos.map((videos, idx, arr) => `${(100 / arr.length) - 1}%`).join(" ");
-         videosRef.current.style.gridTemplateColums = setGridTemplateColumns
+         videosRef.current.style.gridTemplateColumns = setGridTemplateColumns
       }
    }, [challengeVideos])
 
