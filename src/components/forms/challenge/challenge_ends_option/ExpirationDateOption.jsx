@@ -9,7 +9,7 @@ const ExpirationDateOption = () => {
   const challengeExpiration = () => {
     if (challengeDetails.challengeAnouncementID) {
       const deadlineString = challengeAnnouncement.announcementEndsOn;
-      const ISOmin = DateTime.fromISO(deadlineString)
+      const ISOmin = DateTime.fromISO(deadlineString) //convert deadlineString to DataTime.
       const min = ISOmin.plus({ days: 3 }).toFormat('yyyy-MM-dd');
       const max = ISOmin.plus({ months: 5 }).toFormat('yyyy-MM-dd');
       return { min, max };
@@ -23,9 +23,9 @@ const ExpirationDateOption = () => {
 
   return (
     <FormGroup>
-        <Label for='endbydate'><strong>CHALLENGE END DATE</strong></Label>
-        <Input type='date' id='endbydate' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' onChange={e => setChallengeDetails(prv => ({...prv, challengeExpires: e.target.value}))} required />
-      </FormGroup>
+      <Label for='endbydate'><strong>CHALLENGE END DATE</strong></Label>
+      <Input type='date' id='endbydate' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' onChange={e => setChallengeDetails(prv => ({...prv, challengeExpires: e.target.value}))} required />
+    </FormGroup>
   )
 }
 
