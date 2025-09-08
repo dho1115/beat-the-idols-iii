@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Form, FormGroup, Button, Input, Label } from 'reactstrap'
 import { ChallengeDetailsContext } from '../../challenge/ChallengeFormComponent';
 
-//Cover Image Components.
+//Components.
+import ChallengeEndsChoices from '../../challenge/challenge_ends_option/ChallengeEndsChoices';
 import Deadline from '../../challenge/challenge_form/input_invite_others/Deadline';
 
 import "./ChallengeAnnouncementForm.styles.css";
