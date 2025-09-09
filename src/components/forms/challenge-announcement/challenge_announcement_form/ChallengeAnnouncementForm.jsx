@@ -11,7 +11,7 @@ import "./ChallengeAnnouncementForm.styles.css";
 
 const ChallengeAnnouncementForm = () => {
    const { user } = useParams();
-   const { challengeAnnouncement, setChallengeAnnouncement } = useContext(ChallengeDetailsContext);
+   const { challengeAnnouncement, setChallengeAnnouncement, setChallengeDetails } = useContext(ChallengeDetailsContext);
 
    useEffect(() => {
       setChallengeAnnouncement(prv => ({ ...prv, _announcementOwnerID: user }));
@@ -27,7 +27,8 @@ const ChallengeAnnouncementForm = () => {
             <Label for='description'>ANYTHING YOU WANT TO SAY ABOUT THIS ANNOUNCEMENT?.</Label>
             <Input type='textarea' value={challengeAnnouncement.description} placeholder='Description of your challenge' onChange={e => setChallengeAnnouncement(prv => ({...prv, description: e.target.value}))} />
          </FormGroup>
-         <Deadline challengeAnnouncement={challengeAnnouncement} setChallengeAnnouncement={setChallengeAnnouncement} />
+         <Deadline challengeAnnouncement={challengeAnnouncement} setChallengeAnnouncement={setChallengeAnnouncement} setChallengeDetails={setChallengeDetails} />
+         { challengeAnnouncement.announcementEndsOn != '0000-00-00' && <ChallengeEndsChoices /> } {/* This ensures that the user MUST pick a challenge annnouncenment FIRST. */}
       </div>
    )
 }
