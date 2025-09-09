@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Alert, Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
 
@@ -13,9 +13,17 @@ import './ChallengeForm.styles.css';
 const ChallengeForm = () => {
   const navigate = useNavigate();
   const { challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement } = useContext(ChallengeDetailsContext);
+  const [dateAlert, setDateAlert] = useState(false);
   const { currentUser } = useContext(dataContext);
 
-  const onButtonClick = () => navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
+  const onButtonClick = () => {
+    setDateAlert(false);
+    if ((challengeAnnouncement._challengeAnnouncementID) && (challengeAnnouncement.announcementEndsOn > challengeDetails.challengeExpires)) {
+      setDateAlert(true)
+      return;
+    } //validation to ensure the announcement end date < challenge expiration.
+    navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
+  }
 
   return (
     <>
@@ -46,6 +54,7 @@ const ChallengeForm = () => {
           </FormGroup>
         </Col>
       </FormGroup>
+      {dateAlert && <Alert color='danger'><strong>Your announcement end date of {challengeAnnouncement.announcementEndsOn} <i>CANNOT</i> be greater than your actual challenge expiration date of {challengeDetails.challengeExpires}</strong></Alert>}
       {
         challengeAnnouncement._challengeAnnouncementID ? <ChallengeAnnouncementForm /> : <ChallengeEndsChoices />
       }
