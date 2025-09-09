@@ -7,7 +7,7 @@ const ExpirationDateOption = () => {
   const { challengeDetails, setChallengeDetails, challengeAnnouncement } = useContext(ChallengeDetailsContext)
   
   const challengeExpiration = () => {
-    if (challengeDetails.challengeAnouncementID) {
+    if (challengeDetails.challengeAnnouncementID) {
       const deadlineString = challengeAnnouncement.announcementEndsOn;
       const ISOmin = DateTime.fromISO(deadlineString) //convert deadlineString to DataTime.
       const min = ISOmin.plus({ days: 3 }).toFormat('yyyy-MM-dd');
@@ -17,7 +17,6 @@ const ExpirationDateOption = () => {
 
     const min = DateTime.local().plus({ days: 3 }).toFormat("yyyy-MM-dd");
     const max = DateTime.local().plus({ months: 5 }).toFormat("yyyy-MM-dd");
-
     return { min, max };
   }
 
