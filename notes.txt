@@ -1,4 +1,3 @@
-THE PROBLEM:
-If I go back and change the challenge announcement date to a later date and FORGET to change the actual challenge expiration date, it will NOT change by itself!!!
+Test if the user selects VOTES for the challenge.
 
-MAYBE PUT SOME VALIDATION TO ENSURE THE ANNOUNCEMENT DATE IS BEFORE THE VALIDATION DATE INSIDE THE onChange???
+Start creating the cards.
