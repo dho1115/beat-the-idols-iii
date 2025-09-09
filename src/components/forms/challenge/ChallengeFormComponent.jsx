@@ -52,7 +52,7 @@ const ChallengeFormComponent = () => {
          setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement })); //set challengeAnnouncement only if user selected it.
 
          setChallengeAnnouncements(prv => ([...prv, challengeAnnouncement])); //from dataContext in App.jsx.
-
+         
          navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`)
       } else {
          setCurrentChallenges(prv => ([...prv, challengeDetails])); //from dataContext in App.jsx.
@@ -65,7 +65,7 @@ const ChallengeFormComponent = () => {
       const _challengeID = v4();
       setChallengeDetails(prv => ({ ...prv, _challengeID, id: _challengeID, _challengeOwnerID: currentUser.id }));
 
-      return () => {
+      return () => {         
          setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
 
          setChallengeAnnouncement({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
