@@ -12,8 +12,7 @@ import './ChallengeForm.styles.css';
 
 const ChallengeForm = () => {
   const navigate = useNavigate();
-  const { challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement } = useContext(ChallengeDetailsContext);
-  const [dateAlert, setDateAlert] = useState(false);
+  const { challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement, dateAlert, setDateAlert } = useContext(ChallengeDetailsContext);
   const { currentUser } = useContext(dataContext);
 
   const onButtonClick = () => {
@@ -54,12 +53,11 @@ const ChallengeForm = () => {
           </FormGroup>
         </Col>
       </FormGroup>
-      {dateAlert && <Alert color='danger'><strong>Your announcement end date of {challengeAnnouncement.announcementEndsOn} <i>CANNOT</i> be greater than your actual challenge expiration date of {challengeDetails.challengeExpires}</strong></Alert>}
       {
         challengeAnnouncement._challengeAnnouncementID ? <ChallengeAnnouncementForm /> : <ChallengeEndsChoices />
       }
       <FormGroup className='w-100'>
-        <Button type='button' className='w-100' color='danger' size='lg' onClick={onButtonClick}>NEXT</Button>
+        <Button type='button' className='w-100' color='danger' size='lg' onClick={onButtonClick} disabled={dateAlert}>{dateAlert ? <strong>FIX ERRORS BEFORE CONTINUING!!!</strong> : <strong>NEXT</strong>}</Button>
       </FormGroup>
     </>
   )
