@@ -19,7 +19,9 @@ const ChallengeFormComponent = () => {
 
    const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
    
-   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
+   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeExpires: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
+
+   const [dateAlert, setDateAlert] = useState(false);
 
    const defaultExpirationDate = () => {
       if (challengeDetails.challengeAnnouncementID) {
@@ -82,7 +84,7 @@ const ChallengeFormComponent = () => {
                </div>
             }
          >
-            <ChallengeDetailsContext.Provider value={{ challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement }}>
+            <ChallengeDetailsContext.Provider value={{ challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement, dateAlert, setDateAlert }}>
                <Form className='challenge-component-form p-3 m-1' onSubmit={handleSubmit}>
                   <Outlet />
                </Form>               
