@@ -17,7 +17,7 @@ const ChallengeFormComponent = () => {
    const navigate = useNavigate();
    const { videos, currentUser, setChallengeAnnouncements, setCurrentChallenges } = useContext(dataContext);
 
-   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
+   const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', cover_img: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' });
    
    const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeExpires: '0000-00-00', winningVotes: 0, challengeVideos: [], howChallengeEnds: '', challengeAnnouncementID: '' });
 
@@ -49,7 +49,7 @@ const ChallengeFormComponent = () => {
       setChallengeDetails(prv => ({ ...prv, ...form_content }));
 
       if (challengeAnnouncement._challengeAnnouncementID) {
-         const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, challengeVideos: [...challengeDetails.challengeVideos] }
+         const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, challengeVideos: [...challengeDetails.challengeVideos], cover_img: challengeDetails.challengeCoverImage }
 
          setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement })); //set challengeAnnouncement only if user selected it.
 
@@ -70,7 +70,7 @@ const ChallengeFormComponent = () => {
       return () => {         
          setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideos: [], _challengeAnnouncementID: '' });
 
-         setChallengeAnnouncement({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' })
+         setChallengeAnnouncement({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', cover_img: '', _challengeAnnouncementID: '' })
       }
    }, [])
 
