@@ -2,7 +2,6 @@ import React from 'react';
 import { Alert, FormGroup, Input, Label } from 'reactstrap';
 import { DateTime } from 'luxon';
 
-
 const Deadline = ({ challengeAnnouncement, setChallengeAnnouncement, ...args }) => {
    const { challengeDetails, setChallengeDetails, dateAlert, setDateAlert } = args;
    const currentDate = DateTime.local().toFormat('yyyy-MM-dd');
