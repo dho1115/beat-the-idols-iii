@@ -1,0 +1,9 @@
+.cover-img {
+   width: 100%;
+   height: auto;
+}
+.cover-img-div {
+   max-height: 51%;
+   overflow: hidden;
+   object-fit: cover;
+}
