@@ -3,7 +3,8 @@ import { createContext, useState, useEffect } from 'react';
 //Components - Lazy loaded.
 import AddChallengeVideos from './components/forms/challenge/challenge_videos/AddChallengeVideos';
 import AddVideo from './components/forms/add_video/AddVideo';
-import ChallengeAnnouncements from './components/home/ChallengeAnnouncements';
+import AnnouncementsComponent from './components/home/challenge-announcements/AnnouncementComponent';
+import AnnouncementDetailsComponent from './components/home/challenge-announcements/AnnouncementDetailsComponent';
 import ChallengeForm from './components/forms/challenge/challenge_form/ChallengeForm';
 import ChallengeFormComponent from './components/forms/challenge/ChallengeFormComponent';
 import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
@@ -94,7 +95,7 @@ function App() {
         <Route path='/' element={<WelcomePage />} />
         <Route path='/home/*' element={<Homepage />}>
           <Route path='current-challenges' element={<CurrentChallenges />} />
-          <Route path='challenge-announcements' element={<ChallengeAnnouncements />} />
+          <Route path='challenge-announcements' element={<AnnouncementsComponent />} />
         </Route>
         <Route path='/about' element={<AboutUsPage />} />
         <Route path='/contact' element={<ContactPage />} />
@@ -112,7 +113,9 @@ function App() {
             <Route path="add-challenge-video" element={<AddVideo />} />
             <Route path="view/challengeVideos/:filter" element= {<ChallengeVideos />} />
             <Route path="view/challenges/active" element={<CurrentChallenges />} />
-            <Route path="view/challenges/announcements" element={<ChallengeAnnouncements />} />
+            <Route path="view/challenges/announcements/*" element={<AnnouncementsComponent />}>
+              <Route path="announcement/:id" element={<AnnouncementDetailsComponent />} />
+            </Route>
           </Route>
         }          
         {/* ====================== */}
