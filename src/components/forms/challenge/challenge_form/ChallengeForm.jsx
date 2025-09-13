@@ -21,6 +21,11 @@ const ChallengeForm = () => {
       setDateAlert(true)
       return;
     } //validation to ensure the announcement end date < challenge expiration.
+
+    if (challengeDetails.challengeExpires == '0000-00-00') {
+      setDateAlert(true);
+      return;
+    }
     navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
   }
 
