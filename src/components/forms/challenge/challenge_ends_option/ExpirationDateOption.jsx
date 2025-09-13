@@ -4,9 +4,9 @@ import { DateTime } from 'luxon';
 import { FormGroup, Label, Input } from 'reactstrap';
 
 const ExpirationDateOption = () => {
-  const { challengeDetails, setChallengeDetails, challengeAnnouncement } = useContext(ChallengeDetailsContext)
+  const { challengeDetails, setChallengeDetails, challengeAnnouncement, setDateAlert } = useContext(ChallengeDetailsContext)
   
-  const challengeExpiration = () => {
+  const challengeExpirationDate = () => {
     if (challengeDetails.challengeAnnouncementID) {
       const deadlineString = challengeAnnouncement.announcementEndsOn;
       const ISOmin = DateTime.fromISO(deadlineString) //convert deadlineString to DataTime.
@@ -20,10 +20,16 @@ const ExpirationDateOption = () => {
     return { min, max };
   }
 
+  const challengeExpirationLogic = e => {
+    e.target.value != '0000-00-00' && setDateAlert(false);
+    (e.target.value <= challengeAnnouncement.announcementEndsOn) ? setDateAlert(true) : setDateAlert(false)
+    setChallengeDetails(prv => ({ ...prv, challengeExpires: e.target.value }));
+  }
+
   return (
     <FormGroup>
       <Label for='endbydate'><strong>CHALLENGE END DATE</strong></Label>
-      <Input type='date' id='endbydate' min={challengeExpiration().min} max={challengeExpiration().max} placeholder='Select a date for when your challenge ends' onChange={e => setChallengeDetails(prv => ({...prv, challengeExpires: e.target.value}))} required />
+      <Input type='date' id='endbydate' min={challengeExpirationDate().min} max={challengeExpirationDate().max} placeholder='Select a date for when your challenge ends' onChange={challengeExpirationLogic} required />
     </FormGroup>
   )
 }
