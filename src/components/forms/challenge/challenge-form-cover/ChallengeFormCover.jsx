@@ -1,15 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Input, Label, Button, FormGroup } from 'reactstrap';
 
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 
-const OnlineImage = ({challengeCoverImage, setstate}) => {
-  return (
-    <FormGroup>
-      <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW (<strong>ACTIVE CHALLENGE</strong>).</Label>
-      <Input type='text' id='url' value={challengeCoverImage} onChange={setstate} placeholder="Right click online photo, select 'Copy Image Address' & paste here." required />
-    </FormGroup>
-  )
+const OnlineImage = () => {
+   const { challengeDetails, setChallengeDetails, challengeAnnouncement, setChallengeAnnouncement } = useContext(ChallengeDetailsContext);
+
+   const { challengeCoverImage } = challengeDetails;
+
+   useEffect(() => {
+      if ((challengeAnnouncement._announcementOwnerID) && (challengeDetails.challengeCoverImage)) setChallengeAnnouncement(prv => ({ ...prv, cover_img: challengeDetails.challengeCoverImage }));
+
+   }, [challengeDetails.challengeCoverImage]);
+
+   return (
+      <FormGroup>
+         <Label for='url'>COPY 'IMAGE ADDRESS' FROM ONLINE VIDEO & PASTE BELOW (<strong>ACTIVE CHALLENGE</strong>).</Label>
+         <Input type='text' id='url' value={challengeCoverImage} onChange={e => setChallengeDetails(prv => ({...prv, challengeCoverImage: e.target.value}))} placeholder="Right click online photo, select 'Copy Image Address' & paste here." required />
+      </FormGroup>
+   )
 }
 
 const ComputerUpload = ({challengeCoverImage, setstate}) => {
@@ -37,8 +46,7 @@ const ChallengeFormCover = () => {
          </FormGroup>
          
          {
-            challengeDetails.challengeCoverType == 'online' && <OnlineImage challengeCoverImage={challengeDetails.challengeCoverImage} setstate={e => setChallengeDetails(prv => ({ ...prv, challengeCoverImage: e.target.value }))}
-            />
+            challengeDetails.challengeCoverType == 'online' && <OnlineImage />
          }
 
          {
