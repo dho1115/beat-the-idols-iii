@@ -24,7 +24,7 @@ const AnnouncementsComponent = () => {
    if (challengeAnnouncements.length) {
       
       return (
-         <Container className='challenge-announcements-container' ref={challengeAnnouncementsRef}>
+         <Container className='challenge-announcements-container p-3' ref={challengeAnnouncementsRef}>
             {
                challengeAnnouncements.map(({announcement: {_challengeAnnouncementID, _announcementOwnerID,cover_img, headline, description}}, idx) => (
                   <ChallengeWrapper key={idx}
@@ -35,7 +35,7 @@ const AnnouncementsComponent = () => {
                      button_text={<strong>CHALLENGE DETAILS.</strong>}
                      _ownerID={_announcementOwnerID}
                      idx={idx}
-                     clickLogic={() => navigate(`/currentUser/${_announcementOwnerID}/view/announcement/:id/${_challengeAnnouncementID}`)}
+                     clickLogic={() => navigate(`/currentUser/${_announcementOwnerID}/view/announcement/${_challengeAnnouncementID}`)}
                   />
                ))
             }
