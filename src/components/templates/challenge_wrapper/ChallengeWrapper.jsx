@@ -16,20 +16,16 @@ const ChallengeWrapper = ({ coverImg, title, description, button_text, clickLogi
    const { username, email } = allUsers.find(({ id }) => id == _ownerID);
 
    return (
-      <Card className='m-1' style={{ border: idx % 2 == 1 ? '3.5px solid lightseagreen' : '3.5px solid red', height: '30%', width: '19%', borderRadius: '15.3px' }}>
+      <Card className='m-1' style={{ position: 'relative', border: idx % 2 == 1 ? '3.5px solid lightseagreen' : '3.5px solid red', height: '100%', width: '19%', borderRadius: '15.3px', overflow: 'hidden', objectFit: 'cover' }}>
          <Suspense fallback={<SuspenseFallback />}>
-            <div className='w-100 p-0 cover-img-div'>
-               <img src={coverImg} alt='cover pic for challenge wrapper' className='cover-img'/>
-            </div>
-            <CardTitle className='p-1'>
-               <strong>
-                  {title.length > 19 ? title.substring(0, 19) + "..." : title}
-               </strong>
+            <img src={coverImg} alt='cover pic for challenge wrapper' className='cover-img'/>
+            <CardTitle className='p-1' style={{position: 'relative', width: '100%', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+               <h3 className='title'> {title.length > 25 ? title.substring(0, 25) + "..." : title} </h3>
             </CardTitle>    
             {
                (button_text && clickLogic)
                &&
-               <CardFooter className='w-100' style={{backgroundColor: 'black'}}>
+               <CardFooter className='w-100' style={{position: 'relative', zIndex: 1}}>
                   <Button type="button" color='danger' className= 'btn btn-block w-100' onClick={clickLogic || null}>{button_text}</Button>
                </CardFooter>
             }
