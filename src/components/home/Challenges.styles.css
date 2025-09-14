@@ -1,3 +1,15 @@
+.announcementDetailsCoverImg {
+   object-fit: cover;
+   border: 1.5px solid maroon;
+   overflow: hidden;
+}
+
+.announcementDetailsProfile {
+   display: grid;
+   grid-template-columns: 75% 25%;
+   background-color: bisque;
+}
+
 .challenge-announcements-container {
    display: grid;
    border: 1.5px solid black;
