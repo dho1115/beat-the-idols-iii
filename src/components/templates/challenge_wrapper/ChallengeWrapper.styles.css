@@ -1,9 +1,17 @@
 .cover-img {
    width: 100%;
+   position: absolute;
+   height: 100%;
 }
 
 .cover-img-div {
-   max-height: 51%;
+   position: absolute;
+   min-height: 100%;
    overflow: hidden;
    object-fit: cover;
+}
+
+.title {
+   -webkit-text-stroke-color: whitesmoke;
+   -webkit-text-stroke-width: 0.9px;
 }
