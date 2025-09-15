@@ -1,6 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
+
+//Components.
+import UploadVideo from '../../templates/video/upload/UploadVideo';
+import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
+import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 
 //Context
 import { dataContext } from '../../../App';
@@ -9,21 +14,20 @@ import "../Challenges.styles.css";
 
 const AnnouncementDetailsComponent = () => {
    const { user, id } = useParams();
-   const { challengeAnnouncements, allUsers } = useContext(dataContext);
+   const { challengeAnnouncements, allUsers, videos } = useContext(dataContext);
 
    const [announcement, setAnnouncement] = useState({})
    const [actualChallenge, setActualChallenge] = useState({})
+   const [videosInChallenge, setVideosInChallenge] = useState([]);
 
    const announcementDetails = challengeAnnouncements.find(({ announcement: { _challengeAnnouncementID } }) => _challengeAnnouncementID == id)
 
    const announcementOwner = allUsers.find(val => val.id == user);
 
-   console.log({ announcementDetails });
-   debugger;
-
    useEffect(() => {
       setAnnouncement(prv => ({ ...prv, ...announcementDetails.announcement, owner: announcementOwner.username }));
-      setActualChallenge(prv => ({...prv, ...announcementDetails.challenge}))
+      setActualChallenge(prv => ({ ...prv, ...announcementDetails.challenge }));
+      setVideosInChallenge(prv => ([...prv, ...announcementDetails.challenge.challengeVideos]));
    }, [])
    
    return (
@@ -46,8 +50,26 @@ const AnnouncementDetailsComponent = () => {
             <headline className='p-3'>
                <h3>VIDEOS CURRENTLY IN THIS CHALLENGE:</h3>
             </headline>
-            <Container>
-               <h3>{actualChallenge.challengeVideos}</h3>
+            <Container className="announcement-videos-container p-3">
+               {
+                  videos.map(({ title, description, videoType, urlOrFile, username }, idx) => (
+                     <VideoWrapper
+                        key={idx}
+                        color={idx%2==1 ? "red" : "yellow"}
+                        title={title}
+                        description={description}
+                        video_component={
+                           videoType == 'you-tube' ?
+                              <YouTubeVideo url={urlOrFile} title={title} />
+                              :
+                              <UploadVideo file={urlOrFile} />
+                        }
+                        username={username}
+                        button_text={null}
+                        clickLogic={false}
+                     />
+                  ))
+               }
             </Container>
             <Button color='danger' size='lg'><strong>JOIN THIS CHALLENGE!!!</strong></Button>
          </Container>
