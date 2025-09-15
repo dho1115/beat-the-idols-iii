@@ -14,11 +14,14 @@ const AnnouncementsComponent = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      if (challengeAnnouncements.length >= 5) {
-         challengeAnnouncementsRef.current.style.gridTemplateColumns = "auto auto auto auto auto"
-      } else {
-         challengeAnnouncementsRef.current.style.gridTemplateColumns = challengeAnnouncements.map(val => `${(100 / 4) - 1}%`).join(" ");
+      if (challengeAnnouncements.length) {
+         if (challengeAnnouncements.length >= 5) {
+            challengeAnnouncementsRef.current.style.gridTemplateColumns = "auto auto auto auto auto"
+         } else {
+            challengeAnnouncementsRef.current.style.gridTemplateColumns = challengeAnnouncements.map(val => `${(100 / 4) - 1}%`).join(" ");
+         }
       }
+      
    }, [challengeAnnouncements.length])
 
    if (challengeAnnouncements.length) {
