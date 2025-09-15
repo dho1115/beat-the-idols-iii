@@ -16,7 +16,7 @@ const ChallengeWrapper = ({ coverImg, title, description, button_text, clickLogi
    const { username, email } = allUsers.find(({ id }) => id == _ownerID);
 
    return (
-      <Card className='m-1' style={{ position: 'relative', border: idx % 2 == 1 ? '3.5px solid lightseagreen' : '3.5px solid red', height: '100%', width: '19%', borderRadius: '15.3px', overflow: 'hidden', objectFit: 'cover' }}>
+      <Card className='m-1' style={{ position: 'relative', border: idx % 2 == 1 ? '3.5px solid lightseagreen' : '3.5px solid red', height: '100%', width: '100%', borderRadius: '15.3px', overflow: 'hidden', objectFit: 'cover' }}>
          <Suspense fallback={<SuspenseFallback />}>
             <img src={coverImg} alt='cover pic for challenge wrapper' className='cover-img'/>
             <CardTitle className='p-1' style={{position: 'relative', width: '100%', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
