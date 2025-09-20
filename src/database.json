@@ -3,6 +3,7 @@
     "username": "jamiesmith",
     "password": "JamieSmith",
     "email": "jsmith@email.com",
+    "personalImages": ["https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"],
     "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
   },
   "allUsers": [
@@ -10,6 +11,7 @@
       "username": "jamiesmith",
       "password": "JamieSmith",
       "email": "jsmith@email.com",
+      "personalImages": ["https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"],
       "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
     }
   ],
