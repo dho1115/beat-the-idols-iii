@@ -1,3 +1,1 @@
-Test if the user selects VOTES for the challenge.
-
-Start creating the cards.
+Refactor AnnouncementDetailsComponent.jsx.
