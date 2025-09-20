@@ -34,7 +34,7 @@ export const dataContext = createContext();
 function App() {
   // alert("New Notes. Read!!!")
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({username: '', password: '', email: '', addImage: '', imageSource: '', personalImages: []});
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
