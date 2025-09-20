@@ -1,17 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 
 //Dependencies.
-import { useNavigate } from 'react-router-dom';
-import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { dataContext } from '../../../App';
-import { v4 } from 'uuid';
+import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import PersonalImagesSource from './PersonalImagesSource';
 import { PostDataAPI } from '../../../functions/postapi';
+import { useNavigate } from 'react-router-dom';
+import { v4 } from 'uuid';
+
 import "./registrationforms.css"
 
 const Signup = ({ text, registrationModal, toggle }) => {
   const _userID = v4();
   const navigate = useNavigate();
   const { currentUser, setCurrentUser, allUsers, setAllUsers } = useContext(dataContext);
+
+  const { username, password, email, addImage } = currentUser;
 
   //Promises
   const addIDToCurrentUser = () => new Promise(
@@ -70,16 +74,28 @@ const Signup = ({ text, registrationModal, toggle }) => {
          <Form onSubmit={handleSignup} className='signupform'>
           <FormGroup>
             <Label for='username'>USERNAME</Label>
-            <Input type='text' id='username' placeholder='username' required onChange={e => setCurrentUser(prv => ({...prv, username: e.target.value}))} />
+            <Input type='text' id='username' value={username} placeholder='username' required onChange={e => setCurrentUser(prv => ({...prv, username: e.target.value}))} />
           </FormGroup>
           <FormGroup>
             <Label for='password'>PASSWORD</Label>
-            <Input type='password' id='password' placeholder='password' required onChange={e => setCurrentUser(prv => ({...prv, password: e.target.value}))} />
+            <Input type='password' id='password' value={password} placeholder='password' required onChange={e => setCurrentUser(prv => ({...prv, password: e.target.value}))} />
           </FormGroup>
           <FormGroup>
             <Label for='email'>E-MAIL</Label>
-            <Input type='email' id='email' placeholder='email' required onChange={e => setCurrentUser(prv => ({...prv, email: e.target.value}))} />
+            <Input type='email' id='email' value={email} placeholder='email' required onChange={e => setCurrentUser(prv => ({...prv, email: e.target.value}))} />
           </FormGroup>
+          <FormGroup tag="fieldset">
+            <legend>
+              <strong>Would you like to add a personal image?</strong>
+            </legend>
+            <FormGroup check>
+              <Input type='radio' name='addImage' value={addImage} onChange={e => setCurrentUser(prv => ({...prv, addImage: true}))} required /> {' '} <Label check>YES.</Label>
+            </FormGroup>
+            <FormGroup check>
+              <Input type='radio' name='addImage' value={addImage} onChange={e => setCurrentUser(prv => ({...prv, addImage: false}))} /> {' '} <Label check>NO.</Label>
+            </FormGroup>
+          </FormGroup>
+          { addImage && <PersonalImagesSource />}
           <FormGroup>
             <button type="submit" className="btn btn-danger btn-lg btn-block" style={{width: '100%'}}>SUBMIT</button>
           </FormGroup>
