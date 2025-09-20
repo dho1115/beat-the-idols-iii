@@ -64,7 +64,7 @@ const AnnouncementDetailsComponent = () => {
             <headline className='p-3'>
                <h3>VIDEOS CURRENTLY IN THIS CHALLENGE:</h3>
             </headline>
-            { ShowChallengeVideos }
+            <ShowChallengeVideos videosInChallenge={videosInChallenge} />
             {
                !videosEligibleForChallenge.show && <Button color='danger' size='lg' onClick={showEligibleVideos}><strong>JOIN THIS CHALLENGE!!!</strong></Button>
             }            
