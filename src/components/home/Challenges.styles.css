@@ -28,3 +28,8 @@
    display: grid;
    border: 3.5px solid red;
 }
+
+.eligibleVideosDiv {
+   display: grid;
+   grid-template-columns: auto auto auto auto auto;
+}
