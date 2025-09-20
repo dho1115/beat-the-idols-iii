@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
 
 //Components.
 import AddVideosToChallenge from './AddVideosToChallenge';
-import UploadVideo from '../../templates/video/upload/UploadVideo';
-import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
-import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
+import ShowChallengeVideos from './ShowChallengeVideos';
 
 //Context
 import { dataContext } from '../../../App';
@@ -66,62 +64,19 @@ const AnnouncementDetailsComponent = () => {
             <headline className='p-3'>
                <h3>VIDEOS CURRENTLY IN THIS CHALLENGE:</h3>
             </headline>
-            <Container className="announcement-videos-container p-3">
-               {
-                  videosInChallenge.map(({ title, description, videoType, urlOrFile, username }, idx) => (
-                     <VideoWrapper
-                        key={idx}
-                        color={idx%2==1 ? "red" : "yellow"}
-                        title={title}
-                        description={description}
-                        video_component={
-                           videoType == 'you-tube' ?
-                              <YouTubeVideo url={urlOrFile} title={title} />
-                              :
-                              <UploadVideo file={urlOrFile} />
-                        }
-                        username={username}
-                        button_text={null}
-                        clickLogic={false}
-                     />
-                  ))
-               }
-            </Container>
+            { ShowChallengeVideos }
             {
                !videosEligibleForChallenge.show && <Button color='danger' size='lg' onClick={showEligibleVideos}><strong>JOIN THIS CHALLENGE!!!</strong></Button>
             }            
          </Container>
          <Container>
             {
-               (videosEligibleForChallenge.show && !videosEligibleForChallenge.eligibleVideos.length)
-               &&
-               <h1>You have no eligible videos for challenge (probably because they are already in the challenge).</h1>
-            }
-            {
-               (videosEligibleForChallenge.show && videosEligibleForChallenge.eligibleVideos.length)
-               &&
-               <>
-                  {/* <h1>*** SELECT VIDEO(S) TO ADD TO CHALLENGE ***</h1>
-                  <div className="eligibleVideosDiv">
-                        {
-                        videosEligibleForChallenge.eligibleVideos.map((val, idx) => {
-                           const video_component = val.videoType == 'you-tube' ? <YouTubeVideo url={val.urlOrFile} title={val.title} /> : <UploadVideo file={val.urlOrFile} />
-                           return (
-                              <VideoWrapper
-                                 key={idx}
-                                 idx={idx}
-                                 video_component={video_component}
-                                 username={val.username}
-                                 title={val.title}
-                                 description={val.description}
-                                 button_text="ADD THIS VIDEO!!!"
-                                 clickLogic={() => console.log(`About to add ${JSON.stringify(val)} to challenge-announcement ${id}!!!`)}
-                              />
-                           )
-                        })
-                        }
-                  </div> */} {/* Moved to AddVideosToChallenge.jsx */}
-               </>
+               (videosEligibleForChallenge.show && !videosEligibleForChallenge.eligibleVideos.length) ?
+                  <h1>You have no eligible videos for challenge (probably because they are already in the challenge).</h1>
+                  :
+                  <AddVideosToChallenge
+                     eligibleVideos={videosEligibleForChallenge.eligibleVideos} setvideosEligibleForChallenge={setvideosEligibleForChallenge} 
+                  />
             }
             {
                videosEligibleForChallenge.show
