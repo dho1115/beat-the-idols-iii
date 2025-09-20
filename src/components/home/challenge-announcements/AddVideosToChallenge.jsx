@@ -5,7 +5,9 @@ import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 import UploadVideo from '../../templates/video/upload/UploadVideo';
 import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 
-const AddVideosToChallenge = ({ eligibleVideos }) => {
+import "../Challenges.styles.css";
+
+const AddVideosToChallenge = ({ eligibleVideos, setvideosEligibleForChallenge }) => {
    const { id } = useParams;
    return (
       <>
