@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { dataContext } from '../../../App';
+
 //components
 import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 import UploadVideo from '../../templates/video/upload/UploadVideo';
@@ -7,8 +9,23 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 
 import "../Challenges.styles.css";
 
-const AddVideosToChallenge = ({ eligibleVideos, setvideosEligibleForChallenge }) => {
-   const { id } = useParams;
+const AddVideosToChallenge = ({ eligibleVideos, setActualChallenge, setVideosInChallenge, showEligibleVideos, challengeVideos }) => {
+   const { id:announcementID } = useParams();
+   const { challengeAnnouncements, setChallengeAnnouncements } = useContext(dataContext);
+
+   const handleAddVideoToChallenge = ({ description, id, posted, title, urlOrFile, username, videoType, _userID }) => {
+      setVideosInChallenge(prv => ([...prv, { description, id, posted, title, urlOrFile, username, videoType, _userID }]));
+      setActualChallenge(prv => ({ ...prv, challengeVideos: [...challengeVideos, id] }));
+      const challengeAnnouncementsUpdated = challengeAnnouncements.map(announcement_OBJECT => {
+         if (announcement_OBJECT.announcement.id == announcementID) {
+            announcement_OBJECT.challenge.challengeVideos = [...announcement_OBJECT.challenge.challengeVideos, id];
+         }
+         return announcement_OBJECT;
+      })
+      setChallengeAnnouncements(challengeAnnouncementsUpdated);
+      showEligibleVideos()
+   }
+
    return (
       <>
          <h3>SELECT FROM THE VIDEOS BELOW TO ADD TO THIS CHALLENGE:</h3>
@@ -26,7 +43,7 @@ const AddVideosToChallenge = ({ eligibleVideos, setvideosEligibleForChallenge })
                            title={val.title}
                            description={val.description}
                            button_text="ADD THIS VIDEO!!!"
-                           clickLogic={() => console.log(`About to add ${JSON.stringify(val)} to challenge-announcement ${id}!!!`)}
+                           clickLogic={() => handleAddVideoToChallenge(val)}
                         />
                      )
                   })
@@ -37,3 +54,4 @@ const AddVideosToChallenge = ({ eligibleVideos, setvideosEligibleForChallenge })
 }
 
 export default AddVideosToChallenge
+
