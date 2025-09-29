@@ -20,15 +20,16 @@ const AnnouncementDetailsComponent = () => {
    const [videosInChallenge, setVideosInChallenge] = useState([]);
    const [videosEligibleForChallenge, setvideosEligibleForChallenge] = useState({ show: false, eligibleVideos: [] });
 
-   const announcementDetails = challengeAnnouncements.find(({ announcement: { _challengeAnnouncementID } }) => _challengeAnnouncementID == id)
+   const announcementDetails = challengeAnnouncements.find(({ announcement: { _challengeAnnouncementID } }) => _challengeAnnouncementID == id) //challengeAnnouncement object for this challenge.
    
    const announcementOwner = allUsers.find(val => val.id == user);
+
+   const { challengeVideos } = actualChallenge;
 
    const showEligibleVideos = () => {
       const eligibleVideos = videos.filter(({ _userID, id: videoID }) => (_userID == user) && (!announcementDetails.challenge.challengeVideos.includes(videoID)))
 
-      setvideosEligibleForChallenge({ show: !videosEligibleForChallenge.show, eligibleVideos: [...eligibleVideos] });
-      return eligibleVideos;
+      setvideosEligibleForChallenge({ show: true, eligibleVideos: [...eligibleVideos] });
    }
 
    useEffect(() => {
@@ -50,6 +51,7 @@ const AnnouncementDetailsComponent = () => {
       <div className='m-1 p-1'>
          <div className='announcementDetailsProfile w-100'>
             <div className='m-1'>
+               <h1>This Announcement Expires: <span style={{color: 'maroon'}}>{announcement.announcementEndsOn}</span></h1>
                <h3>Announcement ID: {id}</h3>
                <h3>Owner: <strong className='text-danger'>{announcement.owner}</strong>.</h3>
                <hr />
@@ -60,7 +62,6 @@ const AnnouncementDetailsComponent = () => {
             </div>
          </div>
          <Container>
-            <strong>{JSON.stringify(JSON.stringify(announcementDetails.announcement))}</strong>
             <headline className='p-3'>
                <h3>VIDEOS CURRENTLY IN THIS CHALLENGE:</h3>
             </headline>
@@ -74,9 +75,17 @@ const AnnouncementDetailsComponent = () => {
                (videosEligibleForChallenge.show && !videosEligibleForChallenge.eligibleVideos.length) ?
                   <h1>You have no eligible videos for challenge (probably because they are already in the challenge).</h1>
                   :
+                  videosEligibleForChallenge.show &&
                   <AddVideosToChallenge
-                     eligibleVideos={videosEligibleForChallenge.eligibleVideos} setvideosEligibleForChallenge={setvideosEligibleForChallenge} 
+                     challengeVideos={challengeVideos}
+                     eligibleVideos={videosEligibleForChallenge.eligibleVideos}
+                     actualChallenge={actualChallenge}
+                     setActualChallenge={setActualChallenge}
+                     setvideosEligibleForChallenge={setvideosEligibleForChallenge}
+                     setVideosInChallenge={setVideosInChallenge}
+                     showEligibleVideos={showEligibleVideos}
                   />
+                  
             }
             {
                videosEligibleForChallenge.show
