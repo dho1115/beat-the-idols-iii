@@ -29,12 +29,13 @@ const AnnouncementsComponent = () => {
       return (
          <Container className='challenge-announcements-container p-3' ref={challengeAnnouncementsRef}>
             {
-               challengeAnnouncements.map(({announcement: {_challengeAnnouncementID, _announcementOwnerID,cover_img, headline, description}}, idx) => (
+               challengeAnnouncements.map(({announcement: {_challengeAnnouncementID, _announcementOwnerID,cover_img, headline, description, announcementEndsOn}}, idx) => (
                   <ChallengeWrapper key={idx}
                      announcementID={_challengeAnnouncementID}
                      coverImg={cover_img}
                      title={headline}
                      description={description}
+                     expires = {announcementEndsOn}
                      button_text={<strong>CHALLENGE DETAILS.</strong>}
                      _ownerID={_announcementOwnerID}
                      idx={idx}
