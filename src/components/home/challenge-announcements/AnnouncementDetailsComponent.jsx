@@ -13,9 +13,8 @@ import "../Challenges.styles.css";
 
 const AnnouncementDetailsComponent = () => {
    const { user, id } = useParams(); //_userid, challenge announcement id.
-   const { challengeAnnouncements, currentUser, allUsers, videos } = useContext(dataContext);
+   const { challengeAnnouncements, currentUser, allUsers, setChallengeAnnouncements, videos } = useContext(dataContext);
    const { personalImages } = currentUser;
-   const [announcement, setAnnouncement] = useState({})
    const [actualChallenge, setActualChallenge] = useState({})
    const [videosInChallenge, setVideosInChallenge] = useState([]);
    const [videosEligibleForChallenge, setvideosEligibleForChallenge] = useState({ show: false, eligibleVideos: [] });
@@ -24,26 +23,27 @@ const AnnouncementDetailsComponent = () => {
    
    const announcementOwner = allUsers.find(val => val.id == user);
 
-   const { challengeVideos } = actualChallenge;
+   const { challenge: { challengeVideoIDs }, announcement } = announcementDetails;
 
    const showEligibleVideos = () => {
-      const eligibleVideos = videos.filter(({ _userID, id: videoID }) => (_userID == user) && (!announcementDetails.challenge.challengeVideos.includes(videoID)))
+      const eligibleVideos = videos.filter(({ _userID, id: videoID }) => (_userID == user) && (!challengeVideoIDs.includes(videoID)))
 
       setvideosEligibleForChallenge({ show: true, eligibleVideos: [...eligibleVideos] });
    }
 
    useEffect(() => {
-      const videosInChallenge = videos.filter(({ id }) => announcementDetails.challenge.challengeVideos.includes(id)); //videos that joined challenge.
-
-      setAnnouncement(prv => ({ ...prv, ...announcementDetails.announcement, owner: announcementOwner.username }));
+      const videosInChallenge = videos.filter(({ id }) => challengeVideoIDs.includes(id)); //videos that joined challenge.
+      // setAnnouncement(prv => ({ ...prv, ...announcementDetails.announcement, owner: announcementOwner.username }));
       setActualChallenge(prv => ({ ...prv, ...announcementDetails.challenge }));
+      setChallengeAnnouncements([...challengeAnnouncements.filter(val => val.id == id), { ...announcementDetails, announcement: { ...announcementDetails.announcement, owner: announcementOwner.username }, challenge: { ...announcementDetails.challenge } }]);
+
       setVideosInChallenge(prv => ([...prv, ...videosInChallenge]));
 
       return (() => {
          setvideosEligibleForChallenge({ show: false, videos: [] });
          setVideosInChallenge([]);
          setActualChallenge({});
-         setAnnouncement({});
+         // setAnnouncement({});
       })
    }, [])
 
@@ -77,7 +77,7 @@ const AnnouncementDetailsComponent = () => {
                   :
                   videosEligibleForChallenge.show &&
                   <AddVideosToChallenge
-                     challengeVideos={challengeVideos}
+                     challengeVideoIDs={challengeVideoIDs}
                      eligibleVideos={videosEligibleForChallenge.eligibleVideos}
                      actualChallenge={actualChallenge}
                      setActualChallenge={setActualChallenge}
