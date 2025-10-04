@@ -26,7 +26,8 @@ const AddChallengeVideos = () => {
          return;
       } //If you are NOT inviting others, you must select at least 2 videos.
       console.log("About to submit:", selectedVideos);
-      setChallengeDetails(prv => ({ ...prv, challengeVideos: [...challengeDetails.challengeVideos, ...selectedVideos] }));
+      setChallengeDetails(prv => ({ ...prv, challengeVideoIDs: [...challengeDetails.challengeVideoIDs, ...selectedVideos] }));
+      
       navigate(`/currentUser/${currentUser.id}/challenge-form/cover`);
    }
 
@@ -70,9 +71,9 @@ const AddChallengeVideos = () => {
                         color = {selectedVideos.includes(id) ? 'danger' : 'success'}
                         clickLogic={
                            () => selectedVideos.includes(id) ?
-                              setSelectedVideos(selectedVideos.filter(id => id != id))
+                              setSelectedVideos(selectedVideos.filter(id => id != id)) //unselect video.
                               :
-                              setSelectedVideos(prv => ([...prv, id]))
+                              setSelectedVideos(prv => ([...prv, id])) //select video.
                         }
                      />
                   ))
