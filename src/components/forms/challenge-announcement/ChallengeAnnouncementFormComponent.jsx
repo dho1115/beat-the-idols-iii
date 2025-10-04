@@ -9,7 +9,7 @@ export const ChallengeAnnouncementFormContext = createContext();
 
 const ChallengeAnnouncementFormComponent = () => {
    const navigate = useNavigate();
-   const [challengeAnnouncementDetails, setChallengeAnnouncementDetails] = useState({ title: '', description: '', coverImageSource: '', coverImageLink: '', challengeVideos: [] });
+   const [challengeAnnouncementDetails, setChallengeAnnouncementDetails] = useState({ title: '', description: '', coverImageSource: '', coverImageLink: '', challengeVideoIDs: [] });
 
    const onHandleSubmitChallengeAnnouncement = e => {
       e.preventDefault();
