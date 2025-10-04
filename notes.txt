@@ -1,3 +1,17 @@
 Refactor AnnouncementDetailsComponent.jsx.
 
 Logic for adding challenge announcement to database!!!
+
+Work on creating the cards for home/current-challenges. So far, this shows if you click "active challenges":
+{
+   "id":"a2fa2fb0-acea-4dd3-9fc5-9189b42d01ea","_challengeID":"a2fa2fb0-acea-4dd3-9fc5-9189b42d01ea","_challengeOwnerID":"e3288652-f5be-4e52-b315-a7c232c9e0cb",
+   "posted":null,
+   "title":"My Actual Challenge.",
+   "description":"This is an actual challenge",
+   "challengeCoverType":"online",
+   "challengeCoverImage":"https://d1jyxxz9imt9yb.cloudfront.net/medialib/4150/image/s1300x1300/RRR_2020-06-03_BonorongWildlifeSanctuary-Brighton-Tasmania_TasmanianDevil_EricWoehler_31620_EDITED_reduced.jpg",
+   "challengeExpires":"Invalid DateTime",
+   "winningVotes":"15",
+   "challengeVideoIDs":["a814910a-d9ae-4123-bc13-48333718cec2","cac8900f-2676-40c6-a124-295fd0996256","52596c9b-1ad8-4283-a56c-36894b1ed830"],"howChallengeEnds":"votes",
+   "challengeAnnouncementID":""
+}
