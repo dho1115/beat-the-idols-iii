@@ -9,22 +9,27 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 
 import "../Challenges.styles.css";
 
-const AddVideosToChallenge = ({ eligibleVideos, setActualChallenge, setVideosInChallenge, showEligibleVideos, challengeVideos }) => {
+const AddVideosToChallenge = ({ eligibleVideos, actualChallenge, setActualChallenge, setVideosInChallenge, showEligibleVideos, challengeVideoIDs }) => {
    const { id:announcementID } = useParams();
    const { challengeAnnouncements, setChallengeAnnouncements } = useContext(dataContext);
 
-   const handleAddVideoToChallenge = ({ description, id, posted, title, urlOrFile, username, videoType, _userID }) => {
+      const handleAddVideoToChallenge = ({ description, id, posted, title, urlOrFile, username, videoType, _userID }) => {
       setVideosInChallenge(prv => ([...prv, { description, id, posted, title, urlOrFile, username, videoType, _userID }]));
-      setActualChallenge(prv => ({ ...prv, challengeVideos: [...challengeVideos, id] }));
+      
+      setActualChallenge(prv => ({ ...prv, challengeVideoIDs: [...challengeVideoIDs, id] }));
       const challengeAnnouncementsUpdated = challengeAnnouncements.map(announcement_OBJECT => {
          if (announcement_OBJECT.announcement.id == announcementID) {
-            announcement_OBJECT.challenge.challengeVideos = [...announcement_OBJECT.challenge.challengeVideos, id];
+            announcement_OBJECT.challenge.challengeVideoIDs = [...announcement_OBJECT.challenge.challengeVideoIDs, id];
          }
          return announcement_OBJECT;
       })
+      
       setChallengeAnnouncements(challengeAnnouncementsUpdated);
-      showEligibleVideos()
    }
+
+   useEffect(() => {
+      showEligibleVideos()
+   }, [actualChallenge.challengeVideoIDs.length])
 
    return (
       <>
