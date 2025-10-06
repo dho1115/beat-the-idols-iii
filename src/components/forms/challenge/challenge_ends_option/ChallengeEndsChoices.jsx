@@ -13,12 +13,6 @@ import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 const ChallengeEndsChoices = () => {
    const { challengeDetails, setChallengeDetails} = useContext(ChallengeDetailsContext);
 
-   // const setDefaultExpirationDate = () => {
-   //    const announcementDeadline = challengeAnnouncement.announcementEndsOn;
-   //    const announcementDeadlineToISO = DateTime.fromISO(announcementDeadline);
-   //    return announcementDeadlineToISO.plus({months: 5}).toFormat('yyyy-MM-dd')
-   // } //If the user selects votes.
-
    return (
       <FormGroup tag="fieldset">
          <legend>HOW DO YOU WANT YOUR CHALLENGE TO END?</legend>
