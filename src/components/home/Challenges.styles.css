@@ -24,9 +24,38 @@
    border: 1.5px solid black;
 }
 
+.challenge-details-description-div {
+   border: 3px solid green;
+   background-color: antiquewhite;
+}
+
+.challenge-details-header {
+   display: grid;
+   grid-template-columns: 70% 30%;
+   height: 25vh;
+   overflow: hidden;
+   border: 3.75px solid firebrick;
+}
+
+.challenge-details-img {
+   object-fit: cover;
+   width: 100%;
+   height: 100%;
+}
+
+.challenge-details-img-div {
+   overflow: hidden;
+   border: 3px solid maroon;
+}
+
 .challenges-container {
    display: grid;
    border: 3.5px solid red;
+}
+
+.current-challenge-wrapper-div {
+   overflow-wrap: anywhere;
+   max-width: 100%;
 }
 
 .eligibleVideosDiv {
