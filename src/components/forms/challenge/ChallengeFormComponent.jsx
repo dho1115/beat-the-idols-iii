@@ -37,8 +37,6 @@ const ChallengeFormComponent = () => {
       if (challengeAnnouncement._challengeAnnouncementID) {
          const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, challengeVideoIDs: [...challengeDetails.challengeVideoIDs], cover_img: challengeDetails.challengeCoverImage }
 
-         // setChallengeAnnouncement(prv => ({ ...prv, ...form_challenge_announcement })); //set challengeAnnouncement only if user selected it.
-
          setChallengeAnnouncements(prv => ([...prv, { announcement: { ...challengeAnnouncement, ...form_challenge_announcement }, challenge: { ...challengeDetails } }])); //from dataContext in App.jsx.
          
          navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`)
