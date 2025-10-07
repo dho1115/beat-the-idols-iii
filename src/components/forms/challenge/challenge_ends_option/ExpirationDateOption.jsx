@@ -23,7 +23,7 @@ const ExpirationDateOption = () => {
   const challengeExpirationLogic = e => {
     e.target.value != '0000-00-00' && setDateAlert(false);
     (e.target.value <= challengeAnnouncement.announcementEndsOn) ? setDateAlert(true) : setDateAlert(false)
-    setChallengeDetails(prv => ({ ...prv, challengeExpires: e.target.value }));
+    setChallengeDetails(prv => ({ ...prv, challengeEndsOn: e.target.value }));
   }
 
   return (
