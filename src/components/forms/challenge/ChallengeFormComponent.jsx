@@ -28,7 +28,6 @@ const ChallengeFormComponent = () => {
       e.preventDefault();
       const posted = DateTime.local().toFormat('yyyy-MM-dd');
 
-
       const form_content = challengeDetails.howChallengeEnds == 'votes' ?
          { ...challengeDetails, posted, challengeEndsOn: defaultExpirationDate(challengeDetails, challengeAnnouncement, DateTime) }
          :
