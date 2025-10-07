@@ -17,13 +17,13 @@ const ChallengeForm = () => {
 
   const onButtonClick = () => {
     setDateAlert(false);
-    if ((challengeAnnouncement._challengeAnnouncementID) && (challengeAnnouncement.announcementEndsOn > challengeDetails.challengeExpires)) {
+    if ((challengeAnnouncement._challengeAnnouncementID) && (challengeAnnouncement.announcementEndsOn > challengeDetails.challengeEndsOn)) {
       setDateAlert(true)
       return;
     } //validation to ensure the announcement end date < challenge expiration.
 
-    if (challengeDetails.challengeExpires == '0000-00-00') {
-      setDateAlert(true);
+    if ((challengeDetails.challengeEndsOn == '0000-00-00') && (challengeDetails.howChallengeEnds == 'date')) {
+      setDateAlert(true); //setDateAlerty ONLY IF there is no .challengeEndsOn date AND howChallengeEnds == 'date'.
       return;
     }
     navigate(`/currentUser/${currentUser.id}/challenge-form/add-video`, { state: { from: "ChallengeForm.jsx" } });
