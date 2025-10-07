@@ -33,7 +33,6 @@ const AnnouncementDetailsComponent = () => {
 
    useEffect(() => {
       const videosInChallenge = videos.filter(({ id }) => challengeVideoIDs.includes(id)); //videos that joined challenge.
-      // setAnnouncement(prv => ({ ...prv, ...announcementDetails.announcement, owner: announcementOwner.username }));
       setActualChallenge(prv => ({ ...prv, ...announcementDetails.challenge }));
       setChallengeAnnouncements([...challengeAnnouncements.filter(val => val.id == id), { ...announcementDetails, announcement: { ...announcementDetails.announcement, owner: announcementOwner.username }, challenge: { ...announcementDetails.challenge } }]);
 
@@ -43,7 +42,6 @@ const AnnouncementDetailsComponent = () => {
          setvideosEligibleForChallenge({ show: false, videos: [] });
          setVideosInChallenge([]);
          setActualChallenge({});
-         // setAnnouncement({});
       })
    }, [])
 
