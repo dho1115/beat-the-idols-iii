@@ -8,7 +8,7 @@ const Deadline = ({ challengeAnnouncement, setChallengeAnnouncement, ...args }) 
    const add5months = DateTime.local().plus({ months: 5 }).toFormat('yyyy-MM-dd');
 
    const challengeAnnouncementDeadlineLogic = e => {
-      ((e.target.value > challengeDetails.challengeExpires) && (challengeDetails.challengeExpires != '0000-00-00')) ? setDateAlert(true) : setDateAlert(false);
+      ((e.target.value > challengeDetails.challengeEndsOn) && (challengeDetails.challengeEndsOn != '0000-00-00')) ? setDateAlert(true) : setDateAlert(false);
 
       setChallengeAnnouncement(prv => ({ ...prv, announcementEndsOn: e.target.value }))
    }
@@ -16,7 +16,7 @@ const Deadline = ({ challengeAnnouncement, setChallengeAnnouncement, ...args }) 
    return (
       <FormGroup>
          {
-            dateAlert && <Alert color='danger'><strong>Your announcement end date of {challengeAnnouncement.announcementEndsOn} <i>CANNOT</i> be greater than your actual challenge expiration date of {challengeDetails.challengeExpires}</strong></Alert>
+            dateAlert && <Alert color='danger'><strong>Your announcement end date of {challengeAnnouncement.announcementEndsOn} <i>CANNOT</i> be greater than your actual challenge expiration date of {challengeDetails.challengeEndsOn}</strong></Alert>
          }
          <Label for='announcementDeadline'>SELECT A DEADLINE FOR PEOPLE TO SEND THEIR VIDEOS.</Label>
          <Input type='date' id='announcementDeadline' value={challengeAnnouncement.announcementEndsOn} min={currentDate} max={add5months} onChange={challengeAnnouncementDeadlineLogic} required/>
