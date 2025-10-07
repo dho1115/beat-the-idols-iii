@@ -10,6 +10,7 @@ import ChallengeFormComponent from './components/forms/challenge/ChallengeFormCo
 import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
 import ChallengeVideos from './components/view_videos/ChallengeVideos';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
+import CurrentChallengeDetails from './components/home/CurrentChallengeDetails';
 
 //Dependencies.
 import { lazy } from 'react';
@@ -95,6 +96,7 @@ function App() {
         <Route path='/' element={<WelcomePage />} />
         <Route path='/home/*' element={<Homepage />}>
           <Route path='current-challenges' element={<CurrentChallenges />} />
+          <Route path='active-challenge/:_challengeID' element={<CurrentChallengeDetails />} />
           <Route path='challenge-announcements' element={<AnnouncementsComponent />} />
         </Route>
         <Route path='/about' element={<AboutUsPage />} />
