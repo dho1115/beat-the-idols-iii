@@ -6,8 +6,11 @@ import { v4 } from 'uuid';
 import { Outlet } from 'react-router-dom'
 import ErrorBoundary from '../../ErrorBoundary';
 import ChallengeFormError from './ChallengeFormError';
-import { defaultExpirationDate } from './functions';
 
+//Functions.
+import { AddChallengeToDB, defaultExpirationDate } from './functions';
+
+//Context Data.
 import { dataContext } from '../../../App'
 
 export const ChallengeDetailsContext = createContext();
@@ -36,13 +39,17 @@ const ChallengeFormComponent = () => {
       if (challengeAnnouncement._challengeAnnouncementID) {
          const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, challengeVideoIDs: [...challengeDetails.challengeVideoIDs], cover_img: challengeDetails.challengeCoverImage }
 
-         setChallengeAnnouncements(prv => ([...prv, { announcement: { ...challengeAnnouncement, ...form_challenge_announcement }, challenge: { ...challengeDetails } }])); //from dataContext in App.jsx.
-         
-         navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`)
-      } else {
-         setCurrentChallenges(prv => ([...prv, {...challengeDetails, ...form_content}])); //from dataContext in App.jsx.
+         const announcementData = { announcement: { ...challengeAnnouncement, ...form_challenge_announcement }, challenge: { ...challengeDetails } }
 
-         navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
+         AddChallengeToDB("http://localhost:3003/challengeAnnouncements", announcementData, setChallengeAnnouncements).
+            then(result => navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`))
+            .catch(err => console.err({ location: "AddChallengeToDB (announcement)", err, errCode: err.code, errMessage: err.message }))
+      } else {
+         const activeChallengeData = { ...challengeDetails, ...form_content }
+         
+         AddChallengeToDB("http://localhost:3003/activeChallenges", activeChallengeData, setCurrentChallenges)
+            .then(result => navigate(`/currentUser/${currentUser.id}/view/challenges/active`))
+            .catch(err => console.err({ location: "AddChallengeToDB (active challenge)", err, errCode: err.code, errMessage: err.message }))         
       }
    }
 
