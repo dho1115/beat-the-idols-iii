@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 import { Outlet } from 'react-router-dom'
 import ErrorBoundary from '../../ErrorBoundary';
 import ChallengeFormError from './ChallengeFormError';
+import { defaultExpirationDate } from './functions';
 
 import { dataContext } from '../../../App'
 
@@ -19,34 +20,22 @@ const ChallengeFormComponent = () => {
 
    const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', cover_img: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' });
    
-   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeExpires: '0000-00-00', winningVotes: 0, challengeVideoIDs: [], howChallengeEnds: '', challengeAnnouncementID: '' });
+   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideoIDs: [], howChallengeEnds: '', challengeAnnouncementID: '' });
 
    const [dateAlert, setDateAlert] = useState(false);
-
-   const defaultExpirationDate = () => {
-      if (challengeDetails.challengeAnnouncementID) {
-         const deadlineString = challengeAnnouncement.announcementEndsOn;
-         const deadline = DateTime.fromISO(deadlineString)
-         const defaultChallengeExpiration = deadline.plus({ months: 5 }).toFormat('yyyy-MM-dd');
-         
-         return defaultChallengeExpiration;
-      }
-
-      const defaultChallengeExpiration = DateTime.local().plus({ months: 5 }).toFormat("yyyy-MM-dd");
-      
-      return defaultChallengeExpiration;
-   }
 
    const handleSubmit = (e) => {
       e.preventDefault();
       const posted = DateTime.local().toFormat('yyyy-MM-dd');
 
+      // const defaultExpiration = defaultExpirationDate(challengeDetails, challengeAnnouncement, DateTime);
+
       const form_content = challengeDetails.howChallengeEnds == 'votes' ?
-         { ...challengeDetails, posted, challengeEndsOn: defaultExpirationDate() /* default expiration date */ }
+         { ...challengeDetails, posted, challengeEndsOn: defaultExpirationDate(challengeDetails, challengeAnnouncement, DateTime) }
          :
          { ...challengeDetails, posted };
       
-      setChallengeDetails(prv => ({ ...prv, ...form_content }));
+      // setChallengeDetails(prv => ({ ...prv, ...form_content }));
 
       if (challengeAnnouncement._challengeAnnouncementID) {
          const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, challengeVideoIDs: [...challengeDetails.challengeVideoIDs], cover_img: challengeDetails.challengeCoverImage }
@@ -57,7 +46,7 @@ const ChallengeFormComponent = () => {
          
          navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`)
       } else {
-         setCurrentChallenges(prv => ([...prv, challengeDetails])); //from dataContext in App.jsx.
+         setCurrentChallenges(prv => ([...prv, {...challengeDetails, ...form_content}])); //from dataContext in App.jsx.
 
          navigate(`/currentUser/${currentUser.id}/view/challenges/active`)
       }
@@ -68,7 +57,7 @@ const ChallengeFormComponent = () => {
       setChallengeDetails(prv => ({ ...prv, _challengeID, id: _challengeID, _challengeOwnerID: currentUser.id }));
 
       return () => {         
-         setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeExpires: '', challengeVideoIDs: [], _challengeAnnouncementID: '' });
+         setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeEndsOn: '', challengeVideoIDs: [], _challengeAnnouncementID: '' });
 
          setChallengeAnnouncement({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', cover_img: '', _challengeAnnouncementID: '' })
       }
