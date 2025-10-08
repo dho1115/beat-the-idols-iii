@@ -22,7 +22,7 @@ export const AddChallengeToDB = (link=null, data=null, setState=null) => {
       if (typeof(link) != 'string' || typeof(data) != 'object' || typeof(setState) != 'function') throw new Error(`Wrong data type for one or more of the arguments. link and data must be a string and setState must be a function. You have: ${dataTypes}.`)
 
       return PostDataAPI(link, data)
-         .then(result => setState(prv => ([...prv, result.jsonData])))
+         .then(result => setState(prv => ([...prv, JSON.parse(result.jsonData)])))
          .catch(error => console.error({ error, errorCode: error.code, errorMessage: error.message }));
    }
    catch (err) {
