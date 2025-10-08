@@ -48,14 +48,13 @@
    border: 3px solid maroon;
 }
 
-.challenges-container {
+.challenges-container, .challengesContainer {
    display: grid;
    border: 3.5px solid red;
 }
 
 .current-challenge-wrapper-div {
    overflow-wrap: anywhere;
-   max-width: 100%;
 }
 
 .eligibleVideosDiv {
