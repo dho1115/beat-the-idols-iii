@@ -6,7 +6,7 @@ import { Card, CardBody, CardFooter, CardText, CardTitle, Button } from 'reactst
 import "./VideoWrapper.styles.css";
 
 const VideoWrapper = ({ video_component, title, description, button_text, clickLogic, ...args }) => {
-   const { color, username, idx } = args;
+   const { color, record, username, idx } = args;
 
    return (
       <Card className='m-1' style={{ border: idx % 2 == 1 ? '3.5px solid lightseagreen' : '3.5px solid red', height: '100%', borderRadius: '15.3px' }}>
@@ -20,7 +20,8 @@ const VideoWrapper = ({ video_component, title, description, button_text, clickL
                </strong>
             </CardTitle>
             <CardBody className='px-1'>
-               <strong>Posted By: {username}</strong>
+               <h5>Posted By: {username}</h5>
+               {record ? <h5>wins: <span className='text-danger'>{record.wins}</span> losses: <span className='text-danger'>{record.losses}</span>, ties: <span className='text-danger'>{record.ties}</span>, pct: <span className='text-danger'>{record.winPct}</span></h5> : <p></p>}
                {
                   description &&
                   <CardText className='px-1' style={{paddingBottom: '5px', height: '100%'}}>
