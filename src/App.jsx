@@ -60,7 +60,7 @@ function App() {
       })
       .then(_allUsers => {
         setAllUsers(prv => ([...prv, ..._allUsers]));
-        return fetchDataAPI("http://localhost:3003/currentChallenges");
+        return fetchDataAPI("http://localhost:3003/activeChallenges");
       })
       .then(_currentChallenges => {
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
