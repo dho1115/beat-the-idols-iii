@@ -3,7 +3,9 @@
     "username": "jamiesmith",
     "password": "JamieSmith",
     "email": "jsmith@email.com",
-    "personalImages": ["https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"],
+    "personalImages": [
+      "https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"
+    ],
     "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
   },
   "allUsers": [
@@ -11,11 +13,33 @@
       "username": "jamiesmith",
       "password": "JamieSmith",
       "email": "jsmith@email.com",
-      "personalImages": ["https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"],
+      "personalImages": [
+        "https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"
+      ],
       "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
     }
   ],
-  "activeChallenges": [],
+  "activeChallenges": [
+    {
+      "id": "11c90710-2a19-4ee3-bfc6-a55ca3f2de2f",
+      "_challengeID": "11c90710-2a19-4ee3-bfc6-a55ca3f2de2f",
+      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+      "posted": "2025-10-08",
+      "title": "MY TEST CHALLENGE!!!",
+      "description": "Description of my test challenge goes here.",
+      "challengeCoverType": "online",
+      "challengeCoverImage": "https://images.stockcake.com/public/3/d/1/3d182bb7-f9e3-4cd3-aae2-6c37874aef6e_large/epic-rock-concert-stockcake.jpg",
+      "challengeEndsOn": "2026-03-08",
+      "winningVotes": "19",
+      "challengeVideoIDs": [
+        "a814910a-d9ae-4123-bc13-48333718cec2",
+        "cac8900f-2676-40c6-a124-295fd0996256",
+        "52596c9b-1ad8-4283-a56c-36894b1ed830"
+      ],
+      "howChallengeEnds": "votes",
+      "challengeAnnouncementID": ""
+    }
+  ],
   "challengeAnnouncements": [],
   "videos": [
     {
@@ -26,7 +50,13 @@
       "videoType": "you-tube",
       "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
       "id": "a814910a-d9ae-4123-bc13-48333718cec2",
-      "posted": "08-07-2025"
+      "posted": "08-07-2025",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "winPct:": 0
+      }
     },
     {
       "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
@@ -36,7 +66,13 @@
       "videoType": "you-tube",
       "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
       "id": "cac8900f-2676-40c6-a124-295fd0996256",
-      "posted": "08-07-2025"
+      "posted": "08-07-2025",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "winPct": 0
+      }
     },
     {
       "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
@@ -46,7 +82,13 @@
       "videoType": "you-tube",
       "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
       "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
-      "posted": "08-07-2025"
+      "posted": "08-07-2025",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "winPct": 0
+      }
     }
   ]
 }
