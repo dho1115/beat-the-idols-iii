@@ -14,7 +14,7 @@ import CurrentChallengeDetails from './components/home/CurrentChallengeDetails';
 
 //Dependencies.
 import { lazy } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { UpdateDataAPI } from './functions/updateapi';
@@ -39,6 +39,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [videos, setVideos] = useState([]);
   const [welcomeLinks, setWelcomeLinks] = useState([]);
 
@@ -55,6 +56,7 @@ function App() {
   useEffect(() => {
     fetchDataAPI('http://localhost:3003/currentUser')
       .then(_currentUser => {
+        setIsLoading(true);
         setCurrentUser(prv => ({ ...prv, ..._currentUser }));
         return fetchDataAPI("http://localhost:3003/allUsers");
       })
@@ -65,7 +67,10 @@ function App() {
       .then(_currentChallenges => {
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
         return fetchDataAPI("http://localhost:3003/videos");
-      }).then(allVideos => setVideos(prv => ([...prv, ...allVideos])))
+      }).then(allVideos => {
+        setVideos(prv => ([...prv, ...allVideos]))
+        setIsLoading(false);
+      })
       .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
     return () => {
       setVideos([]);
@@ -90,13 +95,16 @@ function App() {
   }, [currentUser.id, currentUser.username, location.pathname])
 
   return (
-    <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
+    <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, isLoading, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
       <WelcomeNavbar />
       <Routes>
         <Route path='/' element={<WelcomePage />} />
         <Route path='/home/*' element={<Homepage />}>
           <Route path='current-challenges' element={<CurrentChallenges />} />
-          <Route path='active-challenge/:_challengeID' element={<CurrentChallengeDetails />} />
+          <Route path='active-challenge/:_challengeID' element={
+            currentChallenges.length ?
+              <CurrentChallengeDetails /> : <Homepage />
+          } />
           <Route path='challenge-announcements' element={<AnnouncementsComponent />} />
         </Route>
         <Route path='/about' element={<AboutUsPage />} />
