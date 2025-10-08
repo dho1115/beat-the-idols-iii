@@ -13,8 +13,6 @@ const CurrentChallengeDetails = () => {
    const { currentChallenges, currentUser } = useContext(dataContext);
 
    const { challengeCoverImage, challengeEndsOn, _challengeOwnerID, challengeVideoIDs, description, title, winningVotes } = currentChallenges.find(val => val._challengeID == _challengeID);
-   
-   const onHandleAddVideoToChallenge = () => alert(`Add logic to add videos from ${currentUser.username} (id# ${currentUser.id}) to _challengeID #${_challengeID}.`)
 
    return (
       <div>
@@ -35,9 +33,6 @@ const CurrentChallengeDetails = () => {
          <Container>
             <strong>{challengeVideoIDs}</strong>
          </Container>
-         <div>
-            <Button size='xl' className='w-100' color='danger' onClick={onHandleAddVideoToChallenge}><strong>ADD YOUR VIDEOS TO THIS CHALLENGE!!!</strong></Button>
-         </div>
       </div>
    )
 }
