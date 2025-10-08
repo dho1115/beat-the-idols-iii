@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useRef, useEffect } from 'react';
+import React, { Suspense, useContext, useRef, useEffect, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { dataContext } from '../../App';
@@ -14,16 +14,12 @@ const CurrentChallenges = () => {
   const currentChallengesRef = useRef();
   const navigate = useNavigate();
 
-  console.log(currentChallenges);
-  debugger;
-  
-  // const setGridTemplateColumns = currentChallenges.length >= 5 ? "auto auto auto auto auto" : currentChallenges.map((_, __, arr) => `${19}%`).join(" ")
-
-  const setGridTemplateColumns = "19.5% 19.5% 19.5% 19.5% 19.5%";
-
-  useEffect(() => {
-    if (currentChallengesRef?.current?.style?.setGridTemplateColumns) currentChallengesRef.current.style.setGridTemplateColumns = setGridTemplateColumns;
-  }, [])
+  const setGridTemplateColumns = currentChallenges.length >= 5 ? "auto auto auto auto auto" : currentChallenges.map((_, __, arr) => `${((1/100)*100)*19}%`).join(" ")
+    
+  useLayoutEffect(() => {
+    console.log(currentChallengesRef?.current?.style?.gridTemplateColumns)
+    if (currentChallengesRef?.current?.style) currentChallengesRef.current.style.gridTemplateColumns = setGridTemplateColumns;    
+  }, [currentChallengesRef?.current?.style])
 
   if (!currentChallenges.length) {
     return (
@@ -34,17 +30,17 @@ const CurrentChallenges = () => {
   }
 
   const challenges = currentChallenges.map((val, idx) => (
-    <div key={idx} className='mx-1 p-1 current-challenge-wrapper-div' style={{border: `1.5px solid ${idx%2 == 1 ? 'lightseagreen' : 'firebrick'}`, backgroundColor: `${idx % 2 == 1 ? 'bisque' : 'antiquewhite'}`}}>
-      <ChallengeWrapper
-        coverImg={val.challengeCoverImage}
-        expires = {val.challengeEndsOn? val.challengeEndsOn : null}
-        title={val.title}
-        button_text="DETAILS."
-        _ownerID = {val._challengeOwnerID}
-        winningVotes = {val.winningVotes}
-        clickLogic={() => navigate(`/home/active-challenge/${val._challengeID}`)}
-      />
-    </div>
+      <Suspense fallback={<h3 style={{ backgroundColor: 'yellow', color: 'firebrick'}}>...Loading.</h3>}>
+        <ChallengeWrapper
+          coverImg={val.challengeCoverImage}
+          expires = {val.challengeEndsOn? val.challengeEndsOn : null}
+          title={val.title}
+          button_text="DETAILS."
+          _ownerID = {val._challengeOwnerID}
+          winningVotes = {val.winningVotes}
+          clickLogic={() => navigate(`/home/active-challenge/${val._challengeID}`)}
+        />
+      </Suspense>
   ));
 
   return (
