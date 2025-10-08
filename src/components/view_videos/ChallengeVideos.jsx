@@ -29,9 +29,9 @@ const ChallengeVideos = () => {
       <Container ref={videosContainerRef} className={ filterQuery[filter].length? 'challenge-videos-container p-3' : 'no-videos'}>
          {
             filterQuery[filter].length ?
-               filterQuery[filter].map(({ id, _userID, username, title, description, urlOrFile, videoType }, idx) => {
+               filterQuery[filter].map(({ id, _userID, username, title, description, urlOrFile, record, videoType }, idx) => {
                   if (videoType == "you-tube") {
-                     return <VideoWrapper key={idx} video_component={<YouTubeVideo url={urlOrFile} title={title} />} title={title} description={description} id={id} _userID={_userID} username={username} idx={idx}/>
+                     return <VideoWrapper key={idx} record={record} video_component={<YouTubeVideo url={urlOrFile} title={title} />} title={title} description={description} id={id} _userID={_userID} username={username} idx={idx}/>
                   }
                   
                })
