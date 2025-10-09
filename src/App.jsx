@@ -14,7 +14,7 @@ import CurrentChallengeDetails from './components/home/CurrentChallengeDetails';
 
 //Dependencies.
 import { lazy } from 'react';
-import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { UpdateDataAPI } from './functions/updateapi';
