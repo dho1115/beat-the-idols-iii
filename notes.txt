@@ -15,3 +15,9 @@ Work on creating the cards for home/current-challenges. So far, this shows if yo
    "challengeVideoIDs":["a814910a-d9ae-4123-bc13-48333718cec2","cac8900f-2676-40c6-a124-295fd0996256","52596c9b-1ad8-4283-a56c-36894b1ed830"],"howChallengeEnds":"votes",
    "challengeAnnouncementID":""
 }
+
+=====
+
+Work on displaying videos for CurrentChallengeDetails.jsx.
+
+ADD VOTE LOGIC!!!
