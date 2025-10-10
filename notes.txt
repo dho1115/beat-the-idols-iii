@@ -20,4 +20,13 @@ Work on creating the cards for home/current-challenges. So far, this shows if yo
 
 Work on displaying videos for CurrentChallengeDetails.jsx.
 
-ADD VOTE LOGIC!!!
+for challengeVideoIDs: 
+consider changing name to videosInChallenge and also:
+consider changing the [id] to:
+{
+   id: id;
+   challengeAttachments: {
+      votes: 0;
+      finalStatus: [winner, loser, tie];
+   }
+}
