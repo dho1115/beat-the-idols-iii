@@ -9,17 +9,17 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 
 import "../Challenges.styles.css";
 
-const AddVideosToChallenge = ({ eligibleVideos, actualChallenge, setActualChallenge, setVideosInChallenge, showEligibleVideos, challengeVideoIDs }) => {
+const AddVideosToChallenge = ({ eligibleVideos, actualChallenge, setActualChallenge, setVideosInChallenge, showEligibleVideos, videosInChallenge }) => {
    const { id:announcementID } = useParams();
    const { challengeAnnouncements, setChallengeAnnouncements } = useContext(dataContext);
 
       const handleAddVideoToChallenge = ({ description, id, posted, title, urlOrFile, username, videoType, _userID }) => {
       setVideosInChallenge(prv => ([...prv, { description, id, posted, title, urlOrFile, username, videoType, _userID }]));
       
-      setActualChallenge(prv => ({ ...prv, challengeVideoIDs: [...challengeVideoIDs, id] }));
+      setActualChallenge(prv => ({ ...prv, videosInChallenge: [...videosInChallenge, id] }));
       const challengeAnnouncementsUpdated = challengeAnnouncements.map(announcement_OBJECT => {
          if (announcement_OBJECT.announcement.id == announcementID) {
-            announcement_OBJECT.challenge.challengeVideoIDs = [...announcement_OBJECT.challenge.challengeVideoIDs, id];
+            announcement_OBJECT.challenge.videosInChallenge = [...announcement_OBJECT.challenge.videosInChallenge, id];
          }
          return announcement_OBJECT;
       })
@@ -29,7 +29,7 @@ const AddVideosToChallenge = ({ eligibleVideos, actualChallenge, setActualChalle
 
    useEffect(() => {
       showEligibleVideos()
-   }, [actualChallenge.challengeVideoIDs.length])
+   }, [actualChallenge.videosInChallenge.length])
 
    return (
       <>
