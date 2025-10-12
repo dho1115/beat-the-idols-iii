@@ -50,7 +50,7 @@ const MapCurrentUserVideos = ({ selectedVideos, setSelectedVideos }) => {
                      () => selectedVideosIDList.includes(id) ?
                         setSelectedVideos(selectedVideos.filter(selectedVideo => selectedVideo.id != id)) //unselect video.
                         :
-                        setSelectedVideos(prv => ([...prv, { id, urlOrFile, title, record, username, challengeAccessories: { votes: 0, finalStatus: 'pending' } }])) //select video.
+                        setSelectedVideos(prv => ([...prv, { id, urlOrFile, videoType, title, record, username, challengeAccessories: { votes: 0, finalStatus: 'pending' } }])) //select video.
                   }
                />
             ))
