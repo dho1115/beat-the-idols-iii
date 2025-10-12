@@ -14,10 +14,9 @@ const CurrentChallenges = () => {
   const currentChallengesRef = useRef();
   const navigate = useNavigate();
 
-  const setGridTemplateColumns = currentChallenges.length >= 5 ? "auto auto auto auto auto" : currentChallenges.map((_, __, arr) => `${((1/100)*100)*19}%`).join(" ")
+  const setGridTemplateColumns = currentChallenges.length >= 5 ? "auto auto auto auto auto" : currentChallenges.map((_, __, arr) => `${((1/100)*100)*25}%`).join(" ")
     
   useLayoutEffect(() => {
-    console.log(currentChallengesRef?.current?.style?.gridTemplateColumns)
     if (currentChallengesRef?.current?.style) currentChallengesRef.current.style.gridTemplateColumns = setGridTemplateColumns;    
   }, [currentChallengesRef?.current?.style])
 
@@ -31,15 +30,18 @@ const CurrentChallenges = () => {
 
   const challenges = currentChallenges.map((val, idx) => (
       <Suspense fallback={<h3 style={{ backgroundColor: 'yellow', color: 'firebrick'}}>...Loading.</h3>}>
-        <ChallengeWrapper
-          coverImg={val.challengeCoverImage}
-          expires = {val.challengeEndsOn? val.challengeEndsOn : null}
-          title={val.title}
-          button_text="DETAILS."
-          _ownerID = {val._challengeOwnerID}
-          winningVotes = {val.winningVotes}
-          clickLogic={() => navigate(`/home/active-challenge/${val._challengeID}`)}
-        />
+        <div className='mx-3'>
+          <ChallengeWrapper
+            coverImg={val.challengeCoverImage}
+            expires = {val.challengeEndsOn? val.challengeEndsOn : null}
+            title={val.title}
+            button_text="DETAILS."
+            _ownerID = {val._challengeOwnerID}
+            winningVotes = {val.winningVotes}
+            clickLogic={() => navigate(`/home/active-challenge/${val._challengeID}`)}
+          />
+        </div>
+        
       </Suspense>
   ));
 
