@@ -8,6 +8,9 @@ import UploadVideo from '../../templates/video/upload/UploadVideo';
 import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 
+//functions.
+import { hasChallengeEnded } from './functions';
+
 import { dataContext } from '../../../App';
 
 import "../Challenges.styles.css";
@@ -25,19 +28,17 @@ const ActiveChallengeDetails = () => {
    const onHandleVote = (val) => {
       const todaysDate = DateTime.now().toFormat('yyyy-MM-dd');
       const { id } = val;
+
+      if (hasChallengeEnded(id, todaysDate, challengeEndsOn, val.votes, winningVotes)) {
+         alert("CHALLENGE HAS ENDED!!!")
+         return;
+      }
+
       const updateVideosInChallengeState = videosInChallengeState.map(videoInChallenge => {
-         const { challengeAccessories: { votes } } = videoInChallenge;
-         if (videoInChallenge.id == id) {
-            if (challengeEndsOn == todaysDate) {
-               alert("CHALLENGE HAS ENDED!!!")
-            }
-            else if (votes == winningVotes) {
-               alert("CHALLENGE HAS ENDED!!!")
-            }
-            else videoInChallenge.challengeAccessories.votes += 1;
-         }
+         if (videoInChallenge.id == id) videoInChallenge.challengeAccessories.votes += 1;
          return videoInChallenge;
       });
+
       setVideosInChallengeState(updateVideosInChallengeState);
       console.log(videosInChallengeState);
    }
@@ -63,8 +64,9 @@ const ActiveChallengeDetails = () => {
             {
                videosInChallengeState.map((val, idx) => (
                   <VideoWrapper
+                     key={idx}
                      idx={idx}   
-                     video_component={<YouTubeVideo url={val.urlOrFile} title={val.title} />}
+                     video_component={val.videoType=='you-tube' ? <YouTubeVideo title={val.title} url={val.url} /> : <UploadVideo file={val.urlOrFile} />}
                      title={val.title}
                      description={null}
                      username={val.username}
