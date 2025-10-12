@@ -23,7 +23,7 @@ const ChallengeFormComponent = () => {
 
    const [challengeAnnouncement, setChallengeAnnouncement] = useState({ id: '', _announcementOwnerID: '', headline: '', description: '', cover_img: '', announcementEndsOn: '0000-00-00', _challengeAnnouncementID: '' });
    
-   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, challengeVideoIDs: [], howChallengeEnds: '', challengeAnnouncementID: '' });
+   const [challengeDetails, setChallengeDetails] = useState({ id: '', _challengeID: '', _challengeOwnerID: '', posted: null, title: '', description: '', challengeCoverType: '', challengeCoverImage: '', challengeEndsOn: '0000-00-00', winningVotes: 0, videosInChallenge: [], howChallengeEnds: '', challengeAnnouncementID: '' });
 
    const [dateAlert, setDateAlert] = useState(false);
 
@@ -37,9 +37,17 @@ const ChallengeFormComponent = () => {
          { ...challengeDetails, posted };
 
       if (challengeAnnouncement._challengeAnnouncementID) {
-         const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, challengeVideoIDs: [...challengeDetails.challengeVideoIDs], cover_img: challengeDetails.challengeCoverImage }
+         const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, videosInChallenge: [...challengeDetails.videosInChallenge], cover_img: challengeDetails.challengeCoverImage }
 
-         const announcementData = { announcement: { ...challengeAnnouncement, ...form_challenge_announcement }, challenge: { ...challengeDetails } }
+         const announcementData = {
+            announcement: {
+               ...challengeAnnouncement,
+               ...form_challenge_announcement
+            },
+            challenge: {
+               ...challengeDetails
+            }
+         }
 
          AddChallengeToDB("http://localhost:3003/challengeAnnouncements", announcementData, setChallengeAnnouncements).
             then(result => navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`))
@@ -58,7 +66,7 @@ const ChallengeFormComponent = () => {
       setChallengeDetails(prv => ({ ...prv, _challengeID, id: _challengeID, _challengeOwnerID: currentUser.id }));
 
       return () => {         
-         setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeEndsOn: '', challengeVideoIDs: [], _challengeAnnouncementID: '' });
+         setChallengeDetails({ id: '', posted: '', title: '', inviteOthers: '', announcementDeadline: "0000-00-00", description: '', challengeCoverImage: '', challengeCoverType: '', winningVotes: 0, challengeEndsOn: '', videosInChallenge: [], _challengeAnnouncementID: '' });
 
          setChallengeAnnouncement({ id: '', _announcementOwnerID: '', headline: '', description: '', announcementEndsOn: '0000-00-00', cover_img: '', _challengeAnnouncementID: '' })
       }
