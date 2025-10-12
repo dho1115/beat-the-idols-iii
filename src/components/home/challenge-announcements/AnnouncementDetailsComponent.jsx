@@ -23,16 +23,16 @@ const AnnouncementDetailsComponent = () => {
    
    const announcementOwner = allUsers.find(val => val.id == user);
 
-   const { challenge: { challengeVideoIDs }, announcement } = announcementDetails;
+   const { challenge, announcement } = announcementDetails;
 
    const showEligibleVideos = () => {
-      const eligibleVideos = videos.filter(({ _userID, id: videoID }) => (_userID == user) && (!challengeVideoIDs.includes(videoID)))
+      const eligibleVideos = videos.filter(({ _userID, id: videoID }) => (_userID == user) && (!videosInChallenge.includes(videoID)))
 
       setvideosEligibleForChallenge({ show: true, eligibleVideos: [...eligibleVideos] });
    }
 
    useEffect(() => {
-      const videosInChallenge = videos.filter(({ id }) => challengeVideoIDs.includes(id)); //videos that joined challenge.
+      const videosInChallenge = videos.filter(({ id }) => challenge.videosInChallenge.includes(id)); //videos that joined challenge.
       setActualChallenge(prv => ({ ...prv, ...announcementDetails.challenge }));
       setChallengeAnnouncements([...challengeAnnouncements.filter(val => val.id == id), { ...announcementDetails, announcement: { ...announcementDetails.announcement, owner: announcementOwner.username }, challenge: { ...announcementDetails.challenge } }]);
 
@@ -75,7 +75,7 @@ const AnnouncementDetailsComponent = () => {
                   :
                   videosEligibleForChallenge.show &&
                   <AddVideosToChallenge
-                     challengeVideoIDs={challengeVideoIDs}
+                     videosInChallenge={videosInChallenge}
                      eligibleVideos={videosEligibleForChallenge.eligibleVideos}
                      actualChallenge={actualChallenge}
                      setActualChallenge={setActualChallenge}
