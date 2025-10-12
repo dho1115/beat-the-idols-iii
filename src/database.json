@@ -19,7 +19,72 @@
       "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
     }
   ],
-  "activeChallenges": [],
+  "activeChallenges": [
+    {
+      "id": "822ce8b0-ba39-4cf5-8c9c-fa7c327a508a",
+      "_challengeID": "822ce8b0-ba39-4cf5-8c9c-fa7c327a508a",
+      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+      "posted": "2025-10-12",
+      "title": "My Test Challenge.",
+      "description": "Description of my Test Challenge Here.",
+      "challengeCoverType": "online",
+      "challengeCoverImage": "https://c8.alamy.com/comp/PAM99R/beautiful-galaxy-elements-of-this-image-furnished-by-nasa-PAM99R.jpg",
+      "challengeEndsOn": "2026-03-12",
+      "winningVotes": "15",
+      "videosInChallenge": [
+        {
+          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
+          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
+          "title": "The Wizard and I - cover.",
+          "record": {
+            "wins": 0,
+            "losses": 0,
+            "ties": 0,
+            "winPct:": 0
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 0,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "cac8900f-2676-40c6-a124-295fd0996256",
+          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
+          "title": "The Wizard and I - v2",
+          "record": {
+            "wins": 0,
+            "losses": 0,
+            "ties": 0,
+            "winPct": 0
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 0,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
+          "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
+          "title": "The World will Know (\"Newsies\").",
+          "record": {
+            "wins": 0,
+            "losses": 0,
+            "ties": 0,
+            "winPct": 0
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 0,
+            "finalStatus": "pending"
+          }
+        }
+      ],
+      "howChallengeEnds": "votes",
+      "challengeAnnouncementID": ""
+    }
+  ],
   "challengeAnnouncements": [],
   "videos": [
     {
