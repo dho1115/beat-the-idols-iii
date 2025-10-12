@@ -1,23 +1,20 @@
-import React, { useContext, useState, useRef, useLayoutEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Label, Button, Container, FormGroup, Alert } from 'reactstrap';
+import { Label, Button, FormGroup, Alert } from 'reactstrap';
 import { ChallengeDetailsContext } from '../ChallengeFormComponent';
 import { dataContext } from '../../../../App';
-import UploadVideo from '../../../templates/video/upload/UploadVideo';
-import VideoWrapper from '../../../templates/video_wrapper/VideoWrapper';
-import YouTubeVideo from '../../../templates/video/you_tube/YouTubeVideo';
+import MapCurrentUserVideos from './MapCurrentUserVideos';
 
 import "./ChallengeVideos.styles.css";
 
 const AddChallengeVideos = () => {
    const navigate = useNavigate();
-   const videosContainerRef = useRef();
    const [selectedVideos, setSelectedVideos] = useState([])
    const [addVideoAlert, setAddVideoAlert] = useState(false)
-   const { videos, currentUser } = useContext(dataContext);
+   const { currentUser } = useContext(dataContext);
    const { challengeDetails, setChallengeDetails } = useContext(ChallengeDetailsContext);
+
    const { challengeAnnouncementID } = challengeDetails;
-   const currentUsersVideos = videos.filter(({ _userID }) => _userID == currentUser.id); //We only want current user to select his/her/their own videos.
 
    const onHandleSubmitChallengeVideos = e => {
       e.preventDefault();
@@ -25,24 +22,15 @@ const AddChallengeVideos = () => {
          setAddVideoAlert(true)
          return;
       } //If you are NOT inviting others, you must select at least 2 videos.
-      console.log("About to submit:", selectedVideos);
-      setChallengeDetails(prv => ({ ...prv, challengeVideoIDs: [...challengeDetails.challengeVideoIDs, ...selectedVideos] }));
+      setChallengeDetails(prv => ({ ...prv, videosInChallenge: [...challengeDetails.videosInChallenge, ...selectedVideos] }));
       
       navigate(`/currentUser/${currentUser.id}/challenge-form/cover`);
    }
 
-   useLayoutEffect(() => {
-      const setGridTemplateColumns = currentUsersVideos.length >= 5 ?
-         "auto auto auto auto auto"
-         :
-         currentUsersVideos.map(() => `${(100 / (currentUsersVideos.length))}%`).join(" ");
-      
-      videosContainerRef.current.style.gridTemplateColumns = setGridTemplateColumns
-      return () => {
+   useEffect(() => () => {
          setSelectedVideos([])
          setAddVideoAlert(false)
-      }
-   }, [])
+      }, []) //cleanup.
 
    return (
       <div className="challenge-videos-form p-3 m-3">
@@ -51,34 +39,7 @@ const AddChallengeVideos = () => {
          }
          <FormGroup>
             <Label><strong>SELECT CHALLENGE VIDEOS!!!</strong></Label>
-            <Container
-               className='challenge-videos-form-container'
-               ref={videosContainerRef}
-            >
-               {
-                  currentUsersVideos.map(({id, title, videoType, description, urlOrFile}, idx) => (
-                     <VideoWrapper
-                        key={idx}
-                        video_component={
-                           videoType == 'you-tube' ?
-                              <YouTubeVideo title={title} url={urlOrFile} />
-                              :
-                              <UploadVideo file={urlOrFile} />
-                        }
-                        title={title}
-                        description={description}
-                        button_text={selectedVideos.includes(id) ? "UNSELECT THIS VIDEO" :"SELECT THIS VIDEO!!!"}
-                        color = {selectedVideos.includes(id) ? 'danger' : 'success'}
-                        clickLogic={
-                           () => selectedVideos.includes(id) ?
-                              setSelectedVideos(selectedVideos.filter(id => id != id)) //unselect video.
-                              :
-                              setSelectedVideos(prv => ([...prv, id])) //select video.
-                        }
-                     />
-                  ))
-               }
-            </Container>
+            <MapCurrentUserVideos selectedVideos={selectedVideos} setSelectedVideos={setSelectedVideos} />
          </FormGroup>
          <FormGroup>
             <Button type='button' color='danger' className='w-100' onClick={onHandleSubmitChallengeVideos}>FINISHED SELECTING VIDEOS.</Button>
