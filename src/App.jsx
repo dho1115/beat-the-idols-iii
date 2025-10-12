@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 
 //Components - Lazy loaded.
+import ActiveChallenge from './components/home/active-challenge/ActiveChallenge';
 import AddChallengeVideos from './components/forms/challenge/challenge_videos/AddChallengeVideos';
 import AddVideo from './components/forms/add_video/AddVideo';
 import AnnouncementsComponent from './components/home/challenge-announcements/AnnouncementsComponent';
@@ -10,7 +11,6 @@ import ChallengeFormComponent from './components/forms/challenge/ChallengeFormCo
 import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
 import ChallengeVideos from './components/view_videos/ChallengeVideos';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
-import CurrentChallengeDetails from './components/home/CurrentChallengeDetails';
 
 //Dependencies.
 import { lazy } from 'react';
@@ -103,7 +103,7 @@ function App() {
           <Route path='current-challenges' element={<CurrentChallenges />} />
           <Route path='active-challenge/:_challengeID' element={
             currentChallenges.length ?
-              <CurrentChallengeDetails /> : <Homepage />
+              <ActiveChallenge /> : <Homepage />
           } />
           <Route path='challenge-announcements' element={<AnnouncementsComponent />} />
         </Route>
