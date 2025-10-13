@@ -1,7 +1,7 @@
-export const hasChallengeEnded = (videoID, todaysDate, challengeEndsOn, votes, WinningVotes) => {
-   console.log({ videoID, todaysDate, challengeEndsOn, areDatesEqual: todaysDate == challengeEndsOn, votes, WinningVotes, areVotesEqual: votes == WinningVotes });
+export const challengeHasEnded = (videoID, dateDifference, votes, WinningVotes) => {
+   console.log({ videoID, dateDifference, differenceGreaterThanZero: Number(dateDifference) > 0 });
    
-   if (todaysDate == challengeEndsOn) return true;
-   else if (votes == WinningVotes) return true;
+   if (Number(dateDifference <= 0)) return true;
+   else if (WinningVotes && (votes == WinningVotes)) return true;
    return false;
 }
