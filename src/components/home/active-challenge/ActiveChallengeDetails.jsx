@@ -9,7 +9,7 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 
 //functions.
-import { challengeHasEnded } from './functions';
+import { addVoteToVideoLogic, challengeHasEnded, endChallengeLogic } from './functions';
 
 import { dataContext } from '../../../App';
 
@@ -28,26 +28,26 @@ const ActiveChallengeDetails = () => {
 
    const challengeOwnerObject = allUsers.find(val => val.id == _challengeOwnerID);
 
-   const onHandleVote = (val) => {
-      const { id } = val;
-      const { votes } = val.challengeAccessories;
-      if (challengeHasEnded(id, daysRemainingForChallenge.days.toFixed(3), votes, winningVotes)) {
-         alert(`CHALLENGE HAS ENDED!!! RESULTS ARE: ${JSON.stringify(videosInChallengeState)}.`)
+   const onHandleVote = ({ id, challengeAccessories: { votes } }) => {
+      const challengeEnded = challengeHasEnded(id, daysRemainingForChallenge.days.toFixed(3), votes, winningVotes)
+      if (challengeEnded) {
+         endChallengeLogic(videosInChallengeState); //all the logic to end challenge.
          return;
       }
 
-      const updateVideosInChallengeState = videosInChallengeState.map(videoInChallenge => {
-         if (videoInChallenge.id == id) videoInChallenge.challengeAccessories.votes += 1;
-         return videoInChallenge;
-      });
+      const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id);
 
-      setVideosInChallengeState(updateVideosInChallengeState);
-      console.log(videosInChallengeState);
+      // const updateVideosInChallengeState = videosInChallengeState.map(videoInChallenge => {
+      //    if (videoInChallenge.id == id) videoInChallenge.challengeAccessories.votes += 1;
+      //    return videoInChallenge;
+      // });
+
+      setVideosInChallengeState(addVoteToSelectedVideo);
    }
 
    useEffect(() => {
       if (daysRemainingForChallenge.days.toFixed(3) <= 0) {
-         alert(`THIS CHALLENGE HAS ENDED!!! THE RESULTS ARE: ${JSON.stringify(videosInChallengeState)}.`);
+         endChallengeLogic(videosInChallengeState)
       }
    }, [])
 
