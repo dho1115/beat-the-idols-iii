@@ -79,7 +79,7 @@ const ActiveChallengeDetails = () => {
                      description={null}
                      username={val.username}
                      votes={val.challengeAccessories.votes}
-                     button_text={challengeHasEnded() ? "THIS CHALLENGE HAS ENDED!!!" : "VOTE FOR THIS VIDEO!!!"}
+                     button_text={challengeHasEnded(val.id, daysRemainingForChallenge.days.toFixed(3), val.votes, winningVotes) ? "THIS CHALLENGE HAS ENDED!!!" : "VOTE FOR THIS VIDEO!!!"}
                      clickLogic={() => onHandleVote(val)}
                      disabled={challengeHasEnded(val.id, daysRemainingForChallenge.days.toFixed(3), val.votes, winningVotes)}
                   />
