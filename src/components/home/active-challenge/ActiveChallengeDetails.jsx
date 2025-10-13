@@ -37,11 +37,6 @@ const ActiveChallengeDetails = () => {
 
       const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id);
 
-      // const updateVideosInChallengeState = videosInChallengeState.map(videoInChallenge => {
-      //    if (videoInChallenge.id == id) videoInChallenge.challengeAccessories.votes += 1;
-      //    return videoInChallenge;
-      // });
-
       setVideosInChallengeState(addVoteToSelectedVideo);
    }
 
