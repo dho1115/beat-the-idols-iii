@@ -14,6 +14,7 @@ import { challengeHasEnded } from './functions';
 import { dataContext } from '../../../App';
 
 import "../Challenges.styles.css";
+import WinningVotesOption from '../../forms/challenge/challenge_ends_option/WinningVotesOption';
 
 const ActiveChallengeDetails = () => {
    const { _challengeID } = useParams();
@@ -80,7 +81,7 @@ const ActiveChallengeDetails = () => {
                      votes={val.challengeAccessories.votes}
                      button_text={challengeHasEnded() ? "THIS CHALLENGE HAS ENDED!!!" : "VOTE FOR THIS VIDEO!!!"}
                      clickLogic={() => onHandleVote(val)}
-                     disabled={challengeHasEnded()}
+                     disabled={challengeHasEnded(val.id, daysRemainingForChallenge.days.toFixed(3), val.votes, winningVotes)}
                   />
                ))
             }
