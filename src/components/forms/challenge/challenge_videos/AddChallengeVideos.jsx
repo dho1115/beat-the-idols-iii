@@ -18,7 +18,7 @@ const AddChallengeVideos = () => {
 
    const onHandleSubmitChallengeVideos = e => {
       e.preventDefault();
-      if ((!challengeAnnouncementID && (selectedVideos < 2)) || !selectedVideos.length) {
+      if ((!challengeAnnouncementID && (selectedVideos.length < 2)) || !selectedVideos.length) {
          setAddVideoAlert(true)
          return;
       } //If you are NOT inviting others, you must select at least 2 videos.
