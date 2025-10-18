@@ -36,7 +36,7 @@ const ActiveChallengeDetails = () => {
    const challengeOwnerObject = allUsers.find(val => val.id == _challengeOwnerID);
 
    const onHandleVote = ({ id, challengeAccessories: { votes } }) => {
-      const challengeEnded = challengeHasEnded(id, daysRemainingForChallenge.days.toFixed(3), votes, winningVotes) //check if challenge has ended.
+      const challengeEnded = challengeHasEnded(id, daysRemainingForChallenge, votes, winningVotes) //check if challenge has ended.
 
       const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id);
 
@@ -62,7 +62,7 @@ const ActiveChallengeDetails = () => {
    }
 
    useEffect(() => {
-      if (daysRemainingForChallenge.days.toFixed(3) <= 0) {
+      if (daysRemainingForChallenge <= 0) {
          endChallengeLogic(videosInChallengeState, findLeaders(videosInChallengeState, highestVoteState), `http://localhost:3003/activeChallenges/${_challengeID}`)
       }
    }, [])
@@ -73,7 +73,7 @@ const ActiveChallengeDetails = () => {
             <div className='challenge-details-description-div p-3'>
                <h3>Challenge ID: <span className='text-danger'>{_challengeID}</span></h3>
                <h3>OWNER: {challengeOwnerObject.username} (id# {_challengeOwnerID})</h3>
-               <h3>EXPIRES: {challengeEndsOn} (<span className='text-danger'>{daysRemainingForChallenge.days.toFixed(3)} days left</span>).</h3>
+               <h3>EXPIRES: {challengeEndsOn} (<span className='text-danger'>{daysRemainingForChallenge} days left</span>).</h3>
                <h3>TITLE: <span className='text-danger'>{title}</span>.</h3>
                <h3>DESCRIPTION:<span className='text-danger'>{description}</span>.</h3>
                {
@@ -95,9 +95,9 @@ const ActiveChallengeDetails = () => {
                      description={null}
                      username={val.username}
                      votes={val.challengeAccessories.votes}
-                     button_text={challengeHasEnded(val.id, daysRemainingForChallenge.days.toFixed(3), val.votes, winningVotes) ? "THIS CHALLENGE HAS ENDED!!!" : "VOTE FOR THIS VIDEO!!!"}
+                     button_text={challengeHasEnded(val.id, daysRemainingForChallenge, val.votes, winningVotes) ? "THIS CHALLENGE HAS ENDED!!!" : "VOTE FOR THIS VIDEO!!!"}
                      clickLogic={() => onHandleVote(val)}
-                     disabled={challengeHasEnded(val.id, daysRemainingForChallenge.days.toFixed(3), val.votes, winningVotes)}
+                     disabled={challengeHasEnded(val.id, daysRemainingForChallenge, val.votes, winningVotes)}
                   />
                ))
             }
