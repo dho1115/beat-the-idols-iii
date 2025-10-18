@@ -21,7 +21,7 @@ import { UpdateDataAPI } from './functions/updateapi';
 import { DateTime } from 'luxon';
 
 //Functions.
-import { calculateHighestVote, challengeHasEnded, endChallengeLogic, findLeaders } from './components/home/active-challenge/functions';
+import { calculateHighestVote, updateVideoRecords } from './components/home/active-challenge/functions';
 import { findExpiredChallenges, timeRemaining, deleteExpiredChallenges } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
 
