@@ -41,23 +41,23 @@ const ActiveChallengeDetails = () => {
 
       PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo })
          .then(response => {
-            setVideosInChallengeState(addVoteToSelectedVideo);
+            setVideosInChallengeState(addVoteToSelectedVideo); //add vote.
             return response.json()
          })
          .then(result => {
             const highestVote = calculateHighestVote(videosInChallengeState);
-            (highestVote != highestVoteState) && setHighestVoteState(highestVote);
+            (highestVote != highestVoteState) && setHighestVoteState(highestVote); //set state ONLY if new highest vote.
             return { highestVote };
          })
          .then(({ highestVote }) => {
             if (challengeEnded) {
                endChallengeLogic(videosInChallengeState, findLeaders(videosInChallengeState, highestVote), `http://localhost:3003/activeChallenges/${_challengeID}`);
                return { challengeEnded };
-            }
+            } //Logic if active challenge has ended.
             const leaders = findLeaders(videosInChallengeState, highestVote); //current vote leaders.
             return leaders;
          })
-         .catch(err => console.error({ message: "PatchDataAPI error!!!", err, errCode: err.code, errMessage: err.message }));
+         .catch(err => console.error({ message: "PatchDataAPI error!!!", err, errCode: err.code, errMessage: err.message })); //vote logic.
    }
 
    useEffect(() => {
