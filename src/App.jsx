@@ -18,6 +18,10 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { UpdateDataAPI } from './functions/updateapi';
+import { DateTime } from 'luxon';
+
+//Functions.
+import { calculateHighestVote, challengeHasEnded, endChallengeLogic, findLeaders } from './components/home/active-challenge/functions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -67,7 +71,8 @@ function App() {
       .then(_currentChallenges => {
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
         return fetchDataAPI("http://localhost:3003/videos");
-      }).then(allVideos => {
+      })
+      .then(allVideos => {
         setVideos(prv => ([...prv, ...allVideos]))
         setIsLoading(false);
       })
@@ -93,6 +98,12 @@ function App() {
 
     };
   }, [currentUser.id, currentUser.username, location.pathname])
+
+  useEffect(() => {
+    if (currentChallenges.length) {
+      //check for any expired challenges.
+    }
+  }, [currentChallenges.length]); //check for expired challenges.
 
   return (
     <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, isLoading, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
