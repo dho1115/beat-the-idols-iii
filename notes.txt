@@ -18,15 +18,4 @@ Work on creating the cards for home/current-challenges. So far, this shows if yo
 
 =====
 
-Work on displaying videos for CurrentChallengeDetails.jsx.
-
-for challengeVideoIDs: 
-consider changing name to videosInChallenge and also:
-consider changing the [id] to:
-{
-   id: id;
-   challengeAccessories: {
-      votes: 0;
-      finalStatus: [winner, loser, tie, pending];
-   }
-}
+Put the Delete Active Challenge logic in App.jsx b/c we want any active challenges that has ended to be deleted as soon as the user goes to our url.
