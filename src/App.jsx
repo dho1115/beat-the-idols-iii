@@ -22,6 +22,8 @@ import { DateTime } from 'luxon';
 
 //Functions.
 import { calculateHighestVote, challengeHasEnded, endChallengeLogic, findLeaders } from './components/home/active-challenge/functions';
+import { findExpiredChallenges, timeRemaining, deleteExpiredChallenges } from './functions/remainingtime';
+import { deleteObjectAPI } from './functions/deleteapi';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -69,7 +71,22 @@ function App() {
         return fetchDataAPI("http://localhost:3003/activeChallenges");
       })
       .then(_currentChallenges => {
-        setCurrentChallenges(prv => ([...prv, ..._currentChallenges]));
+        const expired_challenges = findExpiredChallenges(_currentChallenges, DateTime, timeRemaining);
+
+        if (expired_challenges.length) {
+          Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI))
+            .then(response => {
+              console.log({ message: 'DELETE IS SUCCESSFUL!!!', response });
+              return fetchDataAPI("http://localhost:3003/activeChallenges");
+            })
+            .then(_currentChallenges => setCurrentChallenges(prv => ([...prv, ..._currentChallenges])))
+            .catch(error => console.error({ message: "ERROR DELETING EXPIRED CHALLENGE (App.jsx)!!!", error, errorMessage: error.message, code: error.code }));
+
+          return fetchDataAPI("http://localhost:3003/videos")
+        } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
+
+        setCurrentChallenges(prv => ([...prv, ..._currentChallenges]))
+
         return fetchDataAPI("http://localhost:3003/videos");
       })
       .then(allVideos => {
@@ -98,12 +115,6 @@ function App() {
 
     };
   }, [currentUser.id, currentUser.username, location.pathname])
-
-  useEffect(() => {
-    if (currentChallenges.length) {
-      //check for any expired challenges.
-    }
-  }, [currentChallenges.length]); //check for expired challenges.
 
   return (
     <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, isLoading, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
