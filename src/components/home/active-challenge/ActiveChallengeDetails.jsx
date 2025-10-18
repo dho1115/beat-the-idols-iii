@@ -30,7 +30,6 @@ const ActiveChallengeDetails = () => {
 
    const [videosInChallengeState, setVideosInChallengeState] = useState(videosInChallenge);
 
-   // const [daysRemainingForChallenge, setDaysRemainingForChallenge] = useState(DateTime.fromISO(challengeEndsOn).diff(DateTime.now(), ['days']));
    const [daysRemainingForChallenge, setDaysRemainingForChallenge] = useState(timeRemaining(DateTime, challengeEndsOn));
 
    const challengeOwnerObject = allUsers.find(val => val.id == _challengeOwnerID);
