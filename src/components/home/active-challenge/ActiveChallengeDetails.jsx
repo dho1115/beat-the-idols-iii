@@ -51,7 +51,6 @@ const ActiveChallengeDetails = () => {
          })
          .then(({ highestVote }) => {
             if (challengeEnded) {
-               endChallengeLogic(videosInChallengeState, findLeaders(videosInChallengeState, highestVote), `http://localhost:3003/activeChallenges/${_challengeID}`);
                return { challengeEnded };
             } //Logic if active challenge has ended.
             const leaders = findLeaders(videosInChallengeState, highestVote); //current vote leaders.
