@@ -9,3 +9,14 @@ export const fetchDataAPI = async url => {
       return { from: 'fetchDataAPI (fetchapi.jsx)', error, errorCode: error.code, errorMessage: error.message };
    }
 }
+
+export const fetchDataThenSetState = async (fetchDataAPI, url, setStateWrapper) => {
+   try {
+      const response = await fetchDataAPI(url);
+      const data = response.json();
+      setStateWrapper(data);
+      return data;
+   } catch (error) {
+      console.error({ message: 'fetchDataThenSetState ERROR!!!', error, errorCode: error.code, errorMessage: error.message });
+   }
+}
