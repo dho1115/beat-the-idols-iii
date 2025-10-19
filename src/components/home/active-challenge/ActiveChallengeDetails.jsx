@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
 import { DateTime } from 'luxon';
 
@@ -9,10 +9,10 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 
 //functions.
-import { addVoteToVideoLogic, calculateHighestVote, challengeHasEnded, endChallengeLogic, findLeaders, updateDatabaseAndState } from './functions';
+import { addVoteToVideoLogic, calculateHighestVote, challengeHasEnded, findLeaders, updateRecordInVideosState, updateVideoRecords } from './functions';
 import { timeRemaining } from '../../../functions/remainingtime';
 
-import { UpdateDataAPI } from '../../../functions/updateapi';
+import { UpdateDataAPI, UpdateDataInDBThenSetState } from '../../../functions/updateapi';
 import { PatchDataAPI } from '../../../functions/patchapi';
 
 import { dataContext } from '../../../App';
@@ -22,9 +22,12 @@ import "../Challenges.styles.css";
 
 const ActiveChallengeDetails = () => {
    const { _challengeID } = useParams();
-   const { allUsers, currentChallenges } = useContext(dataContext);
+   const location = useLocation();
+   const { allUsers, currentChallenges, videos, setVideos } = useContext(dataContext);
 
-   const { challengeCoverImage, challengeEndsOn, _challengeOwnerID, videosInChallenge, description, title, winningVotes } = currentChallenges.find(val => val._challengeID == _challengeID);
+   const thisChallenge = currentChallenges.find(val => val._challengeID == _challengeID);
+
+   const { challengeCoverImage, challengeEndsOn, _challengeOwnerID, videosInChallenge, description, title, winningVotes } = thisChallenge;
 
    const [highestVoteState, setHighestVoteState] = useState(0);
 
@@ -51,7 +54,9 @@ const ActiveChallengeDetails = () => {
          })
          .then(({ highestVote }) => {
             if (challengeEnded) {
-               return { challengeEnded };
+               const leadersAndLosers = updateVideoRecords(thisChallenge, highestVote);
+               const videos_updated = updateRecordInVideosState(videos, leadersAndLosers)
+               return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated)).catch(error => console.error({ location: location.pathname, message: "UpdateDataInDBThenSetState ERROR (PatchDataAPI)!!!", error, errorCode: error.code, errorMessage: error.message }));
             } //Logic if active challenge has ended.
             const leaders = findLeaders(videosInChallengeState, highestVote); //current vote leaders.
             return leaders;
@@ -59,11 +64,11 @@ const ActiveChallengeDetails = () => {
          .catch(err => console.error({ message: "PatchDataAPI error!!!", err, errCode: err.code, errMessage: err.message })); //vote logic.
    }
 
-   useEffect(() => {
-      if (daysRemainingForChallenge <= 0) {
-         endChallengeLogic(videosInChallengeState, findLeaders(videosInChallengeState, highestVoteState), `http://localhost:3003/activeChallenges/${_challengeID}`)
-      }
-   }, [])
+   // useEffect(() => {
+   //    if (daysRemainingForChallenge <= 0) {
+   //       endChallengeLogic(videosInChallengeState, findLeaders(videosInChallengeState, highestVoteState), `http://localhost:3003/activeChallenges/${_challengeID}`)
+   //    }
+   // }, [])
 
    return (
       <div>
