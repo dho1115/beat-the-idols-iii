@@ -84,6 +84,12 @@ function App() {
               return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated))
             })
           )
+            .then(response => console.log({ message: "Update videos success!!!", response }))
+            .catch(error => console.error({ message: "Something went wrong with updating videos!!!", error, errorMessage: error.message, errorCode: error.code }));
+
+          Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI))
+            .then(response => console.log({ message: "successfully deleted expired challenges!!!", response }))
+            .catch(error => console.error({ message: 'something went wrong deleting one or more challenges', error, errorCode: error.code, errorMessage: error.message }));
         } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
 
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]))
