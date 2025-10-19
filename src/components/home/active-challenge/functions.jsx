@@ -1,4 +1,4 @@
-import { UpdateDataAPI } from "../../../functions/updateapi";
+import { UpdateDataInDBThenSetState } from "../../../functions/updateapi";
 import { deleteObjectAPI } from "../../../functions/deleteapi";
 
 export const addVoteToVideoLogic = (videosInChallegeState, targetID) => videosInChallegeState.map(challengeVideo => {
@@ -34,6 +34,7 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
          record.winPct = record.wins / (record.wins + record.losses + record.ties);
          return { record, ...rest };
       }) : [];
+
       return { updatedVideoData: [...updateLeaders, ...updateLosers] };
    } catch (error) {
       console.error({ message: 'updateVideoRecordError!!!', error, errorMessage: error.message, errorCode: error.code });
@@ -41,19 +42,36 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
    }
 }
 
-export const challengeHasEnded = (videoID, dateDifference, votes, WinningVotes) => {   
-   if (Number(dateDifference <= 0)) return true;
-   else if (WinningVotes && (votes == WinningVotes)) return true;
-   return false;
+export const updateRecordInVideosState = (videos, updateVideoRecords) => {
+   try {
+      const { updatedVideoData } = updateVideoRecords;
+      const videos_updated = videos.map(video => {
+         const updatedRecord = updatedVideoData.find(({ id }) => (id == video.id)).record;
+         if (updatedRecord) return { ...video, record: updatedRecord };
+         return video;
+      });
+
+      return videos_updated;
+   } catch (error) {
+      console.error({ message: "updatedSelectedVideoData ERROR!!!", error, errorCode: error.code, errorMessage: error.message });
+   }
 }
 
-export const endChallengeLogic = async (arg, findLeaders, url, deleteObjectAPI=deleteObjectAPI) => {
+export const endChallengeLogic = async (updateDataInDBThenSetState, UpdateDataAPI, updateDataUrl, updatedData, updateDataSetStateWrapper, deleteObjectAPI, deleteObjectUrl) => {
    try {
-      const deleteChallenge = await deleteObjectAPI(url)
+      const updateVideosInDB = await updateDataInDBThenSetState(UpdateDataAPI, updateDataUrl, updatedData, updateDataSetStateWrapper);
+      const deleteChallenge = await deleteObjectAPI(deleteObjectUrl);
+
       return deleteChallenge
    } catch (error) {
       console.error({ error, errorCode: error.code, errorMessage: error.message });
    }
+}
+
+export const challengeHasEnded = (videoID, dateDifference, votes, WinningVotes) => {   
+   if (Number(dateDifference <= 0)) return true;
+   else if (WinningVotes && (votes == WinningVotes)) return true;
+   return false;
 }
 
 export const findLeaders = (videosInChallenge, calculateHighestVote) => {
