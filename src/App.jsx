@@ -15,13 +15,13 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 //Dependencies.
 import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { fetchDataAPI } from './functions/fetchapi';
+import { fetchDataAPI, fetchDataThenSetState } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
-import { UpdateDataAPI } from './functions/updateapi';
 import { DateTime } from 'luxon';
 
 //Functions.
-import { calculateHighestVote, updateVideoRecords } from './components/home/active-challenge/functions';
+import { calculateHighestVote, updateRecordInVideosState, updateVideoRecords } from './components/home/active-challenge/functions';
+import { UpdateDataAPI, UpdateDataInDBThenSetState } from './functions/updateapi';
 import { findExpiredChallenges, timeRemaining, deleteExpiredChallenges } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
 
@@ -34,9 +34,9 @@ const Homepage = lazy(() => import('./pages/home/Homepage'));
 const RegistrationPage = lazy(() => import('./pages/registration/RegistrationPage'));
 const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
 
-import './App.css';
-
 export const dataContext = createContext();
+
+import './App.css';
 
 function App() {
   // alert("New Notes. Read!!!")
@@ -74,15 +74,16 @@ function App() {
         const expired_challenges = findExpiredChallenges(_currentChallenges, DateTime, timeRemaining);
 
         if (expired_challenges.length) {
-          Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI))
-            .then(response => {
-              console.log({ message: 'DELETE IS SUCCESSFUL!!!', response });
-              return fetchDataAPI("http://localhost:3003/activeChallenges");
-            })
-            .then(_currentChallenges => setCurrentChallenges(prv => ([...prv, ..._currentChallenges])))
-            .catch(error => console.error({ message: "ERROR DELETING EXPIRED CHALLENGE (App.jsx)!!!", error, errorMessage: error.message, code: error.code }));
+          Promise.all(
+            expired_challenges.map((expiredChallenge) => {
+              const { videosInChallenge } = expiredChallenge; //destructure videosInChallenge prop.
+              const highestVote = calculateHighestVote(videosInChallenge); //returns this highest vote using Math.max
+              const leadersAndLosers = updateVideoRecords(expiredChallenge, highestVote); //add 1 to win/loss/tie and calculates record.
+              const videos_updated = updateRecordInVideosState(videos, leadersAndLosers); //updates videos state with leadersAndLosers.
 
-          return fetchDataAPI("http://localhost:3003/videos")
+              return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated))
+            })
+          )
         } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
 
         setCurrentChallenges(prv => ([...prv, ..._currentChallenges]))
