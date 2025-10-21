@@ -15,12 +15,18 @@ const PersonalImagesSource = () => {
           <strong>SOURCE OF YOUR PERSONAL IMAGE.</strong>
         </legend>
         <FormGroup check>
-          <Input type='radio' name='imageSource' value={imageSource} onChange={e => setCurrentUser(prv => ({...prv, imageSource: 'online'}))} required /> {' '} <Label check>ONLINE</Label>
+          <Input type='radio' name='imageSource' value={imageSource} onChange={() => setCurrentUser(prv => ({...prv, imageSource: 'online'}))} required /> {' '} <Label check>ONLINE</Label>
         </FormGroup>
         <FormGroup check>
-          <Input type='radio' name='imageSource' value={imageSource} onChange={e => setCurrentUser(prv => ({...prv, addImage: 'upload'}))} /> {' '} <Label check>UPLOAD</Label>
+          <Input type='radio' name='imageSource' value={imageSource} onChange={() => setCurrentUser(prv => ({...prv, addImage: 'upload'}))} /> {' '} <Label check>UPLOAD</Label>
         </FormGroup>
       </FormGroup>
+      {
+        imageSource == 'online' && <OnlineOption />
+      }
+      {
+        imageSource == 'upload' && <UploadOption />
+      }
     </>
   )
 }
