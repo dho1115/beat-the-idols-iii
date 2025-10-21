@@ -2,7 +2,7 @@ import React, { Suspense, useContext } from 'react';
 import SuspenseFallback from '../../suspense_fallback/SuspenseFallback';
 
 //Dependencies & components.
-import { Card, CardFooter, CardTitle, Button } from 'reactstrap';
+import { Card, CardFooter, CardTitle, Button, ButtonToggle } from 'reactstrap';
 
 //Contexts
 import { dataContext } from '../../../App';
