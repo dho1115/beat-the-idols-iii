@@ -14,9 +14,11 @@ export const calculateHighestVote = (videosInChallegeState) => {
 export const updateVideoRecords = (expiredChallenge, highestVote) => {
    const { videosInChallenge } = expiredChallenge;
    try {
-      const leaders = videosInChallenge.map(({ challengeAccessories: { votes } }) => votes == highestVote);
+      const leaders = videosInChallenge.filter(({ challengeAccessories: { votes } }) => votes == highestVote);
 
-      const losers = videosInChallenge.map(({ challengeAccessories: { votes } }) => votes < highestVote);
+      const losers = videosInChallenge.filter(({ challengeAccessories: { votes } }) => votes < highestVote);
+
+      if (leaders.length < 1) throw Error(`const leaders returned: ${leaders}!!! Please debug updateVideoRecords!!!`)
 
       const updateLeaders = leaders.map(({ challengeAccessories, record, ...rest }) => {
          if (leaders.length > 1) {
@@ -24,14 +26,21 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
             record.winPct = record.wins / (record.wins + record.losses + record.ties);
             return { record, ...rest };
          } //tie logic.
+
+         if (!record || !record.wins || !record.ties) throw Error(`Error with the record in updateVideoRecords function!!! ${JSON.stringify({ record, wins: record.wins, ties: record.ties })}.`);
+
          record.wins += 1;
          record.winPct = record.wins / (record.wins + record.losses + record.ties); //win logic
+         console.log({ record, rest });
+         debugger;
          return { record, ...rest };
       })
 
       const updateLosers = losers.length > 0 ? losers.map(({ challengeAccessories, record, ...rest }) => {
          record.losses += 1;
          record.winPct = record.wins / (record.wins + record.losses + record.ties);
+         console.log({ record, rest });
+         debugger;
          return { record, ...rest };
       }) : [];
 
@@ -51,6 +60,8 @@ export const updateRecordInVideosState = (videos, updateVideoRecords) => {
          return video;
       });
 
+      console.log({ videos_updated });
+      debugger;
       return videos_updated;
    } catch (error) {
       console.error({ message: "updatedSelectedVideoData ERROR!!!", error, errorCode: error.code, errorMessage: error.message });
