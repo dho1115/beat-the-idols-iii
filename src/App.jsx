@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //Components - Lazy loaded.
 import ActiveChallenge from './components/home/active-challenge/ActiveChallenge';
@@ -9,7 +10,9 @@ import AnnouncementDetailsComponent from './components/home/challenge-announceme
 import ChallengeForm from './components/forms/challenge/challenge_form/ChallengeForm';
 import ChallengeFormComponent from './components/forms/challenge/ChallengeFormComponent';
 import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
+import ChallengeFormValidation from './components/forms/challenge/challenge_form/ChallengeFormValidation';
 import ChallengeVideos from './components/view_videos/ChallengeVideos';
+import CurrentChallenges from './components/home/CurrentChallenges';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
@@ -29,7 +32,6 @@ import { deleteObjectAPI } from './functions/deleteapi';
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
 const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
 const CurrentUserHomepage = lazy(() => import('./pages/private_pages/userhomepage/CurrentUserHomepage'));
-const CurrentChallenges = lazy(() => import("./components/home/CurrentChallenges"));
 const Homepage = lazy(() => import('./pages/home/Homepage'));
 const RegistrationPage = lazy(() => import('./pages/registration/RegistrationPage'));
 const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
@@ -41,6 +43,7 @@ import './App.css';
 function App() {
   // alert("New Notes. Read!!!")
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({username: '', password: '', email: '', addImage: '', imageSource: '', personalImages: []});
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
@@ -84,15 +87,15 @@ function App() {
               return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated))
             })
           )
-            .then(response => console.log({ message: "Update videos success!!!", response }))
-            .catch(error => console.error({ message: "Something went wrong with updating videos!!!", error, errorMessage: error.message, errorCode: error.code }));
-
-          Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI))
-            .then(response => console.log({ message: "successfully deleted expired challenges!!!", response }))
-            .catch(error => console.error({ message: 'something went wrong deleting one or more challenges', error, errorCode: error.code, errorMessage: error.message }));
+            .then(() => Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI)))
+            .catch(error => console.error({ message: "Something went wrong with updating videos or deleting challenges!!!", error, errorMessage: error.message, errorCode: error.code }));
         } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
 
-        setCurrentChallenges(prv => ([...prv, ..._currentChallenges]))
+        const expired_challenges_ids = expired_challenges.map(({ id }) => id);
+
+        const unexpired_challenges = _currentChallenges.filter(val => !expired_challenges_ids.includes(val.id))
+        
+        setCurrentChallenges(prv => ([...prv, ...unexpired_challenges]))
 
         return fetchDataAPI("http://localhost:3003/videos");
       })
@@ -145,7 +148,7 @@ function App() {
           &&
           <Route path='/currentUser/:user' element={<CurrentUserHomepage />}>
             <Route path="challenge-form/*" element={<ChallengeFormComponent />}>
-              <Route path='details' element={<ChallengeForm />} />
+              <Route path='details' element={<ChallengeFormValidation />} />
               <Route path='add-video' element={<AddChallengeVideos />} />
               <Route path='cover' element={<ChallengeFormCover />} />
             </Route>
