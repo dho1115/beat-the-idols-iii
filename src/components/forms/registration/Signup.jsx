@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 //Dependencies.
 import { dataContext } from '../../../App';
@@ -8,49 +9,33 @@ import { PostDataAPI } from '../../../functions/postapi';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
+//functions
+import { PostRequestToDB } from './functions';
+
 import "./registrationforms.css"
 
 const Signup = ({ text, registrationModal, toggle }) => {
   const _userID = v4();
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentUser, setCurrentUser, allUsers, setAllUsers } = useContext(dataContext);
 
   const { username, password, email, addImage } = currentUser;
 
-  //Promises
-  const addIDToCurrentUser = () => new Promise(
-    (res, rej) => {
-    setCurrentUser(prv => ({ ...prv, id: _userID }));
-    if (currentUser.id) res({ from: 'addIDToCurrentUser', result: 'SUCCESS!!!', currentUser })
-    else rej({ from: 'addIDToCurrentUser', result: 'FAILED (or not yet).', currentUser });
-    }
-  );
-
-  const addUserToAllUsers = () => new Promise(
-    (res, rej) => {
-    const oldLengthAllUsers = allUsers.length;
-    setAllUsers(prv => ([...prv, currentUser]));
-    if (allUsers.length > oldLengthAllUsers) res({ from: 'AddUserToAllUsers', result: 'SUCCESS!!!', allUsers });
-    else rej({ from: 'addIDToCurrentUser', result: 'FAILED (or not yet)', allUsers, currentUser });
-    }
-  );
-
-  const handleSignup = e => {
+  const handleSignup = async e => {
     e.preventDefault();
+    const updatedCurrentUser = { ...currentUser, id: _userID };
+    try {
+      const addToCurrentUserDBandSetState = await PostRequestToDB(_userID, currentUser, "http://localhost:3003/currentUser", () => setCurrentUser(prv => ({...prv, ...updatedCurrentUser})));
+      const addToAllUsersDBAndSetState = await PostRequestToDB(_userID, currentUser, "http://localhost:3003/allUsers", () => setAllUsers(prv => ([...prv, updatedCurrentUser])), location);
 
-    addIDToCurrentUser()
-      .then(data => {
-        console.log({ data });
-        return PostDataAPI('http://localhost:3003/currentUser', data.currentUser)
-      }).then(addIDToCurrentUserResult => {
-        console.log({ addIDToCurrentUserResult });
-        return addUserToAllUsers()
-      })
-      .then(addUserToAllUsersResult => {
-        console.log({ addUserToAllUsersResult });
-        return PostDataAPI('http://localhost:3003/allUsers', { ...currentUser })
-      })
-      .catch(error => console.error({ from: "addIDToCurrentUser", message: "ERROR!!!", error, errorCode: error.code, errorMessage: error.message, status: error.status }));
+      console.log({ message: "Registration is successful!!!", addToCurrentUserDBandSetState, addToAllUsersDBAndSetState });
+      
+      return { addToCurrentUserDBandSetState, addToAllUsersDBAndSetState };
+    } catch (error) {
+      console.error({ message: 'error inside handleSignup function!!!', error, errorCode: error.code, errorMessage: error.message });
+    }
+    
   }
 
   useEffect(() => {
