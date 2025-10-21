@@ -30,75 +30,7 @@
       "id": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd"
     }
   ],
-  "activeChallenges": [
-    {
-      "id": "74799879-39ae-462d-8f16-62a6e77f4602",
-      "_challengeID": "74799879-39ae-462d-8f16-62a6e77f4602",
-      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-      "posted": "2025-10-21",
-      "title": "My Test Challenge.",
-      "description": "This is only a test challenge (the record is not updating for the videos). Gotta fix that.",
-      "challengeCoverType": "online",
-      "challengeCoverImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn21SzbG6ioi0Ox1aXhsrSs9GU0cC4cvAOjHdCQ4kcd8Wa_Q59RoBIXXAAgsqQAjtuogI&usqp=CAU",
-      "challengeEndsOn": "2025-10-29",
-      "winningVotes": 0,
-      "videosInChallenge": [
-        {
-          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
-          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
-          "videoType": "you-tube",
-          "title": "The Wizard and I - cover.",
-          "record": {
-            "wins": 0,
-            "losses": 0,
-            "ties": 0,
-            "winPct:": 0
-          },
-          "username": "jamiesmith",
-          "challengeAccessories": {
-            "votes": 19,
-            "finalStatus": "pending"
-          }
-        },
-        {
-          "id": "cac8900f-2676-40c6-a124-295fd0996256",
-          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
-          "videoType": "you-tube",
-          "title": "The Wizard and I - v2",
-          "record": {
-            "wins": 0,
-            "losses": 0,
-            "ties": 0,
-            "winPct": 0
-          },
-          "username": "jamiesmith",
-          "challengeAccessories": {
-            "votes": 15,
-            "finalStatus": "pending"
-          }
-        },
-        {
-          "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
-          "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
-          "videoType": "you-tube",
-          "title": "The World will Know (\"Newsies\").",
-          "record": {
-            "wins": 0,
-            "losses": 0,
-            "ties": 0,
-            "winPct": 0
-          },
-          "username": "jamiesmith",
-          "challengeAccessories": {
-            "votes": 23,
-            "finalStatus": "pending"
-          }
-        }
-      ],
-      "howChallengeEnds": "date",
-      "challengeAnnouncementID": ""
-    }
-  ],
+  "activeChallenges": [],
   "challengeAnnouncements": [],
   "videos": [
     {
