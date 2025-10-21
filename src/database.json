@@ -1,14 +1,12 @@
 {
   "currentUser": {
-    "username": "AceyAdams",
-    "password": "aceyadams",
-    "email": "aceyadams@email.com",
-    "addImage": true,
-    "imageSource": "online",
+    "username": "jamiesmith",
+    "password": "JamieSmith",
+    "email": "jsmith@email.com",
     "personalImages": [
-      "https://npr.brightspotcdn.com/dims4/default/1777761/2147483647/strip/true/crop/4217x2811+0+0/resize/880x587!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F51%2Fe2%2Fa97a16594573aeaf748aa81afe69%2Fdavid-menidrey-16ep3tgzr-0-unsplash.jpg"
+      "https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"
     ],
-    "id": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd"
+    "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
   },
   "allUsers": [
     {
@@ -34,15 +32,15 @@
   ],
   "activeChallenges": [
     {
-      "id": "822a1278-e5dd-4f3f-b256-eb3465615483",
-      "_challengeID": "822a1278-e5dd-4f3f-b256-eb3465615483",
+      "id": "74799879-39ae-462d-8f16-62a6e77f4602",
+      "_challengeID": "74799879-39ae-462d-8f16-62a6e77f4602",
       "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-      "posted": "2025-10-12",
-      "title": "Jamie's Test Challenge.",
-      "description": "Description of my challenge goes here.",
+      "posted": "2025-10-21",
+      "title": "My Test Challenge.",
+      "description": "This is only a test challenge (the record is not updating for the videos). Gotta fix that.",
       "challengeCoverType": "online",
-      "challengeCoverImage": "https://media.istockphoto.com/id/1401387054/vector/vector-cosmic-illustration-beautiful-colorful-space-background-watercolor-cosmos.jpg?s=612x612&w=0&k=20&c=SaEzaOn8GJfpsw8Of0pn210gj26yEkbkXFBbGfUkJgE=",
-      "challengeEndsOn": "2025-10-21",
+      "challengeCoverImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn21SzbG6ioi0Ox1aXhsrSs9GU0cC4cvAOjHdCQ4kcd8Wa_Q59RoBIXXAAgsqQAjtuogI&usqp=CAU",
+      "challengeEndsOn": "2025-10-29",
       "winningVotes": 0,
       "videosInChallenge": [
         {
@@ -58,7 +56,7 @@
           },
           "username": "jamiesmith",
           "challengeAccessories": {
-            "votes": 25,
+            "votes": 19,
             "finalStatus": "pending"
           }
         },
@@ -75,7 +73,7 @@
           },
           "username": "jamiesmith",
           "challengeAccessories": {
-            "votes": 25,
+            "votes": 15,
             "finalStatus": "pending"
           }
         },
@@ -92,7 +90,7 @@
           },
           "username": "jamiesmith",
           "challengeAccessories": {
-            "votes": 27,
+            "votes": 23,
             "finalStatus": "pending"
           }
         }
