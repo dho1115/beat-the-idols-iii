@@ -79,14 +79,14 @@ function App() {
           setChallengeAnnouncements(prv => ([...prv, _challengeAnnouncements]))
           return fetchDataAPI("http://localhost:3003/activeChallenges");
         })
-        .then(_activeChallenges => {
+        .then(async (_activeChallenges) => {
           const expired_challenges = findExpiredChallenges(_activeChallenges, DateTime, timeRemaining);
 
           const unexpiredChallenges = unexpired_challenges(expired_challenges, _activeChallenges);
           
           setCurrentChallenges(unexpiredChallenges);
 
-          return { _activeChallenges, allVideos: fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
+          return { allVideos: await fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
         })
         .then(({ allVideos, expired_challenges }) => {
           setVideos(prv => ([...prv, ...allVideos]));
@@ -167,18 +167,4 @@ function App() {
 
 export default App 
 
-// if (expired_challenges.length) {
-//             Promise.all(
-//               expired_challenges.map((expiredChallenge) => {
-//                 const { videosInChallenge } = expiredChallenge; //destructure videosInChallenge prop.
-//                 const highestVote = calculateHighestVote(videosInChallenge); //highest vote.
-//                 const leadersAndLosers = updateVideoRecords(expiredChallenge, highestVote); //add 1 to win/loss/tie and calculates record.
-//                 const videos_updated = updateRecordInVideosState(videos, leadersAndLosers); //updates videos state with leadersAndLosers.
 
-
-//                 return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated))
-//               })
-//             )
-//               .then(() => Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI)))
-//               .catch(error => console.error({ message: "Something went wrong with updating videos or deleting challenges!!!", error, errorMessage: error.message, errorCode: error.code }));
-//           } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
