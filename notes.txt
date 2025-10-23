@@ -18,6 +18,4 @@ Work on creating the cards for home/current-challenges. So far, this shows if yo
 
 =====
 
-Put the Delete Active Challenge logic in App.jsx b/c we want any active challenges that has ended to be deleted as soon as the user goes to our url.
-
-Work on endChallengeLogic in functions.jsx.
+Updating video votes too complicated. Possibly too many steps to follow. Please narrow it down.
