@@ -48,7 +48,6 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
 } //[{ id, record: UPDATED!!!, title, urlOrFile: link, username, videoType }];
 
 export const updateRecordInVideosState = (videos, updateVideoRecords) => {
-
    try {
       const { updatedVideoData } = updateVideoRecords;
 
