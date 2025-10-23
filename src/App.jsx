@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 //Components - Lazy loaded.
 import ActiveChallenge from './components/home/active-challenge/ActiveChallenge';
@@ -7,7 +6,6 @@ import AddChallengeVideos from './components/forms/challenge/challenge_videos/Ad
 import AddVideo from './components/forms/add_video/AddVideo';
 import AnnouncementsComponent from './components/home/challenge-announcements/AnnouncementsComponent';
 import AnnouncementDetailsComponent from './components/home/challenge-announcements/AnnouncementDetailsComponent';
-import ChallengeForm from './components/forms/challenge/challenge_form/ChallengeForm';
 import ChallengeFormComponent from './components/forms/challenge/ChallengeFormComponent';
 import ChallengeFormCover from './components/forms/challenge/challenge-form-cover/ChallengeFormCover';
 import ChallengeFormValidation from './components/forms/challenge/challenge_form/ChallengeFormValidation';
@@ -23,9 +21,8 @@ import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_
 import { DateTime } from 'luxon';
 
 //Functions.
-import { calculateHighestVote, updateRecordInVideosState, updateVideoRecords } from './components/home/active-challenge/functions';
-import { UpdateDataAPI, UpdateDataInDBThenSetState } from './functions/updateapi';
-import { findExpiredChallenges, timeRemaining, deleteExpiredChallenges } from './functions/remainingtime';
+import { UpdateDataAPI } from './functions/updateapi';
+import { findExpiredChallenges, timeRemaining } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
 import { unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
 
@@ -88,14 +85,22 @@ function App() {
 
           return { allVideos: await fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
         })
-        .then(({ allVideos, expired_challenges }) => {
+        .then(async ({ allVideos, expired_challenges }) => {
           setVideos(prv => ([...prv, ...allVideos]));
-          setIsLoading(false);
 
           if (expired_challenges.length) {
-            if (allVideos.length) UpdateAllVideos(expired_challenges, allVideos, "http://localhost:3003/videos", setVideos);
-            else throw new Error(`ERROR (inside expired_challenges.length)!!! NO VIDEOS TO UPDATE!!! videos state is ${JSON.stringify(videos)}.`)
+            if (allVideos.length) {
+              const updateVideos = await UpdateAllVideos(expired_challenges, allVideos, "http://localhost:3003/videos", setVideos)
+              
+              const deleteAllExpiredChallenges = await Promise.all(expired_challenges.map(async ({ id }) => await deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)))
+
+              return { updateVideos, deleteAllExpiredChallenges };
+            }
+            else {
+              throw new Error(`ERROR (inside expired_challenges.length)!!! NO VIDEOS TO UPDATE!!! videos state is ${JSON.stringify(videos)}.`)
+            }
           }
+          setIsLoading(false);
         })
       )
         .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
