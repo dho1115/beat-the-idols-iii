@@ -27,20 +27,16 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
             return { record, ...rest };
          } //tie logic.
 
-         if (!record || !record.wins || !record.ties) throw Error(`Error with the record in updateVideoRecords function!!! ${JSON.stringify({ record, wins: record.wins, ties: record.ties })}.`);
-
          record.wins += 1;
          record.winPct = record.wins / (record.wins + record.losses + record.ties); //win logic
-         console.log({ record, rest });
-         debugger;
+
          return { record, ...rest };
       })
 
       const updateLosers = losers.length > 0 ? losers.map(({ challengeAccessories, record, ...rest }) => {
          record.losses += 1;
          record.winPct = record.wins / (record.wins + record.losses + record.ties);
-         console.log({ record, rest });
-         debugger;
+
          return { record, ...rest };
       }) : [];
 
@@ -49,20 +45,22 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
       console.error({ message: 'updateVideoRecordError!!!', error, errorMessage: error.message, errorCode: error.code });
       return { updatedVideoData: [] };
    }
-}
+} //[{ id, record: UPDATED!!!, title, urlOrFile: link, username, videoType }];
 
 export const updateRecordInVideosState = (videos, updateVideoRecords) => {
+
    try {
       const { updatedVideoData } = updateVideoRecords;
+
       const videos_updated = videos.map(video => {
-         const updatedRecord = updatedVideoData.find(({ id }) => (id == video.id)).record;
-         if (updatedRecord) return { ...video, record: updatedRecord };
+         const updatedData = updatedVideoData.find(({ id }) => (id == video.id));
+         const updatedRecord = updatedData.record;
+
+         if (updatedData) return { ...video, record: updatedRecord }
          return video;
       });
 
-      console.log({ videos_updated });
-      debugger;
-      return videos_updated;
+      return videos_updated; //[{...video, record: {}}]
    } catch (error) {
       console.error({ message: "updatedSelectedVideoData ERROR!!!", error, errorCode: error.code, errorMessage: error.message });
    }
