@@ -30,75 +30,7 @@
       "id": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd"
     }
   ],
-  "activeChallenges": [
-    {
-      "id": "ed6f196b-5b78-4de6-98ba-0836dbe5617a",
-      "_challengeID": "ed6f196b-5b78-4de6-98ba-0836dbe5617a",
-      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-      "posted": "2025-10-23",
-      "title": "My Test Challenge.",
-      "description": "This is a description of my test challenge to see if the video records will update.",
-      "challengeCoverType": "online",
-      "challengeCoverImage": "https://cdn.britannica.com/31/130031-050-469B9571/stream-Amazon-Rainforest-Ecuador.jpg",
-      "challengeEndsOn": "2025-10-29",
-      "winningVotes": 0,
-      "videosInChallenge": [
-        {
-          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
-          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
-          "videoType": "you-tube",
-          "title": "The Wizard and I - cover.",
-          "record": {
-            "wins": 0,
-            "losses": 0,
-            "ties": 0,
-            "winPct:": 0
-          },
-          "username": "jamiesmith",
-          "challengeAccessories": {
-            "votes": 31,
-            "finalStatus": "pending"
-          }
-        },
-        {
-          "id": "cac8900f-2676-40c6-a124-295fd0996256",
-          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
-          "videoType": "you-tube",
-          "title": "The Wizard and I - v2",
-          "record": {
-            "wins": 0,
-            "losses": 0,
-            "ties": 0,
-            "winPct": 0
-          },
-          "username": "jamiesmith",
-          "challengeAccessories": {
-            "votes": 17,
-            "finalStatus": "pending"
-          }
-        },
-        {
-          "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
-          "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
-          "videoType": "you-tube",
-          "title": "The World will Know (\"Newsies\").",
-          "record": {
-            "wins": 0,
-            "losses": 0,
-            "ties": 0,
-            "winPct": 0
-          },
-          "username": "jamiesmith",
-          "challengeAccessories": {
-            "votes": 19,
-            "finalStatus": "pending"
-          }
-        }
-      ],
-      "howChallengeEnds": "date",
-      "challengeAnnouncementID": ""
-    }
-  ],
+  "activeChallenges": [],
   "challengeAnnouncements": [],
   "videos": [
     {
@@ -111,10 +43,11 @@
       "id": "a814910a-d9ae-4123-bc13-48333718cec2",
       "posted": "08-07-2025",
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "ties": 0,
-        "winPct:": 0
+        "winPct:": 0,
+        "winPct": 1
       }
     },
     {
@@ -128,7 +61,7 @@
       "posted": "08-07-2025",
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "ties": 0,
         "winPct": 0
       }
@@ -144,7 +77,7 @@
       "posted": "08-07-2025",
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "ties": 0,
         "winPct": 0
       }
