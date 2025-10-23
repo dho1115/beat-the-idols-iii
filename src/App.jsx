@@ -18,7 +18,7 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 //Dependencies.
 import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { fetchDataAPI, fetchDataThenSetState } from './functions/fetchapi';
+import { fetchDataAPI } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { DateTime } from 'luxon';
 
@@ -27,6 +27,7 @@ import { calculateHighestVote, updateRecordInVideosState, updateVideoRecords } f
 import { UpdateDataAPI, UpdateDataInDBThenSetState } from './functions/updateapi';
 import { findExpiredChallenges, timeRemaining, deleteExpiredChallenges } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
+import { unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -43,7 +44,6 @@ import './App.css';
 function App() {
   // alert("New Notes. Read!!!")
   const location = useLocation();
-  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({username: '', password: '', email: '', addImage: '', imageSource: '', personalImages: []});
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
@@ -63,47 +63,42 @@ function App() {
   } //logout logic.
   
   useEffect(() => {
-    fetchDataAPI('http://localhost:3003/currentUser')
-      .then(_currentUser => {
-        setIsLoading(true);
-        setCurrentUser(prv => ({ ...prv, ..._currentUser }));
-        return fetchDataAPI("http://localhost:3003/allUsers");
-      })
-      .then(_allUsers => {
-        setAllUsers(prv => ([...prv, ..._allUsers]));
-        return fetchDataAPI("http://localhost:3003/activeChallenges");
-      })
-      .then(_currentChallenges => {
-        const expired_challenges = findExpiredChallenges(_currentChallenges, DateTime, timeRemaining);
+    setIsLoading(true)
+    Promise.all(
+      fetchDataAPI('http://localhost:3003/currentUser')
+        .then(_currentUser => {
+          setIsLoading(true);
+          setCurrentUser(prv => ({ ...prv, ..._currentUser }));
+          return fetchDataAPI("http://localhost:3003/allUsers");
+        })
+        .then(_allUsers => {
+          setAllUsers(prv => ([...prv, ..._allUsers]));
+          return fetchDataAPI("http://localhost:3003/challengeAnnouncements");
+        })
+        .then(_challengeAnnouncements => {
+          setChallengeAnnouncements(prv => ([...prv, _challengeAnnouncements]))
+          return fetchDataAPI("http://localhost:3003/activeChallenges");
+        })
+        .then(_activeChallenges => {
+          const expired_challenges = findExpiredChallenges(_activeChallenges, DateTime, timeRemaining);
 
-        if (expired_challenges.length) {
-          Promise.all(
-            expired_challenges.map((expiredChallenge) => {
-              const { videosInChallenge } = expiredChallenge; //destructure videosInChallenge prop.
-              const highestVote = calculateHighestVote(videosInChallenge); //returns this highest vote using Math.max
-              const leadersAndLosers = updateVideoRecords(expiredChallenge, highestVote); //add 1 to win/loss/tie and calculates record.
-              const videos_updated = updateRecordInVideosState(videos, leadersAndLosers); //updates videos state with leadersAndLosers.
+          const unexpiredChallenges = unexpired_challenges(expired_challenges, _activeChallenges);
+          
+          setCurrentChallenges(unexpiredChallenges);
 
-              return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated))
-            })
-          )
-            .then(() => Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI)))
-            .catch(error => console.error({ message: "Something went wrong with updating videos or deleting challenges!!!", error, errorMessage: error.message, errorCode: error.code }));
-        } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
+          return { _activeChallenges, allVideos: fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
+        })
+        .then(({ allVideos, expired_challenges }) => {
+          setVideos(prv => ([...prv, ...allVideos]));
+          setIsLoading(false);
 
-        const expired_challenges_ids = expired_challenges.map(({ id }) => id);
-
-        const unexpired_challenges = _currentChallenges.filter(val => !expired_challenges_ids.includes(val.id))
-        
-        setCurrentChallenges(prv => ([...prv, ...unexpired_challenges]))
-
-        return fetchDataAPI("http://localhost:3003/videos");
-      })
-      .then(allVideos => {
-        setVideos(prv => ([...prv, ...allVideos]))
-        setIsLoading(false);
-      })
-      .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
+          if (expired_challenges.length) {
+            if (allVideos.length) UpdateAllVideos(expired_challenges, allVideos, "http://localhost:3003/videos", setVideos);
+            else throw new Error(`ERROR (inside expired_challenges.length)!!! NO VIDEOS TO UPDATE!!! videos state is ${JSON.stringify(videos)}.`)
+          }
+        })
+      )
+        .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
     return () => {
       setVideos([]);
       setCurrentChallenges([])
@@ -125,6 +120,10 @@ function App() {
 
     };
   }, [currentUser.id, currentUser.username, location.pathname])
+
+  useEffect(() => {
+
+  }, [isLoading])
 
   return (
     <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, isLoading, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
@@ -166,4 +165,20 @@ function App() {
   )
 }
 
-export default App
+export default App 
+
+// if (expired_challenges.length) {
+//             Promise.all(
+//               expired_challenges.map((expiredChallenge) => {
+//                 const { videosInChallenge } = expiredChallenge; //destructure videosInChallenge prop.
+//                 const highestVote = calculateHighestVote(videosInChallenge); //highest vote.
+//                 const leadersAndLosers = updateVideoRecords(expiredChallenge, highestVote); //add 1 to win/loss/tie and calculates record.
+//                 const videos_updated = updateRecordInVideosState(videos, leadersAndLosers); //updates videos state with leadersAndLosers.
+
+
+//                 return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated))
+//               })
+//             )
+//               .then(() => Promise.all(deleteExpiredChallenges(expired_challenges, deleteObjectAPI)))
+//               .catch(error => console.error({ message: "Something went wrong with updating videos or deleting challenges!!!", error, errorMessage: error.message, errorCode: error.code }));
+//           } //LOGIC FOR DELETING ANY EXPIRED CHALLENGES.
