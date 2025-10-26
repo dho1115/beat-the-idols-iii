@@ -11,7 +11,7 @@ export const calculateHighestVote = (videosInChallegeState) => {
    return Math.max(...ArrayOfVotes);
 }
 
-export const updateVideoRecords = (expiredChallenge, highestVote) => {
+export const updateVideoRecords = (expiredChallenge, highestVote, videos) => {
    const { videosInChallenge } = expiredChallenge;
    try {
       const leaders = videosInChallenge.filter(({ challengeAccessories: { votes } }) => votes == highestVote);
@@ -20,39 +20,41 @@ export const updateVideoRecords = (expiredChallenge, highestVote) => {
 
       if (leaders.length < 1) throw Error(`const leaders returned: ${leaders}!!! Please debug updateVideoRecords!!!`)
 
-      const updateLeaders = leaders.map(({ challengeAccessories, record, ...rest }) => {
+      const updateLeaders = leaders.map(({ challengeAccessories, id, ...rest }) => {
+         const { record } = videos.find(video => video.id == id); //record from matching video in videos state.
          if (leaders.length > 1) {
             record.ties += 1;
             record.winPct = record.wins / (record.wins + record.losses + record.ties);
-            return { record, ...rest };
+            return { record, id };
          } //tie logic.
 
          record.wins += 1;
          record.winPct = record.wins / (record.wins + record.losses + record.ties); //win logic
 
-         return { record, ...rest };
+         return { record, id };
       })
 
-      const updateLosers = losers.length > 0 ? losers.map(({ challengeAccessories, record, ...rest }) => {
+      const updateLosers = losers.length > 0 ? losers.map(({ challengeAccessories, id, ...rest }) => {
+         const { record } = videos.find(video => video.id == id);
          record.losses += 1;
-         record.winPct = record.wins / (record.wins + record.losses + record.ties);
+         record.winPct = record.wins / (record.losses + record.ties);
 
-         return { record, ...rest };
-      }) : [];
+         return { record, id };
+      }) : []
 
       return { updatedVideoData: [...updateLeaders, ...updateLosers] };
    } catch (error) {
       console.error({ message: 'updateVideoRecordError!!!', error, errorMessage: error.message, errorCode: error.code });
-      return { updatedVideoData: [] };
+      return { id_and_updated_records: [] };
    }
 } //[{ id, record: UPDATED!!!, title, urlOrFile: link, username, videoType }];
 
 export const updateRecordInVideosState = (videos, updateVideoRecords) => {
    try {
-      const { updatedVideoData } = updateVideoRecords;
+      const { id_and_updated_records } = updateVideoRecords;
 
       const videos_updated = videos.map(video => {
-         const updatedData = updatedVideoData.find(({ id }) => (id == video.id));
+         const updatedData = id_and_updated_records.find(({ id }) => (id == video.id));
          const updatedRecord = updatedData.record;
 
          if (updatedData) return { ...video, record: updatedRecord }
@@ -91,8 +93,10 @@ export const findLeaders = (videosInChallenge, calculateHighestVote) => {
 
 export const updateDatabaseAndState = async (CRUD_action, url, setStateWrapperFunction, data = null) => {
    try {
+      if (data == null || !data) throw new Error(`Your data argument(4th argument) cannot be null!!! You have ${data}.`);
+
       const updateDB = await CRUD_action(url, data);
-      setStateWrapperFunction()
+      setStateWrapperFunction();
       return { message: "updateDatabseAndState SUCCESS!!!", updateDB };
    } catch (error) {
       console.error({error})
