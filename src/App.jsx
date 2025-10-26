@@ -24,7 +24,7 @@ import { DateTime } from 'luxon';
 import { UpdateDataAPI } from './functions/updateapi';
 import { findExpiredChallenges, timeRemaining } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
-import { unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
+import { InitialFetchDBandUpdateState, unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -61,49 +61,20 @@ function App() {
   
   useEffect(() => {
     setIsLoading(true)
+
     Promise.all(
-      fetchDataAPI('http://localhost:3003/currentUser')
-        .then(_currentUser => {
-          setIsLoading(true);
-          setCurrentUser(prv => ({ ...prv, ..._currentUser }));
-          return fetchDataAPI("http://localhost:3003/allUsers");
-        })
-        .then(_allUsers => {
-          setAllUsers(prv => ([...prv, ..._allUsers]));
-          return fetchDataAPI("http://localhost:3003/challengeAnnouncements");
-        })
-        .then(_challengeAnnouncements => {
-          setChallengeAnnouncements(prv => ([...prv, _challengeAnnouncements]))
-          return fetchDataAPI("http://localhost:3003/activeChallenges");
-        })
-        .then(async (_activeChallenges) => {
-          const expired_challenges = findExpiredChallenges(_activeChallenges, DateTime, timeRemaining);
+      [InitialFetchDBandUpdateState('http://localhost:3003/currentUser', _currentUser => setCurrentUser(prv => ({ ...prv, ..._currentUser })), "currentUser", currentUser),
+      InitialFetchDBandUpdateState("http://localhost:3003/allUsers", allUsers => setAllUsers(allUsers), "allUsers", allUsers),
+      InitialFetchDBandUpdateState("http://localhost:3003/videos", videos => setVideos(videos), "videos", videos),
+      InitialFetchDBandUpdateState("http://localhost:3003/challengeAnnouncements", _challengeAnnouncements => setChallengeAnnouncements(_challengeAnnouncements), "challengeAnnouncements", challengeAnnouncements),
+      InitialFetchDBandUpdateState('http://localhost:3003/activeChallenges', _activeChallenges => setCurrentChallenges(_activeChallenges), 'currentChallenges', currentChallenges)]
+    )
+      .then(result => {
+        console.log(result);
+        return result;
+      })
+      .catch(error => console.error({ message: "Promise.all ERROR!!! - Did you forget that Promise.all(array: []) takes an ARRAY???", error, errorCode: error.code, errorMessage: error.message, errorStack: error.stack }));
 
-          const unexpiredChallenges = unexpired_challenges(expired_challenges, _activeChallenges);
-          
-          setCurrentChallenges(unexpiredChallenges);
-
-          return { allVideos: await fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
-        })
-        .then(async ({ allVideos, expired_challenges }) => {
-          setVideos(prv => ([...prv, ...allVideos]));
-
-          if (expired_challenges.length) {
-            if (allVideos.length) {
-              const updateVideos = await UpdateAllVideos(expired_challenges, allVideos, "http://localhost:3003/videos", setVideos)
-              
-              const deleteAllExpiredChallenges = await Promise.all(expired_challenges.map(async ({ id }) => await deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)))
-
-              return { updateVideos, deleteAllExpiredChallenges };
-            }
-            else {
-              throw new Error(`ERROR (inside expired_challenges.length)!!! NO VIDEOS TO UPDATE!!! videos state is ${JSON.stringify(videos)}.`)
-            }
-          }
-          setIsLoading(false);
-        })
-      )
-        .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
     return () => {
       setVideos([]);
       setCurrentChallenges([])
@@ -170,6 +141,49 @@ function App() {
   )
 }
 
-export default App 
+export default App
+
+    // Promise.all(
+    //   fetchDataAPI('http://localhost:3003/currentUser')
+    //     .then(_currentUser => {
+    //       setCurrentUser(prv => ({ ...prv, ..._currentUser }));
+    //       return fetchDataAPI("http://localhost:3003/allUsers");
+    //     })
+    //     .then(_allUsers => {
+    //       setAllUsers(prv => ([...prv, ..._allUsers]));
+    //       return fetchDataAPI("http://localhost:3003/challengeAnnouncements");
+    //     })
+    //     .then(_challengeAnnouncements => {
+    //       setChallengeAnnouncements(prv => ([...prv, _challengeAnnouncements]))
+    //       return fetchDataAPI("http://localhost:3003/activeChallenges");
+    //     })
+    //     .then(async (_activeChallenges) => {
+    //       const expired_challenges = findExpiredChallenges(_activeChallenges, DateTime, timeRemaining);
+
+    //       const unexpiredChallenges = unexpired_challenges(expired_challenges, _activeChallenges);
+          
+    //       setCurrentChallenges(unexpiredChallenges);
+
+    //       return { allVideos: await fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
+    //     })
+    //     .then(async ({ allVideos, expired_challenges }) => {
+    //       setVideos(prv => ([...prv, ...allVideos]));
+
+    //       if (expired_challenges.length) {
+    //         if (allVideos.length) {
+    //           const updateVideos = await UpdateAllVideos(expired_challenges, allVideos, "http://localhost:3003/videos", setVideos)
+              
+    //           const deleteAllExpiredChallenges = await Promise.all(expired_challenges.map(async ({ id }) => await deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)))
+
+    //           return { updateVideos, deleteAllExpiredChallenges };
+    //         }
+    //         else {
+    //           throw new Error(`ERROR (inside expired_challenges.length)!!! NO VIDEOS TO UPDATE!!! videos state is ${JSON.stringify(videos)}.`)
+    //         }
+    //       }
+    //       setIsLoading(false);
+    //     })
+    //   )
+    //     .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
 
 
