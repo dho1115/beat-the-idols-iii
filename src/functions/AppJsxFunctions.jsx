@@ -14,13 +14,23 @@ export const FetchDB = async (fetchDataAPI, url) => {
 export const InitialFetchDBandUpdateState = (url, setStateWrapper, name_of_state = null, state=null, ...args) => fetchDataAPI(url)
    .then(jsonData => {
       setStateWrapper(jsonData);
-      console.log({ message: `Successfully fetched ${JSON.stringify(jsonData)} and set ${name_of_state} state!!!`, jsonData });
 
-      return { message: `Successfully fetched ${JSON.stringify(jsonData)} and set ${name_of_state} state!!!`, jsonData }
+      return { name_of_state, state, jsonData };
    })
    .catch(error => {
       console.error({ message: `Error inside InitialFetchDBandUpdateState while trying to set ${name_of_state} state!!!`, error, errorCode: error.code, errorMessage: error.message, "errorStack": error.stack });
    })
+
+export const PatchDataAndSetState = async (url, newDataFragment, setStateWrapper) => {
+   try {
+      const patchData = await PatchDataAPI(url, newDataFragment);
+      const fetchData = await fetchDataAPI(url);
+      setStateWrapper(fetchData);
+      return { message: "PatchDataAndSetState success!!!", setStateWrapper, fetchData };
+   } catch (error) {
+      console.error({ message: "PatchDataAndSetState Error!!!", TraceStack: error.stack, ErrorMessage: error.message, ErrorCode: error.code });
+   }
+}
 
 export const UpdateAllVideos = (expired_challenges, videos, link, setVideosWrapper) => {
 
@@ -31,7 +41,7 @@ export const UpdateAllVideos = (expired_challenges, videos, link, setVideosWrapp
          const leadersAndLosers = updateVideoRecords(expiredChallenge, highestVote, videos); //add 1 to win/loss/tie and calculates record.
          const videos_updated = updateRecordInVideosState(videos, leadersAndLosers); //updates videos state with leadersAndLosers.
 
-         return UpdateDataInDBThenSetState(UpdateDataAPI, link, videos_updated, setVideosWrapper)
+         return UpdateDataInDBThenSetState(link, videos_updated, setVideosWrapper)
             .then(data => Promise.all(data.map(({ id, record }) => PatchDataAPI(`http://localhost:3003/videos/${id}`, { record }))))
             .then(result => console.log("Promse.all SUCCESS in UpdateDataInDBThenSetState!!! Result is:", result))
             .catch(error => console.error({ message: "error in update all videos!!!", videos, videosInChallenge, error, errorCode: error.code, errorMessage: error.message }))
