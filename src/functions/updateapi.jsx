@@ -8,7 +8,7 @@ export const UpdateDataAPI = (url, updatedData) => fetch(url, {
    .then(result => console.log({ message: "SUCCESS!!!", result }))
    .catch(error => console.error({ errorMessage: error.message }))
 
-export const UpdateDataInDBThenSetState = async (UpdateDataAPI, url, updatedData, setStateWrapper) => {
+export const UpdateDataInDBThenSetState = async (url, updatedData, setStateWrapper) => {
    try {
       const updateDB = await UpdateDataAPI(url, updatedData);
       setStateWrapper(updatedData)
