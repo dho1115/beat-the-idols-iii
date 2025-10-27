@@ -6,7 +6,6 @@ export const deleteObjectAPI = url => fetch(url, {
       
       else console.error("delete is NOT ok:", result);
 
-      debugger;
-      return { result, url };
+      return { result, url, message: `DELETED THE FOLLOWING: ${url}` };
    })
    .catch(error => console.error({ message: `Error deleting ${url}...`, error, errorCode: error.code, errorMessage: error.message }));
