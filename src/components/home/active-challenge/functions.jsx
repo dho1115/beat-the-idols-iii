@@ -1,5 +1,6 @@
 import { UpdateDataInDBThenSetState } from "../../../functions/updateapi";
 import { deleteObjectAPI } from "../../../functions/deleteapi";
+import { PatchDataAndSetState } from "../../../functions/AppJsxFunctions";
 
 export const addVoteToVideoLogic = (videosInChallegeState, targetID) => videosInChallegeState.map(challengeVideo => {
    if (challengeVideo.id == targetID) challengeVideo.challengeAccessories.votes += 1;
@@ -20,21 +21,24 @@ export const updateVideoRecords = (expiredChallenge, highestVote, videos) => {
 
       if (leaders.length < 1) throw Error(`const leaders returned: ${leaders}!!! Please debug updateVideoRecords!!!`)
 
-      const updateLeaders = leaders.map(({ challengeAccessories, id, ...rest }) => {
+      const updatedLeadersArray = leaders.map(({ id }) => {
          const { record } = videos.find(video => video.id == id); //record from matching video in videos state.
-         if (leaders.length > 1) {
+
+         if (leaders.length > 1 /* TIE!!! */) {
+            //update ties for this video record in the state.
             record.ties += 1;
             record.winPct = record.wins / (record.wins + record.losses + record.ties);
             return { record, id };
-         } //tie logic.
-
-         record.wins += 1;
-         record.winPct = record.wins / (record.wins + record.losses + record.ties); //win logic
+         } else /* WINNER!!! */ {
+            //update win for this video record in the state.
+            record.wins += 1;
+            record.winPct = record.wins / (record.wins + record.losses + record.ties);
+         } 
 
          return { record, id };
       })
 
-      const updateLosers = losers.length > 0 ? losers.map(({ challengeAccessories, id, ...rest }) => {
+      const updatedLosersArray = losers.length > 0 ? losers.map(({ id }) => {
          const { record } = videos.find(video => video.id == id);
          record.losses += 1;
          record.winPct = record.wins / (record.losses + record.ties);
@@ -42,19 +46,19 @@ export const updateVideoRecords = (expiredChallenge, highestVote, videos) => {
          return { record, id };
       }) : []
 
-      return { updatedVideoData: [...updateLeaders, ...updateLosers] };
+      return [...updatedLeadersArray, ...updatedLosersArray];
    } catch (error) {
       console.error({ message: 'updateVideoRecordError!!!', error, errorMessage: error.message, errorCode: error.code });
-      return { id_and_updated_records: [] };
+      return [];
    }
-} //[{ id, record: UPDATED!!!, title, urlOrFile: link, username, videoType }];
+} //[{record, id}];
 
 export const updateRecordInVideosState = (videos, updateVideoRecords) => {
    try {
-      const { id_and_updated_records } = updateVideoRecords;
+      const vidRecordsAndIDsUpdated = updateVideoRecords;
 
       const videos_updated = videos.map(video => {
-         const updatedData = id_and_updated_records.find(({ id }) => (id == video.id));
+         const updatedData = vidRecordsAndIDsUpdated.find(({ id }) => (id == video.id));
          const updatedRecord = updatedData.record;
 
          if (updatedData) return { ...video, record: updatedRecord }
