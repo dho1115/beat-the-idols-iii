@@ -21,10 +21,12 @@ import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_
 import { DateTime } from 'luxon';
 
 //Functions.
+import { calculateHighestVote, updateVideoRecords } from './components/home/active-challenge/functions';
+import { PatchDataAPI } from './functions/patchapi';
 import { UpdateDataAPI } from './functions/updateapi';
 import { findExpiredChallenges, timeRemaining } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
-import { InitialFetchDBandUpdateState, unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
+import { InitialFetchDBandUpdateState, PatchDataAndSetState, unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -38,10 +40,11 @@ export const dataContext = createContext();
 
 import './App.css';
 
+
 function App() {
   // alert("New Notes. Read!!!")
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState({username: '', password: '', email: '', addImage: '', imageSource: '', personalImages: []});
+  const [currentUser, setCurrentUser] = useState({ username: '', password: '', email: '', addImage: '', imageSource: '', personalImages: [] });
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
   const [currentChallenges, setCurrentChallenges] = useState([]);
@@ -53,7 +56,7 @@ function App() {
     try {
       const updateCurrentUser = await UpdateDataAPI("http://localhost:3003/currentUser", {});
        
-       setCurrentUser({});
+      setCurrentUser({});
     } catch (err) {
       console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
     }
@@ -63,16 +66,15 @@ function App() {
     setIsLoading(true)
 
     Promise.all(
-      [InitialFetchDBandUpdateState('http://localhost:3003/currentUser', _currentUser => setCurrentUser(prv => ({ ...prv, ..._currentUser })), "currentUser", currentUser),
-      InitialFetchDBandUpdateState("http://localhost:3003/allUsers", allUsers => setAllUsers(allUsers), "allUsers", allUsers),
-      InitialFetchDBandUpdateState("http://localhost:3003/videos", videos => setVideos(videos), "videos", videos),
-      InitialFetchDBandUpdateState("http://localhost:3003/challengeAnnouncements", _challengeAnnouncements => setChallengeAnnouncements(_challengeAnnouncements), "challengeAnnouncements", challengeAnnouncements),
-      InitialFetchDBandUpdateState('http://localhost:3003/activeChallenges', _activeChallenges => setCurrentChallenges(_activeChallenges), 'currentChallenges', currentChallenges)]
+      [
+        InitialFetchDBandUpdateState('http://localhost:3003/currentUser', _currentUser => setCurrentUser(prv => ({ ...prv, ..._currentUser })), "currentUser", currentUser),
+        InitialFetchDBandUpdateState("http://localhost:3003/allUsers", allUsers => setAllUsers(allUsers), "allUsers", allUsers),
+        InitialFetchDBandUpdateState("http://localhost:3003/videos", videos => setVideos(videos), "videos", videos),
+        InitialFetchDBandUpdateState("http://localhost:3003/challengeAnnouncements", _challengeAnnouncements => setChallengeAnnouncements(_challengeAnnouncements), "challengeAnnouncements", challengeAnnouncements),
+        InitialFetchDBandUpdateState('http://localhost:3003/activeChallenges', _activeChallenges => setCurrentChallenges(_activeChallenges), 'currentChallenges', currentChallenges)
+      ]
     )
-      .then(result => {
-        console.log(result);
-        return result;
-      })
+      .then(array => setIsLoading(false))
       .catch(error => console.error({ message: "Promise.all ERROR!!! - Did you forget that Promise.all(array: []) takes an ARRAY???", error, errorCode: error.code, errorMessage: error.message, errorStack: error.stack }));
 
     return () => {
@@ -98,8 +100,29 @@ function App() {
   }, [currentUser.id, currentUser.username, location.pathname])
 
   useEffect(() => {
+    const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
 
-  }, [isLoading])
+    if (currentChallenges.length && expiredChallenges.length && videos.length) {
+      //logic to handle expired challenges.
+
+      const reduceRecordsForEachChallenge = expiredChallenges
+        .reduce((acc, expiredChallenge) => {
+          const highestVote = calculateHighestVote(expiredChallenge.videosInChallenge);
+          acc = [...acc, ...updateVideoRecords(expiredChallenge, highestVote, videos)]
+          return acc;
+        }, [])
+      
+      if (reduceRecordsForEachChallenge.length) {
+        const updateDBandSetState = reduceRecordsForEachChallenge.map(({ record, id }) => PatchDataAndSetState(`http://localhost:3003/videos/${id}`, { record }, updatedVideos => setVideos(updatedVideos)))
+
+        Promise.all(updateDBandSetState)
+          .then(PromiseAllResult => console.log({ message: "Success!!!", PromiseAllResult }))
+          .catch(error => console.error({ message: "ERROR in updateDBandSetState!!!", errorMessage: error.message, errorStack: error.stack, errorCode: error.code }));
+      }
+
+      expiredChallenges.forEach(({id}) => deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`))
+    }
+  }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
   return (
     <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, isLoading, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
