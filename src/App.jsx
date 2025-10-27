@@ -99,30 +99,30 @@ function App() {
     };
   }, [currentUser.id, currentUser.username, location.pathname])
 
-  useEffect(() => {
-    const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
+  // useEffect(() => {
+  //   const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
 
-    if (currentChallenges.length && expiredChallenges.length && videos.length) {
-      //logic to handle expired challenges.
+  //   if (currentChallenges.length && expiredChallenges.length && videos.length) {
+  //     //logic to handle expired challenges.
 
-      const reduceRecordsForEachChallenge = expiredChallenges
-        .reduce((acc, expiredChallenge) => {
-          const highestVote = calculateHighestVote(expiredChallenge.videosInChallenge);
-          acc = [...acc, ...updateVideoRecords(expiredChallenge, highestVote, videos)]
-          return acc;
-        }, [])
+  //     const reduceRecordsForEachChallenge = expiredChallenges
+  //       .reduce((acc, expiredChallenge) => {
+  //         const highestVote = calculateHighestVote(expiredChallenge.videosInChallenge);
+  //         acc = [...acc, ...updateVideoRecords(expiredChallenge, highestVote, videos)]
+  //         return acc;
+  //       }, [])
       
-      if (reduceRecordsForEachChallenge.length) {
-        const updateDBandSetState = reduceRecordsForEachChallenge.map(({ record, id }) => PatchDataAndSetState(`http://localhost:3003/videos/${id}`, { record }, updatedVideos => setVideos(updatedVideos)))
+  //     if (reduceRecordsForEachChallenge.length) {
+  //       const updateDBandSetState = reduceRecordsForEachChallenge.map(({ record, id }) => PatchDataAndSetState(`http://localhost:3003/videos/${id}`, { record }, updatedVideos => setVideos(updatedVideos)))
 
-        Promise.all(updateDBandSetState)
-          .then(PromiseAllResult => console.log({ message: "Success!!!", PromiseAllResult }))
-          .catch(error => console.error({ message: "ERROR in updateDBandSetState!!!", errorMessage: error.message, errorStack: error.stack, errorCode: error.code }));
-      }
+  //       Promise.all(updateDBandSetState)
+  //         .then(PromiseAllResult => console.log({ message: "Success!!!", PromiseAllResult }))
+  //         .catch(error => console.error({ message: "ERROR in updateDBandSetState!!!", errorMessage: error.message, errorStack: error.stack, errorCode: error.code }));
+  //     }
 
-      expiredChallenges.forEach(({id}) => deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`))
-    }
-  }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
+  //     expiredChallenges.forEach(({id}) => deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`))
+  //   }
+  // }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
   return (
     <dataContext.Provider value={{ challengeAnnouncements, setChallengeAnnouncements, currentUser, setCurrentUser, allUsers, setAllUsers, currentChallenges, setCurrentChallenges, isLoading, videos, setVideos, welcomeLinks, setWelcomeLinks }}>
