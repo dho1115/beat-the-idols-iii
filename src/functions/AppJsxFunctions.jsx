@@ -2,6 +2,7 @@ import { calculateHighestVote, updateRecordInVideosState, updateVideoRecords } f
 import { fetchDataAPI } from "./fetchapi";
 import { PatchDataAPI } from "./patchapi";
 import { UpdateDataAPI, UpdateDataInDBThenSetState } from "./updateapi";
+import { findExpiredChallenges } from "./remainingtime";
 
 export const FetchDB = async (fetchDataAPI, url) => {
    try {
@@ -54,3 +55,11 @@ export const unexpired_challenges = (expired_challenges, active_challenges) => {
 
    return active_challenges.filter(val => !expired_challenges_ids.includes(val.id));
 }
+
+export const videosFromExpiredChallenges = (activeChallenges, DateTime) => findExpiredChallenges(activeChallenges, DateTime).reduce((acc, expiredChallenge) => {
+   const { videosInChallenge } = expiredChallenge;
+   acc = [...acc, ...videosInChallenge];
+   
+   return acc;
+}, [])
+   
