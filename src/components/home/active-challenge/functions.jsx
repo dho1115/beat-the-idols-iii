@@ -21,29 +21,33 @@ export const updateVideoRecords = (expiredChallenge, highestVote, videos) => {
 
       if (leaders.length < 1) throw Error(`const leaders returned: ${leaders}!!! Please debug updateVideoRecords!!!`)
 
-      const updatedLeadersArray = leaders.map(({ id }) => {
+      const updatedLeadersArray = leaders.map(video => {
+         const { id, challengeAccessories } = video;
          const { record } = videos.find(video => video.id == id); //record from matching video in videos state.
 
          if (leaders.length > 1 /* TIE!!! */) {
-            //update ties for this video record in the state.
+            //update ties and finalStatus for this video record in the state.
             record.ties += 1;
             record.winPct = record.wins / (record.wins + record.losses + record.ties);
-            return { record, id };
+            challengeAccessories.finalStatus = 'TIE'
+            return { video, finalStatus: 'TIE', record, id };
          } else /* WINNER!!! */ {
-            //update win for this video record in the state.
+            //update win and finalStatus for this video record in the state.
+            challengeAccessories.finalStatus = 'WINNER'
             record.wins += 1;
             record.winPct = record.wins / (record.wins + record.losses + record.ties);
          } 
 
-         return { record, id };
+         return { video, finalStatus: 'WINNER', record, id };
       })
 
-      const updatedLosersArray = losers.length > 0 ? losers.map(({ id }) => {
+      const updatedLosersArray = losers.length > 0 ? losers.map(video => {
+         const { id } = video;
          const { record } = videos.find(video => video.id == id);
          record.losses += 1;
          record.winPct = record.wins / (record.losses + record.ties);
 
-         return { record, id };
+         return { video, finalStatus: 'LOSER', record, id };
       }) : []
 
       return [...updatedLeadersArray, ...updatedLosersArray];
