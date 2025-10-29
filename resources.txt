@@ -79,4 +79,54 @@ This simulates a parallax-like effect using transform and object-fit on a video.
 
 You could use a scroll event or IntersectionObserver to dynamically animate the video position for true parallax, but the above gives a visual approximation.
 
+How to do CHUNKING/BATCHING for updating millions of values inside an array:
+
+// Assume this is your massive array
+const PRODUCTS = Array.from({ length: 100000000 }, (_, i) => ({ id: i, price: 10.00 }));
+
+// Configuration
+const BATCH_SIZE = 10000;
+
+// State management (in a React component, you'd use useState/useReducer)
+let processedCount = 0;
+let updatedProducts = []; // The array that will hold the final, updated products
+
+function updateProductsInBatches() {
+  
+  // 1. Determine the start and end indices for the current batch
+  const startIndex = processedCount;
+  const endIndex = Math.min(PRODUCTS.length, startIndex + BATCH_SIZE);
+
+  // 2. Process the current chunk
+  const currentBatch = PRODUCTS.slice(startIndex, endIndex).map(product => {
+    // 💡 This is your O(1) synchronous price update operation
+    return {
+      ...product,
+      price: product.price * 1.05 // e.g., applying a 5% increase
+    };
+  });
+
+  // 3. Append the processed results
+  updatedProducts.push(...currentBatch);
+  processedCount = endIndex;
+
+  // 4. Update UI Status (Crucial for user feedback)
+  console.log(`Progress: ${processedCount} of ${PRODUCTS.length} items processed.`);
+  // In React: setProgress(processedCount / PRODUCTS.length);
+
+  // 5. Check if more processing is needed
+  if (processedCount < PRODUCTS.length) {
+    // 6. DEFER the next batch using setTimeout(..., 0)
+    // This releases the main thread to handle other tasks (like UI updates)
+    setTimeout(updateProductsInBatches, 0);
+  } else {
+    // 7. Completion
+    console.log("✅ All products updated successfully!");
+    // In React: setProducts(updatedProducts);
+  }
+}
+
+// Start the process
+// updateProductsInBatches();
+
 
