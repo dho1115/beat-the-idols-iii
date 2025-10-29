@@ -52,8 +52,7 @@
             "wins": 1,
             "losses": 0,
             "ties": 0,
-            "winPct:": 0,
-            "winPct": 1
+            "winPct:": 0
           },
           "username": "jamiesmith",
           "challengeAccessories": {
@@ -91,7 +90,7 @@
           },
           "username": "jamiesmith",
           "challengeAccessories": {
-            "votes": 7,
+            "votes": 31,
             "finalStatus": "pending"
           }
         }
@@ -183,7 +182,6 @@
         "wins": 1,
         "losses": 0,
         "ties": 0,
-        "winPct:": 0,
         "winPct": 1
       }
     },
