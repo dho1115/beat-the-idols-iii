@@ -22,11 +22,12 @@ import { DateTime } from 'luxon';
 
 //Functions.
 import { calculateHighestVote, updateVideoRecords } from './components/home/active-challenge/functions';
+import { handleVideoRecordsUpdateInDBandState } from './functions/UpdateVideoRecords';
 import { PatchDataAPI } from './functions/patchapi';
 import { UpdateDataAPI } from './functions/updateapi';
 import { findExpiredChallenges, timeRemaining } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
-import { InitialFetchDBandUpdateState, PatchDataAndSetState, unexpired_challenges, UpdateAllVideos } from './functions/AppJsxFunctions';
+import { InitialFetchDBandUpdateState, PatchDataAndSetState, unexpired_challenges, UpdateAllVideos, videosFromExpiredChallenges } from './functions/AppJsxFunctions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -103,7 +104,10 @@ function App() {
     const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
 
     if (currentChallenges.length && expiredChallenges.length && videos.length) {
-      //logic to handle expired challenges.
+      const updatedVideoProps = handleVideoRecordsUpdateInDBandState(expiredChallenges, videos)
+
+      console.log({ updatedVideoProps });
+      debugger
     }
   }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
