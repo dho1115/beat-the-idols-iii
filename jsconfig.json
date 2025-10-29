@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": ["src"],
+  "javascript.suggest.autoImports": true,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "editor.quickSuggestions": { "other": true, "comments": false, "strings": true },
+  "editor.suggest.selection": "recentlyUsedByPrefix",
+  "editor.suggest.showIcons": true,
+  "emmet.includeLanguages": { "javascript": "javascriptreact" },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/**": true
+  }
+}
