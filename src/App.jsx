@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 
-//Components - Lazy loaded.
+//Components.
 import ActiveChallenge from './components/home/active-challenge/ActiveChallenge';
 import AddChallengeVideos from './components/forms/challenge/challenge_videos/AddChallengeVideos';
 import AddVideo from './components/forms/add_video/AddVideo';
@@ -16,18 +16,13 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 //Dependencies.
 import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { fetchDataAPI, fetchDataThenSetState } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { DateTime } from 'luxon';
 
 //Functions.
 import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
-import { PatchDataAPI } from './functions/patchapi';
 import { UpdateDataAPI } from './functions/updateapi';
-import { findExpiredChallenges } from './functions/remainingtime';
-import { deleteObjectAPI } from './functions/deleteapi';
 import { InitialFetchDBandUpdateState } from './functions/AppJsxFunctions';
-import { updateFinalStatusesForVideos } from './components/home/active-challenge/functions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -74,7 +69,7 @@ function App() {
         InitialFetchDBandUpdateState('http://localhost:3003/activeChallenges', _activeChallenges => setCurrentChallenges(_activeChallenges), 'currentChallenges', currentChallenges)
       ]
     )
-      .then(array => setIsLoading(false))
+      .then(() => setIsLoading(false))
       .catch(error => console.error({ message: "Promise.all ERROR!!! - Did you forget that Promise.all(array: []) takes an ARRAY???", error, errorCode: error.code, errorMessage: error.message, errorStack: error.stack }));
 
     return () => {
@@ -100,51 +95,11 @@ function App() {
   }, [currentUser.id, currentUser.username, location.pathname])
 
   useEffect(() => {
-    // const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
-
-    // if (currentChallenges.length && expiredChallenges.length && videos.length) {
-    //   const challengeVideosFinalStatuses = expiredChallenges
-    //     .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname))
-    //     .reduce((accumulator, array) => {
-    //       accumulator = [...accumulator, ...array];
-    //       return accumulator;
-    //     }, []) //[{finalStatus, _videoID, video_data}]
-      
-    //   challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
-    //     const { record } = videos.find(({ id }) => id == _videoID);
-    //     const { wins, losses, ties } = record;
-    //     if (finalStatus == 'WINNER') {
-    //       const wins_updated = wins + 1;
-    //       const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
-          
-    //       await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
-    //     }
-    //     else if (finalStatus == 'LOSER') {
-    //       const losses_updated = losses + 1;
-    //       const winPct_updated = wins / (wins + losses_updated + ties);
-          
-    //       await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
-    //     }
-    //     else {
-    //       const ties_updated = ties + 1;
-    //       const winPct_updated = wins / (wins + losses + ties_updated);
-          
-    //       await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
-    //     }
-    //   })
-
-    //   fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideos(data))
-    //     .then(data => {
-    //       console.log({ data });
-    //       if (data.length) {
-    //         expiredChallenges.forEach(({ id }) =>
-    //           deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
-    //             .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
-    //       }
-    //       else throw new Error({ message: `ERROR!!! data has not set (yet). data is still ${JSON.stringify(data)}.`, data })
-    //     })
-    //     .catch(error => ({ message: "Error in fetchDataThenSetState!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, errorStack: error.stack }));
-    // }
+    try {
+      handleExpiredActiveChallenges(videos, currentChallenges, DateTime, data => setVideos(data), location.params)
+    } catch (error) {
+      console.error({ message: "ERROR inside useEffect(f, [isLoading, currentChallenges.length, challengeAnnouncements.length])", error, errorMessage: error.message })
+    };
   }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
   return (
