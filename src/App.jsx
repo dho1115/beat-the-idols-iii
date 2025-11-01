@@ -134,8 +134,16 @@ function App() {
       })
 
       fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideos(data))
-        .then(() => expiredChallenges.forEach(({ id }) =>
-          deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`).catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name }))));
+        .then(data => {
+          console.log({ data });
+          if (data.length) {
+            expiredChallenges.forEach(({ id }) =>
+              deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
+                .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
+          }
+          else throw new Error({ message: `ERROR!!! data has not set (yet). data is still ${JSON.stringify(data)}.`, data })
+        })
+        .catch(error => ({ message: "Error in fetchDataThenSetState!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, errorStack: error.stack }));
     }
   }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
