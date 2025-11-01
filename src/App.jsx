@@ -21,12 +21,12 @@ import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_
 import { DateTime } from 'luxon';
 
 //Functions.
-import { handleVideoRecordsUpdateInDBandState } from './functions/UpdateVideoRecords';
+import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
 import { PatchDataAPI } from './functions/patchapi';
 import { UpdateDataAPI } from './functions/updateapi';
 import { findExpiredChallenges } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
-import { InitialFetchDBandUpdateState, PatchDataAndSetState } from './functions/AppJsxFunctions';
+import { InitialFetchDBandUpdateState } from './functions/AppJsxFunctions';
 import { updateFinalStatusesForVideos } from './components/home/active-challenge/functions';
 
 //Pages - Lazy loaded.
@@ -100,51 +100,51 @@ function App() {
   }, [currentUser.id, currentUser.username, location.pathname])
 
   useEffect(() => {
-    const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
+    // const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
 
-    if (currentChallenges.length && expiredChallenges.length && videos.length) {
-      const challengeVideosFinalStatuses = expiredChallenges
-        .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname))
-        .reduce((accumulator, array) => {
-          accumulator = [...accumulator, ...array];
-          return accumulator;
-        }, []) //[{finalStatus, _videoID, video_data}]
+    // if (currentChallenges.length && expiredChallenges.length && videos.length) {
+    //   const challengeVideosFinalStatuses = expiredChallenges
+    //     .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname))
+    //     .reduce((accumulator, array) => {
+    //       accumulator = [...accumulator, ...array];
+    //       return accumulator;
+    //     }, []) //[{finalStatus, _videoID, video_data}]
       
-      challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
-        const { record } = videos.find(({ id }) => id == _videoID);
-        const { wins, losses, ties } = record;
-        if (finalStatus == 'WINNER') {
-          const wins_updated = wins + 1;
-          const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
+    //   challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
+    //     const { record } = videos.find(({ id }) => id == _videoID);
+    //     const { wins, losses, ties } = record;
+    //     if (finalStatus == 'WINNER') {
+    //       const wins_updated = wins + 1;
+    //       const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
           
-          await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
-        }
-        else if (finalStatus == 'LOSER') {
-          const losses_updated = losses + 1;
-          const winPct_updated = wins / (wins + losses_updated + ties);
+    //       await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
+    //     }
+    //     else if (finalStatus == 'LOSER') {
+    //       const losses_updated = losses + 1;
+    //       const winPct_updated = wins / (wins + losses_updated + ties);
           
-          await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
-        }
-        else {
-          const ties_updated = ties + 1;
-          const winPct_updated = wins / (wins + losses + ties_updated);
+    //       await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
+    //     }
+    //     else {
+    //       const ties_updated = ties + 1;
+    //       const winPct_updated = wins / (wins + losses + ties_updated);
           
-          await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
-        }
-      })
+    //       await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
+    //     }
+    //   })
 
-      fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideos(data))
-        .then(data => {
-          console.log({ data });
-          if (data.length) {
-            expiredChallenges.forEach(({ id }) =>
-              deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
-                .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
-          }
-          else throw new Error({ message: `ERROR!!! data has not set (yet). data is still ${JSON.stringify(data)}.`, data })
-        })
-        .catch(error => ({ message: "Error in fetchDataThenSetState!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, errorStack: error.stack }));
-    }
+    //   fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideos(data))
+    //     .then(data => {
+    //       console.log({ data });
+    //       if (data.length) {
+    //         expiredChallenges.forEach(({ id }) =>
+    //           deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
+    //             .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
+    //       }
+    //       else throw new Error({ message: `ERROR!!! data has not set (yet). data is still ${JSON.stringify(data)}.`, data })
+    //     })
+    //     .catch(error => ({ message: "Error in fetchDataThenSetState!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, errorStack: error.stack }));
+    // }
   }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
   return (
