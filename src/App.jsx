@@ -16,18 +16,18 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 //Dependencies.
 import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { fetchDataAPI } from './functions/fetchapi';
+import { fetchDataAPI, fetchDataThenSetState } from './functions/fetchapi';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { DateTime } from 'luxon';
 
 //Functions.
-import { calculateHighestVote } from './components/home/active-challenge/functions';
 import { handleVideoRecordsUpdateInDBandState } from './functions/UpdateVideoRecords';
 import { PatchDataAPI } from './functions/patchapi';
 import { UpdateDataAPI } from './functions/updateapi';
-import { findExpiredChallenges, timeRemaining } from './functions/remainingtime';
+import { findExpiredChallenges } from './functions/remainingtime';
 import { deleteObjectAPI } from './functions/deleteapi';
-import { InitialFetchDBandUpdateState, PatchDataAndSetState, unexpired_challenges, UpdateAllVideos, videosFromExpiredChallenges } from './functions/AppJsxFunctions';
+import { InitialFetchDBandUpdateState, PatchDataAndSetState } from './functions/AppJsxFunctions';
+import { updateFinalStatusesForVideos } from './components/home/active-challenge/functions';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -40,7 +40,6 @@ const WelcomePage = lazy(() => import('./pages/welcome/WelcomePage'));
 export const dataContext = createContext();
 
 import './App.css';
-
 
 function App() {
   // alert("New Notes. Read!!!")
@@ -104,10 +103,39 @@ function App() {
     const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime);
 
     if (currentChallenges.length && expiredChallenges.length && videos.length) {
-      const updatedVideoProps = handleVideoRecordsUpdateInDBandState(expiredChallenges, videos)
+      const challengeVideosFinalStatuses = expiredChallenges
+        .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname))
+        .reduce((accumulator, array) => {
+          accumulator = [...accumulator, ...array];
+          return accumulator;
+        }, []) //[{finalStatus, _videoID, video_data}]
+      
+      challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
+        const { record } = videos.find(({ id }) => id == _videoID);
+        const { wins, losses, ties } = record;
+        if (finalStatus == 'WINNER') {
+          const wins_updated = wins + 1;
+          const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
+          
+          await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
+        }
+        else if (finalStatus == 'LOSER') {
+          const losses_updated = losses + 1;
+          const winPct_updated = wins / (wins + losses_updated + ties);
+          
+          await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
+        }
+        else {
+          const ties_updated = ties + 1;
+          const winPct_updated = wins / (wins + losses + ties_updated);
+          
+          await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
+        }
+      })
 
-      console.log({ updatedVideoProps });
-      debugger
+      fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideos(data))
+        .then(() => expiredChallenges.forEach(({ id }) =>
+          deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`).catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name }))));
     }
   }, [isLoading, currentChallenges.length, challengeAnnouncements.length])
 
@@ -152,48 +180,3 @@ function App() {
 }
 
 export default App
-
-    // Promise.all(
-    //   fetchDataAPI('http://localhost:3003/currentUser')
-    //     .then(_currentUser => {
-    //       setCurrentUser(prv => ({ ...prv, ..._currentUser }));
-    //       return fetchDataAPI("http://localhost:3003/allUsers");
-    //     })
-    //     .then(_allUsers => {
-    //       setAllUsers(prv => ([...prv, ..._allUsers]));
-    //       return fetchDataAPI("http://localhost:3003/challengeAnnouncements");
-    //     })
-    //     .then(_challengeAnnouncements => {
-    //       setChallengeAnnouncements(prv => ([...prv, _challengeAnnouncements]))
-    //       return fetchDataAPI("http://localhost:3003/activeChallenges");
-    //     })
-    //     .then(async (_activeChallenges) => {
-    //       const expired_challenges = findExpiredChallenges(_activeChallenges, DateTime, timeRemaining);
-
-    //       const unexpiredChallenges = unexpired_challenges(expired_challenges, _activeChallenges);
-          
-    //       setCurrentChallenges(unexpiredChallenges);
-
-    //       return { allVideos: await fetchDataAPI("http://localhost:3003/videos"), expired_challenges };
-    //     })
-    //     .then(async ({ allVideos, expired_challenges }) => {
-    //       setVideos(prv => ([...prv, ...allVideos]));
-
-    //       if (expired_challenges.length) {
-    //         if (allVideos.length) {
-    //           const updateVideos = await UpdateAllVideos(expired_challenges, allVideos, "http://localhost:3003/videos", setVideos)
-              
-    //           const deleteAllExpiredChallenges = await Promise.all(expired_challenges.map(async ({ id }) => await deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)))
-
-    //           return { updateVideos, deleteAllExpiredChallenges };
-    //         }
-    //         else {
-    //           throw new Error(`ERROR (inside expired_challenges.length)!!! NO VIDEOS TO UPDATE!!! videos state is ${JSON.stringify(videos)}.`)
-    //         }
-    //       }
-    //       setIsLoading(false);
-    //     })
-    //   )
-    //     .catch(error => console.error({ message: "Promise.all error inside App.jsx!!!", error, errorMessage: error.message, errorStatus: error.status }));
-
-
