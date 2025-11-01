@@ -21,7 +21,7 @@ import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_
 import { DateTime } from 'luxon';
 
 //Functions.
-import { calculateHighestVote, updateVideoRecords } from './components/home/active-challenge/functions';
+import { calculateHighestVote } from './components/home/active-challenge/functions';
 import { handleVideoRecordsUpdateInDBandState } from './functions/UpdateVideoRecords';
 import { PatchDataAPI } from './functions/patchapi';
 import { UpdateDataAPI } from './functions/updateapi';
