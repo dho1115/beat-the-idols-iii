@@ -107,9 +107,8 @@ export const handleExpiredActiveChallenges = async (videos, currentChallenges, D
                  deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
                    .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
              }
-             else throw new Error({ message: `ERROR!!! data has not set (yet). data is still ${JSON.stringify(data)}.`, data })
+             else throw new Error({ message: `ERROR!!! data has not set (yet) inside fetchDataThenSetState function. data is still ${JSON.stringify(data)}.`, data })
            })
-           .catch(error => ({ message: "Error in fetchDataThenSetState!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, errorStack: error.stack }));
        }
    } catch (error) {
       console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: error.message, stackTrace: error.stack });
