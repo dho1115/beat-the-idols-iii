@@ -1,8 +1,9 @@
-import { calculateHighestVote, updateRecordInVideosState, updateVideoRecords } from "../components/home/active-challenge/functions";
-import { fetchDataAPI } from "./fetchapi";
+import { calculateHighestVote, updateFinalStatusesForVideos, updateRecordInVideosState, updateVideoRecords } from "../components/home/active-challenge/functions";
+import { fetchDataAPI, fetchDataThenSetState } from "./fetchapi";
 import { PatchDataAPI } from "./patchapi";
 import { UpdateDataAPI, UpdateDataInDBThenSetState } from "./updateapi";
 import { findExpiredChallenges } from "./remainingtime";
+import { deleteObjectAPI } from "./deleteapi";
 
 export const FetchDB = async (fetchDataAPI, url) => {
    try {
@@ -62,4 +63,56 @@ export const videosFromExpiredChallenges = (activeChallenges, DateTime) => findE
    
    return acc;
 }, [])
+
+export const handleExpiredActiveChallenges = async (videos, currentChallenges, DateTime, setVideosWrapper, location) => {
+   try {
+      const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime)
+
+      if (currentChallenges.length && expiredChallenges.length && videos.length) {
+         const challengeVideosFinalStatuses = expiredChallenges
+           .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname))
+           .reduce((accumulator, array) => {
+             accumulator = [...accumulator, ...array];
+             return accumulator;
+           }, []) //[{finalStatus, _videoID, video_data}]
+         
+         challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
+           const { record } = videos.find(({ id }) => id == _videoID);
+           const { wins, losses, ties } = record;
+           if (finalStatus == 'WINNER') {
+             const wins_updated = wins + 1;
+             const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
+             
+             await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
+           }
+           else if (finalStatus == 'LOSER') {
+             const losses_updated = losses + 1;
+             const winPct_updated = wins / (wins + losses_updated + ties);
+             
+             await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
+           }
+           else {
+             const ties_updated = ties + 1;
+             const winPct_updated = wins / (wins + losses + ties_updated);
+             
+             await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
+           }
+         })
+   
+         await fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideosWrapper(data))
+           .then(data => {
+             console.log({ data });
+             if (data.length) {
+               expiredChallenges.forEach(({ id }) =>
+                 deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
+                   .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
+             }
+             else throw new Error({ message: `ERROR!!! data has not set (yet). data is still ${JSON.stringify(data)}.`, data })
+           })
+           .catch(error => ({ message: "Error in fetchDataThenSetState!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, errorStack: error.stack }));
+       }
+   } catch (error) {
+      console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: error.message, stackTrace: error.stack });
+   }
+}
    
