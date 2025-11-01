@@ -54,7 +54,7 @@ const ActiveChallengeDetails = () => {
          })
          .then(({ highestVote }) => {
             if (challengeEnded) {
-               const leadersAndLosers = updateVideoRecords(thisChallenge, highestVote, videos);
+               const leadersAndLosers = updateVideoRecords(thisChallenge, videos);
                const videos_updated = updateRecordInVideosState(videos, leadersAndLosers)
                return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated)).catch(error => console.error({ location: location.pathname, message: "UpdateDataInDBThenSetState ERROR (PatchDataAPI)!!!", error, errorCode: error.code, errorMessage: error.message }));
             } //Logic if active challenge has ended.

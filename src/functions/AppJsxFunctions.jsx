@@ -39,7 +39,7 @@ export const UpdateAllVideos = (expired_challenges, videos, link, setVideosWrapp
       expired_challenges.map(expiredChallenge => {
          const { videosInChallenge } = expiredChallenge; //destructure videosInChallenge prop.
          const highestVote = calculateHighestVote(videosInChallenge); //highest vote.
-         const leadersAndLosers = updateVideoRecords(expiredChallenge, highestVote, videos); //add 1 to win/loss/tie and calculates record.
+         const leadersAndLosers = updateVideoRecords(expiredChallenge, videos); //add 1 to win/loss/tie and calculates record.
          const videos_updated = updateRecordInVideosState(videos, leadersAndLosers); //updates videos state with leadersAndLosers.
 
          return UpdateDataInDBThenSetState(link, videos_updated, setVideosWrapper)

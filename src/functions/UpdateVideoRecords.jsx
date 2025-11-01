@@ -37,7 +37,7 @@ const UpdateVideoRecordInState = (videoToUpdate, videoStatus) => {
 export const handleVideoRecordsUpdateInDBandState = (expiredChallenges, videos) => {
    const allExpiredChallengeVideos = expiredChallenges.map(expiredChallenge => {
       const highestVote = calculateHighestVote(expiredChallenge.videosInChallenge)
-      return updateVideoRecords(expiredChallenge, highestVote, videos)
+      return updateVideoRecords(expiredChallenge, videos)
    })
       .reduce((accumulator, array) => {
          accumulator = [...accumulator, ...array];
