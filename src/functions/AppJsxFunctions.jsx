@@ -70,8 +70,7 @@ export const handleExpiredActiveChallenges = async (videos, currentChallenges, D
 
       if (currentChallenges.length && expiredChallenges.length && videos.length) {
          const challengeVideosFinalStatuses = expiredChallenges
-           .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname))
-           .reduce((accumulator, array) => {
+           .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname)).reduce((accumulator, array) => {
              accumulator = [...accumulator, ...array];
              return accumulator;
            }, []) //[{finalStatus, _videoID, video_data}]
@@ -109,7 +108,9 @@ export const handleExpiredActiveChallenges = async (videos, currentChallenges, D
              }
              else throw new Error({ message: `ERROR!!! data has not set (yet) inside fetchDataThenSetState function. data is still ${JSON.stringify(data)}.`, data })
            })
-       }
+      }
+      else throw new Error({ warning: `*** ERROR inside handleExpiredChallenges!!! *** One of your variables and/or arguments, expiredChallenges, currentChallenges or videos does NOT have a length!!!\nexpiredChallenges MUST have a length. It is currently ${JSON.stringify(expiredChallenges)}. currentChallenges (the argument) must also have a length. It is currently ${JSON.stringify(currentChallenges)}.\nThe other argument, videos is currently ${JSON.stringify(videos)}`, fileLocation: 'AppJsxFunctions.jsx.', functionName: 'handleExpiredChallenges' })
+      
    } catch (error) {
       console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: error.message, stackTrace: error.stack });
    }
