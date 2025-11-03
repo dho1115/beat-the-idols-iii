@@ -1,7 +1,7 @@
 import { calculateHighestVote, updateFinalStatusesForVideos, updateRecordInVideosState, updateVideoRecords } from "../components/home/active-challenge/functions";
 import { fetchDataAPI, fetchDataThenSetState } from "./fetchapi";
 import { PatchDataAPI } from "./patchapi";
-import { UpdateDataAPI, UpdateDataInDBThenSetState } from "./updateapi";
+import { UpdateDataInDBThenSetState } from "./updateapi";
 import { findExpiredChallenges } from "./remainingtime";
 import { deleteObjectAPI } from "./deleteapi";
 
@@ -64,55 +64,55 @@ export const videosFromExpiredChallenges = (activeChallenges, DateTime) => findE
    return acc;
 }, [])
 
-export const handleExpiredActiveChallenges = async (videos, currentChallenges, DateTime, setVideosWrapper, location) => {
+export const handleExpiredActiveChallenges = async (expiredChallenges, videos, currentChallenges, DateTime, setVideosWrapper, location) => {
    try {
-      const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime)
+      if (typeof (setVideosWrapper) != 'function') throw new Error({ message: `ERROR INSIDE handleExpiredActiveChallenges!!! The argument, setVideosWrapper is NOT a function. It is a ${typeof (setVideosWrapper)}.`, location });
 
       if (currentChallenges.length && expiredChallenges.length && videos.length) {
          const challengeVideosFinalStatuses = expiredChallenges
-           .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname)).reduce((accumulator, array) => {
-             accumulator = [...accumulator, ...array];
-             return accumulator;
-           }, []) //[{finalStatus, _videoID, video_data}]
+            .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname)).reduce((accumulator, array) => {
+               accumulator = [...accumulator, ...array];
+               return accumulator;
+            }, []) //[{finalStatus, _videoID, video_data}]
          
          challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
-           const { record } = videos.find(({ id }) => id == _videoID);
-           const { wins, losses, ties } = record;
-           if (finalStatus == 'WINNER') {
-             const wins_updated = wins + 1;
-             const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
+            const { record } = videos.find(({ id }) => id == _videoID);
+            const { wins, losses, ties } = record;
+            if (finalStatus == 'WINNER') {
+               const wins_updated = wins + 1;
+               const winPct_updated = (wins_updated) / (wins_updated + losses + ties);
              
-             await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
-           }
-           else if (finalStatus == 'LOSER') {
-             const losses_updated = losses + 1;
-             const winPct_updated = wins / (wins + losses_updated + ties);
+               await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, wins: wins_updated, winPct: winPct_updated } });
+            }
+            else if (finalStatus == 'LOSER') {
+               const losses_updated = losses + 1;
+               const winPct_updated = wins / (wins + losses_updated + ties);
              
-             await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
-           }
-           else {
-             const ties_updated = ties + 1;
-             const winPct_updated = wins / (wins + losses + ties_updated);
+               await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, losses: losses_updated, winPct: winPct_updated } });
+            }
+            else {
+               const ties_updated = ties + 1;
+               const winPct_updated = wins / (wins + losses + ties_updated);
              
-             await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
-           }
+               await PatchDataAPI(`http://localhost:3003/videos/${_videoID}`, { record: { ...record, ties: ties_updated, winPct: winPct_updated } });
+            }
          })
    
          await fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideosWrapper(data))
-           .then(data => {
-             console.log({ data });
-             if (data.length) {
-               expiredChallenges.forEach(({ id }) =>
-                 deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
-                   .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
-             }
-             else throw new Error({ message: `ERROR!!! data has not set (yet) inside fetchDataThenSetState function. data is still ${JSON.stringify(data)}.`, data })
-           })
+            .then(data => {
+               console.log({ data });
+               if (data.length) {
+                  expiredChallenges.forEach(({ id }) =>
+                     deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
+                        .catch(error => console.error({ message: "ERROR with deleteObjectAPI!!!", url_to_delete: `http://localhost:3003/activeChallenges/${id}`, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name })))
+               }
+               else throw new Error(`ERROR!!! data has not set (yet) inside fetchDataThenSetState function. data is still ${JSON.stringify(data)}.`)
+            })
       }
-      else throw new Error({ warning: `*** ERROR inside handleExpiredChallenges!!! *** One of your variables and/or arguments, expiredChallenges, currentChallenges or videos does NOT have a length!!!\nexpiredChallenges MUST have a length. It is currently ${JSON.stringify(expiredChallenges)}. currentChallenges (the argument) must also have a length. It is currently ${JSON.stringify(currentChallenges)}.\nThe other argument, videos is currently ${JSON.stringify(videos)}`, fileLocation: 'AppJsxFunctions.jsx.', functionName: 'handleExpiredChallenges' })
+      else throw new Error(JSON.stringify({ warning: `*** ERROR inside handleExpiredChallenges!!! *** One of your variables and/or arguments, expiredChallenges, currentChallenges or videos does NOT have a length!!!\nexpiredChallenges MUST have a length. It is currently ${JSON.stringify(expiredChallenges)}. currentChallenges (the argument) must also have a length. It is currently ${JSON.stringify(currentChallenges)}.\nThe other argument, videos is currently ${JSON.stringify(videos)}`, fileLocation: 'AppJsxFunctions.jsx.', functionName: 'handleExpiredChallenges' }));
       
    } catch (error) {
-      console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: error.message, stackTrace: error.stack });
+      console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, expiredChallenges, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: JSON.stringify(error.message), stackTrace: error.stack });
    }
 }
    
