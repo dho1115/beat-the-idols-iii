@@ -44,8 +44,8 @@
       "posted": "08-07-2025",
       "record": {
         "wins": 0,
-        "losses": 2,
-        "ties": 0,
+        "losses": 4,
+        "ties": 1,
         "winPct": 0
       }
     },
@@ -59,10 +59,10 @@
       "id": "cac8900f-2676-40c6-a124-295fd0996256",
       "posted": "08-07-2025",
       "record": {
-        "wins": 0,
+        "wins": 2,
         "losses": 1,
-        "ties": 0,
-        "winPct": 0
+        "ties": 1,
+        "winPct": 0.5
       }
     },
     {
@@ -76,9 +76,9 @@
       "posted": "08-07-2025",
       "record": {
         "wins": 2,
-        "losses": 0,
+        "losses": 3,
         "ties": 0,
-        "winPct": 1
+        "winPct": 0.4
       }
     }
   ]
