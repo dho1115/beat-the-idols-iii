@@ -20,6 +20,7 @@ import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_
 import { DateTime } from 'luxon';
 
 //Functions.
+import { findExpiredChallenges } from './functions/remainingtime';
 import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
 import { UpdateDataAPI } from './functions/updateapi';
 import { InitialFetchDBandUpdateState } from './functions/AppJsxFunctions';
@@ -96,7 +97,11 @@ function App() {
 
   useEffect(() => {
     try {
-      handleExpiredActiveChallenges(videos, currentChallenges, DateTime, data => setVideos(data), location.params)
+      const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime)
+      
+      if (expiredChallenges.length) {
+              handleExpiredActiveChallenges(expiredChallenges, videos, currentChallenges, DateTime, data => setVideos(data), location.pathname)
+      }
     } catch (error) {
       console.error({ message: "ERROR inside useEffect(f, [isLoading, currentChallenges.length, challengeAnnouncements.length])", error, errorMessage: error.message })
     };
