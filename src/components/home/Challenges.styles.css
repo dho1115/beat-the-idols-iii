@@ -27,15 +27,14 @@
 .challenge-details-description-div {
    border: 3px solid green;
    background-color: antiquewhite;
-   height: 50%;
+   height: 100%;
 }
 
 .challenge-details-header {
    display: grid;
    grid-template-columns: 70% 30%;
    overflow: hidden;
-   max-height: 49.9vh;
-   overflow: hidden;
+   height: 100%;
 }
 
 .challenge-details-img {
@@ -47,7 +46,7 @@
 .challenge-details-img-div {
    overflow: hidden;
    border: 3px solid maroon;
-   height: 50%
+   height: 100%
 }
 
 .challenges-container, .challengesContainer {
