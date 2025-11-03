@@ -15,15 +15,15 @@ import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
 import { lazy } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { DateTime } from 'luxon';
-
 //Functions.
 import { findExpiredChallenges } from './functions/remainingtime';
 import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
 import { UpdateDataAPI } from './functions/updateapi';
 import { InitialFetchDBandUpdateState } from './functions/AppJsxFunctions';
+import { fetchDataAPI, fetchDataThenSetState } from './functions/fetchapi';
 
 //Pages - Lazy loaded.
 const AboutUsPage = lazy(() => import('./pages/about/AboutUsPage'));
@@ -40,6 +40,7 @@ import './App.css';
 function App() {
   // alert("New Notes. Read!!!")
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: '', password: '', email: '', addImage: '', imageSource: '', personalImages: [] });
   const [allUsers, setAllUsers] = useState([]);
   const [challengeAnnouncements, setChallengeAnnouncements] = useState([])
@@ -98,9 +99,22 @@ function App() {
   useEffect(() => {
     try {
       const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime)
-      
+
       if (expiredChallenges.length) {
-              handleExpiredActiveChallenges(expiredChallenges, videos, currentChallenges, DateTime, data => setVideos(data), location.pathname)
+        handleExpiredActiveChallenges(expiredChallenges, videos, currentChallenges, DateTime, data => setVideos(data), location.pathname)
+          .then(async value => {
+            const fetchCurrentChallenges = await fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/activeChallenges", value => setCurrentChallenges(value));
+
+            const checkForExpiredChallenges = findExpiredChallenges(currentChallenges, DateTime)
+
+            return { ...value, currentChallenges: fetchCurrentChallenges, anyExpiredChallenges: checkForExpiredChallenges };
+          })
+          .then(value => {
+            value.anyExpiredChallenges.length && console.error(`Please wait while we clear out all expired challenges. Expired challenges currently is ${JSON.stringify(value.expiredChallenges)}.`)
+            console.log({ value });
+            return navigate("/");
+          })
+          .catch(error => ({ message: "ERROR inside handleExpiredChallenges function call!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, expiredChallenges, videos, currentChallenges }));
       }
     } catch (error) {
       console.error({ message: "ERROR inside useEffect(f, [isLoading, currentChallenges.length, challengeAnnouncements.length])", error, errorMessage: error.message })
