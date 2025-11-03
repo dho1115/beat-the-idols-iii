@@ -19,7 +19,6 @@ import { dataContext } from '../../../App';
 
 import "../Challenges.styles.css";
 
-
 const ActiveChallengeDetails = () => {
    const { _challengeID } = useParams();
    const location = useLocation();
@@ -43,9 +42,9 @@ const ActiveChallengeDetails = () => {
       const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id);
 
       PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo })
-         .then(response => {
+         .then(newDataObject => {
             setVideosInChallengeState(addVoteToSelectedVideo); //add vote.
-            return response.json()
+            return newDataObject;
          })
          .then(result => {
             const highestVote = calculateHighestVote(videosInChallengeState);
@@ -63,12 +62,6 @@ const ActiveChallengeDetails = () => {
          })
          .catch(err => console.error({ message: "PatchDataAPI error!!!", err, errCode: err.code, errMessage: err.message })); //vote logic.
    }
-
-   // useEffect(() => {
-   //    if (daysRemainingForChallenge <= 0) {
-   //       endChallengeLogic(videosInChallengeState, findLeaders(videosInChallengeState, highestVoteState), `http://localhost:3003/activeChallenges/${_challengeID}`)
-   //    }
-   // }, [])
 
    return (
       <div>
