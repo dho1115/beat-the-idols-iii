@@ -44,7 +44,7 @@
       "posted": "08-07-2025",
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 2,
         "ties": 0,
         "winPct": 0
       }
@@ -60,7 +60,7 @@
       "posted": "08-07-2025",
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "ties": 0,
         "winPct": 0
       }
@@ -75,10 +75,10 @@
       "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
       "posted": "08-07-2025",
       "record": {
-        "wins": 0,
+        "wins": 2,
         "losses": 0,
         "ties": 0,
-        "winPct": 0
+        "winPct": 1
       }
     }
   ]
