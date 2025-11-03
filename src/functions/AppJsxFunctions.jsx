@@ -100,7 +100,6 @@ export const handleExpiredActiveChallenges = async (expiredChallenges, videos, c
    
          await fetchDataThenSetState(fetchDataAPI, "http://localhost:3003/videos", data => setVideosWrapper(data))
             .then(data => {
-               console.log({ data });
                if (data.length) {
                   expiredChallenges.forEach(({ id }) =>
                      deleteObjectAPI(`http://localhost:3003/activeChallenges/${id}`)
@@ -109,8 +108,8 @@ export const handleExpiredActiveChallenges = async (expiredChallenges, videos, c
                else throw new Error(`ERROR!!! data has not set (yet) inside fetchDataThenSetState function. data is still ${JSON.stringify(data)}.`)
             })
       }
-      else throw new Error(JSON.stringify({ warning: `*** ERROR inside handleExpiredChallenges!!! *** One of your variables and/or arguments, expiredChallenges, currentChallenges or videos does NOT have a length!!!\nexpiredChallenges MUST have a length. It is currently ${JSON.stringify(expiredChallenges)}. currentChallenges (the argument) must also have a length. It is currently ${JSON.stringify(currentChallenges)}.\nThe other argument, videos is currently ${JSON.stringify(videos)}`, fileLocation: 'AppJsxFunctions.jsx.', functionName: 'handleExpiredChallenges' }));
-      
+
+      return { expiredChallenges, videos, currentChallenges };      
    } catch (error) {
       console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, expiredChallenges, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: JSON.stringify(error.message), stackTrace: error.stack });
    }
