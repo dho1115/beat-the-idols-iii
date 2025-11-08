@@ -16,10 +16,10 @@ const CurrentUserHomepage = () => {
    try {
       return (
          <div className='current-user-homepage-div py-5'>
-            <Suspense falllback={<SuspenseFallback />}>
+            <Suspense fallback={<SuspenseFallback />}>
                <LoggedInNavbar />
                <header className='current-user-homepage-header'>
-                  <h1>Homepage of <span color='danger'>{username} - {email}.</span>.</h1>
+                  <h1>Homepage of <span className='text-danger'>{username} - {email}.</span>.</h1>
                </header>
             </Suspense>
 
