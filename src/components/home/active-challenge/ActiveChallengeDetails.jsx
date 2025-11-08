@@ -9,7 +9,7 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 
 //functions.
-import { addVoteToVideoLogic, calculateHighestVote, challengeHasEnded, findLeaders, updateRecordInVideosState, updateVideoRecords } from './functions';
+import { addVoteToVideoLogic, calculateHighestVote, challengeHasEnded, challengeHasEnded, findLeaders, updateRecordInVideosState, updateVideoRecords } from './functions';
 import { timeRemaining } from '../../../functions/remainingtime';
 
 import { UpdateDataAPI, UpdateDataInDBThenSetState } from '../../../functions/updateapi';
@@ -21,7 +21,7 @@ import "../Challenges.styles.css";
 
 const ActiveChallengeDetails = () => {
    const { _challengeID } = useParams();
-   const location = useLocation();
+   const { pathname } = useLocation();
    const { allUsers, currentChallenges, videos, setVideos } = useContext(dataContext);
 
    const thisChallenge = currentChallenges.find(val => val._challengeID == _challengeID);
@@ -36,31 +36,21 @@ const ActiveChallengeDetails = () => {
 
    const challengeOwnerObject = allUsers.find(val => val.id == _challengeOwnerID);
 
-   const onHandleVote = ({ id, challengeAccessories: { votes } }) => {
-      const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id); //[{...video, vote:vote+1}]:videosInChallenge.
+   const onHandleVote = async ({ id, challengeAccessories: { votes } }) => {
+      try {
+         const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id); //[{...video, vote:vote+1}]:videosInChallenge.
 
-      PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo })
-         .then(({ newData, result, url }) => { /* { newData: videosInChallenge:[{...video: vote: vote+1}], result, url } */
+         const { newData, result, url } = await PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo })
 
-            (result.ok) && setVideosInChallengeState(newData.videosInChallenge); //add vote.
-            return { newData, result, url };
-         })
-         .then(({ newData }) => {
-            const challengeEnded = challengeHasEnded(id, daysRemainingForChallenge, votes, winningVotes) //true or false.
-            const highestVote = calculateHighestVote(videosInChallengeState);
-            (highestVote != highestVoteState) && setHighestVoteState(highestVote); //set state ONLY if new highest vote.
-            return { highestVote, challengeEnded };
-         })
-         .then(({ highestVote, challengeEnded }) => {
-            if (challengeEnded) {
-               const leadersAndLosers = updateVideoRecords(thisChallenge, videos);
-               const videos_updated = updateRecordInVideosState(videos, leadersAndLosers)
-               return UpdateDataInDBThenSetState(UpdateDataAPI, 'http://localhost:3003/videos', videos_updated, () => setVideos(videos_updated)).catch(error => console.error({ location: location.pathname, message: "UpdateDataInDBThenSetState ERROR (PatchDataAPI)!!!", error, errorCode: error.code, errorMessage: error.message }));
-            } //Logic if active challenge has ended.
-            const leaders = findLeaders(videosInChallengeState, highestVote); //current vote leaders.
-            return leaders;
-         })
-         .catch(err => console.error({ message: "PatchDataAPI error!!!", err, errCode: err.code, errMessage: err.message })); //vote logic.
+         if (result.ok) {
+            setVideosInChallengeState(newData.videosInChallenge);
+            const highestVote = calculateHighestVote(videosInChallengeState); //Math.max():int
+            const didChallengeEnd = challengeHasEnded(id, daysRemainingForChallenge, votes + 1, highestVote);
+         } else throw new Error(`Result is not ok: ${result.ok}. Status is ${result.status}. Text is ${result.status}.`)
+
+      } catch (error) {
+         console.error({ message: "ERROR inside onHandleVote function!!!", location: pathname, error, errorMessage: error.message, errorName: error.name, errorCode: error.code });
+      }
    }
 
    return (
@@ -103,3 +93,4 @@ const ActiveChallengeDetails = () => {
 }
 
 export default ActiveChallengeDetails
+
