@@ -4,8 +4,8 @@ export const PatchDataAPI = (url, newData) => fetch(url, {
    body: JSON.stringify(newData)
 })
    .then(result => {
-      console.log({ message: `SUCCESSFULLY patched ${JSON.stringify(newData)} onto ${url}!!!`, result: result.json() });
+      console.log({ message: `SUCCESSFULLY patched ${JSON.stringify(newData)} onto ${url}!!!`, result: result.json(), status: result.status, isOk: result.ok });
    
-      return { url, newData };
+      return { url, newData, result };
    })
-   .catch(error => console.error({ message: `PatchDataAPI ERROR!!! Unable to patch ${JSON.stringify(newData)} onto ${url}!!!`, error, errorCode: error.code, errorMessage: error.message }));
+   .catch(error => console.error({ message: `PatchDataAPI ERROR!!! Unable to patch ${JSON.stringify(newData)} onto ${url}!!!`, error, errorCode: error.code, errorMessage: error.message, errorName: error.name }));
