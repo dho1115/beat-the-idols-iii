@@ -109,7 +109,7 @@ export const handleExpiredActiveChallenges = async (expiredChallenges, videos, c
             })
       }
 
-      return { expiredChallenges, videos, currentChallenges };      
+      return { expiredChallenges, videos, currentChallenges };
    } catch (error) {
       console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, expiredChallenges, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: JSON.stringify(error.message), stackTrace: error.stack });
    }
