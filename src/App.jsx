@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, lazy } from 'react';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 //Components.
 import ActiveChallenge from './components/home/active-challenge/ActiveChallenge';
@@ -14,10 +15,9 @@ import CurrentChallenges from './components/home/CurrentChallenges';
 import WelcomeNavbar from './components/navigationbars/welcome/WelcomeNavbar';
 
 //Dependencies.
-import { lazy } from 'react';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { welcomeNavbarLinks } from './components/navigationbars/welcome/welcome_navbar_links';
 import { DateTime } from 'luxon';
+
 //Functions.
 import { findExpiredChallenges } from './functions/remainingtime';
 import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
@@ -51,14 +51,14 @@ function App() {
 
   const logoutLogic = async () => {
     try {
-      const updateCurrentUser = await UpdateDataAPI("http://localhost:3003/currentUser", {});
-       
+      await UpdateDataAPI("http://localhost:3003/currentUser", {});
+
       setCurrentUser({});
     } catch (err) {
       console.error({ message: 'logoutLogic error!!!', err, errMessage: err.message, errCode: err.code, status: err.status })
     }
   } //logout logic.
-  
+
   useEffect(() => {
     setIsLoading(true)
 
@@ -148,7 +148,7 @@ function App() {
               <Route path='cover' element={<ChallengeFormCover />} />
             </Route>
             <Route path="add-challenge-video" element={<AddVideo />} />
-            <Route path="view/challengeVideos/:filter" element= {<ChallengeVideos />} />
+            <Route path="view/challengeVideos/:filter" element={<ChallengeVideos />} />
             <Route path="view/challenges/active" element={<CurrentChallenges />} />
             <Route path="view/challenges/announcements/*" element={<AnnouncementsComponent />} />
             <Route path="view/announcement/:id" element={ <AnnouncementDetailsComponent />} />
