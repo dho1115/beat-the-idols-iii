@@ -37,21 +37,21 @@ const ActiveChallengeDetails = () => {
    const challengeOwnerObject = allUsers.find(val => val.id == _challengeOwnerID);
 
    const onHandleVote = ({ id, challengeAccessories: { votes } }) => {
-      const challengeEnded = challengeHasEnded(id, daysRemainingForChallenge, votes, winningVotes) //check if challenge has ended.
-
-      const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id);
+      const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id); //[{...video, vote:vote+1}]:videosInChallenge.
 
       PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo })
-         .then(newDataObject => {
-            setVideosInChallengeState(addVoteToSelectedVideo); //add vote.
-            return newDataObject;
+         .then(({ newData, result, url }) => { /* { newData: videosInChallenge:[{...video: vote: vote+1}], result, url } */
+
+            (result.ok) && setVideosInChallengeState(newData.videosInChallenge); //add vote.
+            return { newData, result, url };
          })
-         .then(result => {
+         .then(({ newData }) => {
+            const challengeEnded = challengeHasEnded(id, daysRemainingForChallenge, votes, winningVotes) //true or false.
             const highestVote = calculateHighestVote(videosInChallengeState);
             (highestVote != highestVoteState) && setHighestVoteState(highestVote); //set state ONLY if new highest vote.
-            return { highestVote };
+            return { highestVote, challengeEnded };
          })
-         .then(({ highestVote }) => {
+         .then(({ highestVote, challengeEnded }) => {
             if (challengeEnded) {
                const leadersAndLosers = updateVideoRecords(thisChallenge, videos);
                const videos_updated = updateRecordInVideosState(videos, leadersAndLosers)
