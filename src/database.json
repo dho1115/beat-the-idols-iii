@@ -30,7 +30,75 @@
       "id": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd"
     }
   ],
-  "activeChallenges": [],
+  "activeChallenges": [
+    {
+      "id": "27888e0b-85db-462e-a0bc-d7867dfda4f5",
+      "_challengeID": "27888e0b-85db-462e-a0bc-d7867dfda4f5",
+      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+      "posted": "2025-11-09",
+      "title": "Test Challenge 2",
+      "description": "This is my second test challenge. The first one ended and 15 votes wasn't even reached? REALLY???",
+      "challengeCoverType": "online",
+      "challengeCoverImage": "https://www.uniqcube.com/wp-content/uploads/2023/02/pexels-edoardo-tommasini-2034851.jpg",
+      "challengeEndsOn": "2026-04-09",
+      "winningVotes": "31",
+      "videosInChallenge": [
+        {
+          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
+          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
+          "videoType": "you-tube",
+          "title": "The Wizard and I - cover.",
+          "record": {
+            "wins": 0,
+            "losses": 5,
+            "ties": 1,
+            "winPct": 0
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 18,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "cac8900f-2676-40c6-a124-295fd0996256",
+          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
+          "videoType": "you-tube",
+          "title": "The Wizard and I - v2",
+          "record": {
+            "wins": 2,
+            "losses": 2,
+            "ties": 1,
+            "winPct": 0.4
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 19,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
+          "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
+          "videoType": "you-tube",
+          "title": "The World will Know (\"Newsies\").",
+          "record": {
+            "wins": 3,
+            "losses": 3,
+            "ties": 0,
+            "winPct": 0.5
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 17,
+            "finalStatus": "pending"
+          }
+        }
+      ],
+      "howChallengeEnds": "votes",
+      "challengeAnnouncementID": ""
+    }
+  ],
   "challengeAnnouncements": [],
   "videos": [
     {
