@@ -39,23 +39,22 @@ const ActiveChallengeDetails = () => {
       try {
          const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id); //[{...video, vote:vote+1}]:videosInChallenge.
 
-         const didChallengeEnd = challengeHasEnded(id, daysRemainingForChallenge, votes + 1, calculateHighestVote(videosInChallengeState)); //Boolean.
+         const highestVoteSoFar = calculateHighestVote(videosInChallengeState);
+
+         const didChallengeEnd = challengeHasEnded(id, daysRemainingForChallenge, votes + 1, winningVotes); //Boolean.
 
          const { newData, result, url } = await PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo });
-
-         console.log({ didChallengeEnd, result_ok: result.ok });
-         debugger;
 
          if (result.ok) setVideosInChallengeState(newData.videosInChallenge);
          else throw new Error(`Result is not ok: ${result.ok}. Status is ${result.status}. Text is ${result.status}.`)
 
-         // if (didChallengeEnd) {
-         //    const expiredChallenge = currentChallenges.filter(({ id }) => id == _challengeID);
-         //    const { expiredChallenges: exp, videos: vids, currentChallenges: cc } = await handleExpiredActiveChallenges(expiredChallenge, videos, currentChallenges, DateTime, (data) => setVideos(data), pathname)
+         if (didChallengeEnd) {
+            const expiredChallenge = currentChallenges.filter(({ id }) => id == _challengeID);
+            const { expiredChallenges: exp, videos: vids, currentChallenges: cc } = await handleExpiredActiveChallenges(expiredChallenge, videos, currentChallenges, DateTime, (data) => setVideos(data), pathname)
             
-         //    console.log({ exp, vids, cc });
-         //    debugger;
-         // }
+            console.log({ exp, vids, cc });
+            debugger;
+         }
       } catch (error) {
          console.error({ message: "ERROR inside onHandleVote function!!!", location: pathname, error, errorMessage: error.message, errorName: error.name, errorCode: error.code });
       }
