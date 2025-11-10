@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
 import { DateTime } from 'luxon';
 
@@ -20,8 +20,9 @@ import "../Challenges.styles.css";
 
 const ActiveChallengeDetails = () => {
    const { _challengeID } = useParams();
+   const navigate = useNavigate();
    const { pathname } = useLocation();
-   const { allUsers, currentChallenges, videos, setVideos } = useContext(dataContext);
+   const { allUsers, currentChallenges, currentUser, videos, setVideos } = useContext(dataContext);
 
    const thisChallenge = currentChallenges.find(val => val._challengeID == _challengeID);
 
@@ -50,10 +51,8 @@ const ActiveChallengeDetails = () => {
 
          if (didChallengeEnd) {
             const expiredChallenge = currentChallenges.filter(({ id }) => id == _challengeID);
-            const { expiredChallenges: exp, videos: vids, currentChallenges: cc } = await handleExpiredActiveChallenges(expiredChallenge, videos, currentChallenges, DateTime, (data) => setVideos(data), pathname)
-            
-            console.log({ exp, vids, cc });
-            debugger;
+            const expiredChallenges = await handleExpiredActiveChallenges(expiredChallenge, videos, currentChallenges, DateTime, (data) => setVideos(data), pathname)
+            navigate('/home');
          }
       } catch (error) {
          console.error({ message: "ERROR inside onHandleVote function!!!", location: pathname, error, errorMessage: error.message, errorName: error.name, errorCode: error.code });
