@@ -8,11 +8,11 @@ const Deadline = ({ challengeAnnouncement, setChallengeAnnouncement, ...args }) 
    const add5months = DateTime.local().plus({ months: 5 }).toFormat('yyyy-MM-dd');
 
    const challengeAnnouncementDeadlineLogic = e => {
-      ((e.target.value > challengeDetails.challengeEndsOn) && (challengeDetails.challengeEndsOn != '0000-00-00')) ? setDateAlert(true) : setDateAlert(false);
+      ((e.target.value > challengeDetails.challengeEndsOn) && (challengeDetails.challengeEndsOn != '0000-00-00') && (challengeDetails.howChallengeEnds == 'date')) ? setDateAlert(true) : setDateAlert(false);
 
       setChallengeAnnouncement(prv => ({ ...prv, announcementEndsOn: e.target.value }))
    }
-   
+
    return (
       <FormGroup>
          {
