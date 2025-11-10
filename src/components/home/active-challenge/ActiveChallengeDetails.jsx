@@ -9,10 +9,9 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 
 //functions.
-import { addVoteToVideoLogic, calculateHighestVote, challengeHasEnded, challengeHasEnded, findLeaders, updateRecordInVideosState, updateVideoRecords } from './functions';
+import { addVoteToVideoLogic, calculateHighestVote, challengeHasEnded } from './functions';
+import { handleExpiredActiveChallenges } from 'src/functions/AppJsxFunctions';
 import { timeRemaining } from '../../../functions/remainingtime';
-
-import { UpdateDataAPI, UpdateDataInDBThenSetState } from '../../../functions/updateapi';
 import { PatchDataAPI } from '../../../functions/patchapi';
 
 import { dataContext } from '../../../App';
@@ -40,14 +39,23 @@ const ActiveChallengeDetails = () => {
       try {
          const addVoteToSelectedVideo = addVoteToVideoLogic(videosInChallengeState, id); //[{...video, vote:vote+1}]:videosInChallenge.
 
-         const { newData, result, url } = await PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo })
+         const didChallengeEnd = challengeHasEnded(id, daysRemainingForChallenge, votes + 1, calculateHighestVote(videosInChallengeState)); //Boolean.
 
-         if (result.ok) {
-            setVideosInChallengeState(newData.videosInChallenge);
-            const highestVote = calculateHighestVote(videosInChallengeState); //Math.max():int
-            const didChallengeEnd = challengeHasEnded(id, daysRemainingForChallenge, votes + 1, highestVote);
-         } else throw new Error(`Result is not ok: ${result.ok}. Status is ${result.status}. Text is ${result.status}.`)
+         const { newData, result, url } = await PatchDataAPI(`http://localhost:3003/activeChallenges/${_challengeID}`, { videosInChallenge: addVoteToSelectedVideo });
 
+         console.log({ didChallengeEnd, result_ok: result.ok });
+         debugger;
+
+         if (result.ok) setVideosInChallengeState(newData.videosInChallenge);
+         else throw new Error(`Result is not ok: ${result.ok}. Status is ${result.status}. Text is ${result.status}.`)
+
+         // if (didChallengeEnd) {
+         //    const expiredChallenge = currentChallenges.filter(({ id }) => id == _challengeID);
+         //    const { expiredChallenges: exp, videos: vids, currentChallenges: cc } = await handleExpiredActiveChallenges(expiredChallenge, videos, currentChallenges, DateTime, (data) => setVideos(data), pathname)
+            
+         //    console.log({ exp, vids, cc });
+         //    debugger;
+         // }
       } catch (error) {
          console.error({ message: "ERROR inside onHandleVote function!!!", location: pathname, error, errorMessage: error.message, errorName: error.name, errorCode: error.code });
       }
@@ -93,4 +101,3 @@ const ActiveChallengeDetails = () => {
 }
 
 export default ActiveChallengeDetails
-

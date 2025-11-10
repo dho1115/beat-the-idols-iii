@@ -73,7 +73,7 @@ export const handleExpiredActiveChallenges = async (expiredChallenges, videos, c
             .map(expiredChallenge => updateFinalStatusesForVideos(expiredChallenge, location.pathname)).reduce((accumulator, array) => {
                accumulator = [...accumulator, ...array];
                return accumulator;
-            }, []) //[{finalStatus, _videoID, video_data}]
+            }, []) //[{WINNER/LOSER/TIE, _videoID, video_data}]
          
          challengeVideosFinalStatuses.forEach(async ({ _videoID, finalStatus }) => {
             const { record } = videos.find(({ id }) => id == _videoID);

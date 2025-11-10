@@ -98,7 +98,7 @@ function App() {
 
   useEffect(() => {
     try {
-      const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime)
+      const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime, "date")
 
       if (expiredChallenges.length) {
         handleExpiredActiveChallenges(expiredChallenges, videos, currentChallenges, DateTime, data => setVideos(data), location.pathname)

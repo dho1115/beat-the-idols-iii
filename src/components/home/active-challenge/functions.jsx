@@ -77,7 +77,7 @@ export const updateFinalStatusesForVideos = (expiredChallenge, pathname) => {
 
          if (leaders.length > 1) {
             challengeAccessories.finalStatus = 'TIE'
-            return { video_data: leaderVideo, id, finalStatus: 'TIE', _videoID: id};
+            return { video_data: leaderVideo, id, finalStatus: 'TIE', _videoID: id };
          } // TIE!!!
 
          challengeAccessories.finalStatus = 'WINNER'
