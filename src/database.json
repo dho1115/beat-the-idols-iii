@@ -1,12 +1,14 @@
 {
   "currentUser": {
-    "username": "jamiesmith",
-    "password": "JamieSmith",
-    "email": "jsmith@email.com",
+    "username": "AceyAdams",
+    "password": "aceyadams",
+    "email": "aceyadams@email.com",
+    "addImage": true,
+    "imageSource": "online",
     "personalImages": [
-      "https://itamandi.com/wp-content/uploads/2023/12/exploring-the-mysteries-of-the-night.jpg"
+      "https://npr.brightspotcdn.com/dims4/default/1777761/2147483647/strip/true/crop/4217x2811+0+0/resize/880x587!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F51%2Fe2%2Fa97a16594573aeaf748aa81afe69%2Fdavid-menidrey-16ep3tgzr-0-unsplash.jpg"
     ],
-    "id": "e3288652-f5be-4e52-b315-a7c232c9e0cb"
+    "id": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd"
   },
   "allUsers": [
     {
@@ -214,6 +216,16 @@
         "ties": 0,
         "winPct": 0.42857142857142855
       }
+    },
+    {
+      "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+      "username": "AceyAdams",
+      "title": "Cover for The Wizard and I",
+      "description": "By Acey Adams: The Wizard and I cover",
+      "videoType": "you-tube",
+      "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
+      "id": "94127066-faf9-4268-b257-882bf802855c",
+      "posted": "11-10-2025"
     }
   ]
 }
