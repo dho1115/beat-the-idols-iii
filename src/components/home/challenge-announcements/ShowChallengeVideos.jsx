@@ -8,11 +8,11 @@ import UploadVideo from '../../templates/video/upload/UploadVideo';
 
 import "../Challenges.styles.css"
 
-const ShowChallengeVideos = ({videosInChallenge}) => {
+const ShowChallengeVideos = ({ challenge_videos }) => {
   return (
     <Container className="announcement-videos-container p-3">
       {
-         videosInChallenge.map(({ title, description, videoType, urlOrFile, username }, idx) => (
+         challenge_videos.map(({ title, description, videoType, urlOrFile, username }, idx) => (
             <VideoWrapper
                key={idx}
                color={idx%2==1 ? "red" : "yellow"}
