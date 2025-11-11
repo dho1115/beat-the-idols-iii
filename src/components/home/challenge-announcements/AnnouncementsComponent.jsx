@@ -1,4 +1,5 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, Suspense } from 'react';
+import ErrorBoundary from 'src/components/ErrorBoundary';
 import { useNavigate } from 'react-router-dom';
 import { dataContext } from '../../../App';
 import { Container } from 'reactstrap';
@@ -24,25 +25,30 @@ const AnnouncementsComponent = () => {
       
    }, [challengeAnnouncements.length])
 
-   if (challengeAnnouncements.length) {
-      
+   if (challengeAnnouncements.length) {      
       return (
          <Container className='challenge-announcements-container p-3' ref={challengeAnnouncementsRef}>
-            {
-               challengeAnnouncements.map(({announcement: {_challengeAnnouncementID, _announcementOwnerID,cover_img, headline, description, announcementEndsOn}}, idx) => (
-                  <ChallengeWrapper key={idx}
-                     announcementID={_challengeAnnouncementID}
-                     coverImg={cover_img}
-                     title={headline}
-                     description={description}
-                     expires = {announcementEndsOn}
-                     button_text={<strong>CHALLENGE DETAILS.</strong>}
-                     _ownerID={_announcementOwnerID}
-                     idx={idx}
-                     clickLogic={() => navigate(`/currentUser/${_announcementOwnerID}/view/announcement/${_challengeAnnouncementID}`)}
-                  />
-               ))
-            }
+            <ErrorBoundary fallback={<h3>Error Rendering Announcement Values!!!</h3>}>
+               <Suspense fallback={<h3>...Loading.</h3>}>
+                  {
+                     challengeAnnouncements.map(({ announcement: { _challengeAnnouncementID, _announcementOwnerID, cover_img, headline, description, announcementEndsOn } }, idx) => (
+                        <ErrorBoundary fallback={<h3>ERROR RENDERING ANNOUNCEMENT WRAPPER!!!</h3>}>
+                           <ChallengeWrapper key={idx}
+                              announcementID={_challengeAnnouncementID}
+                              coverImg={cover_img}
+                              title={headline}
+                              description={description}
+                              expires = {announcementEndsOn}
+                              button_text={<strong>CHALLENGE DETAILS.</strong>}
+                              _ownerID={_announcementOwnerID}
+                              idx={idx}
+                              clickLogic={() => navigate(`/currentUser/${_announcementOwnerID}/view/announcement/${_challengeAnnouncementID}`)}
+                           />
+                        </ErrorBoundary>
+                     ))
+                  }
+               </Suspense>
+            </ErrorBoundary>
          </Container>
       )
    }
