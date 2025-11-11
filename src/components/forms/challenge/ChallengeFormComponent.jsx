@@ -40,6 +40,7 @@ const ChallengeFormComponent = () => {
          const form_challenge_announcement = { posted, _announcementOwnerID: currentUser.id, videosInChallenge: [...challengeDetails.videosInChallenge], cover_img: challengeDetails.challengeCoverImage }
 
          const announcementData = {
+            id: challengeDetails.challengeAnnouncementID,
             announcement: {
                ...challengeAnnouncement,
                ...form_challenge_announcement
@@ -49,8 +50,8 @@ const ChallengeFormComponent = () => {
             }
          }
 
-         AddChallengeToDB("http://localhost:3003/challengeAnnouncements", announcementData, setChallengeAnnouncements).
-            then(result => navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`))
+         AddChallengeToDB("http://localhost:3003/challengeAnnouncements", announcementData, announcementData => setChallengeAnnouncements(prv => ([...prv, announcementData])))
+            .then(data => navigate(`/currentUser/${currentUser.id}/view/challenges/announcements`))
             .catch(err => console.err({ location: "AddChallengeToDB (announcement)", err, errCode: err.code, errMessage: err.message }))
       } else {
          const activeChallengeData = { ...challengeDetails, ...form_content }
@@ -73,6 +74,7 @@ const ChallengeFormComponent = () => {
    }, [])
 
    if (videos.length <= 2) return <ChallengeFormError videos={videos} />
+   
    return (      
       <Container>
          <ErrorBoundary
