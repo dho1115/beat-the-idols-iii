@@ -9,7 +9,7 @@ export const PostDataAPI = async (url, data) => {
       
       console.log({ message: 'PostDataAPI success!!!', jsonData, postData });
 
-      return { message: 'usePost success!!!', jsonData, postData };
+      return { message: 'usePost success!!!', jsonData, postData, postDataJSON: postData.json() };
    } catch (error) {
       console.error({ message: 'Error in PostDataAPI function', error, errorCode: error.code, status: error.status, errMessage: error.message });
 
