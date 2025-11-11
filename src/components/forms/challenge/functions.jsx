@@ -17,12 +17,17 @@ export const defaultExpirationDate = (challengeDetails, challengeAnnouncement, D
 //CRUD FUNCTIONS.
 
 export const AddChallengeToDB = (link=null, data=null, setState=null) => {
-   const dataTypes = JSON.stringify({ link: typeof (link), data: typeof (data), setState: typeof (setState) });
+   const yourDataTypes = JSON.stringify({ link: typeof (link), data: typeof (data), setState: typeof (setState) });
+
    try {
-      if (typeof(link) != 'string' || typeof(data) != 'object' || typeof(setState) != 'function') throw new Error(`Wrong data type for one or more of the arguments. link and data must be a string and setState must be a function. You have: ${dataTypes}.`)
+      if (typeof(link) != 'string' || typeof(data) != 'object' || typeof(setState) != 'function') throw new Error(`Wrong data type for one or more of the arguments. link and data must be a string and setState must be a function. You have: ${yourDataTypes}.`)
 
       return PostDataAPI(link, data)
-         .then(result => setState(prv => ([...prv, JSON.parse(result.jsonData)])))
+         .then(result => {
+            console.log({ from: 'PostDataAPI', result });
+            setState(data)
+            return data;
+         })
          .catch(error => console.error({ error, errorCode: error.code, errorMessage: error.message }));
    }
    catch (err) {
