@@ -14,10 +14,7 @@ import "../Challenges.styles.css";
 const AnnouncementDetailsComponent = () => {
    const { user, id } = useParams(); //_userid, challenge announcement id.
    const { challengeAnnouncements, currentUser, allUsers, setChallengeAnnouncements, videos } = useContext(dataContext);
-   const { personalImages } = currentUser;
-   const [actualChallenge, setActualChallenge] = useState({})
-   const [videosInChallenge, setVideosInChallenge] = useState([]);
-   const [videosEligibleForChallenge, setvideosEligibleForChallenge] = useState({ show: false, eligibleVideos: [] });
+   const [showEligibleVideosForChallenge, setShowEligibleVideosForChallenge] = useState(false);
 
    const announcementDetails = challengeAnnouncements.find(({ announcement: { _challengeAnnouncementID } }) => _challengeAnnouncementID == id) //challengeAnnouncement object for this challenge.
    
@@ -25,23 +22,19 @@ const AnnouncementDetailsComponent = () => {
 
    const { challenge, announcement } = announcementDetails;
 
-   const showEligibleVideos = () => {
-      const eligibleVideos = videos.filter(({ _userID, id: videoID }) => (_userID == user) && (!videosInChallenge.includes(videoID)))
+   const { announcementEndsOn, cover_img, description, posted, videosInChallenge, _announcementOwnerID, _challengeAnnouncementID } = announcement;
 
-      setvideosEligibleForChallenge({ show: true, eligibleVideos: [...eligibleVideos] });
+   const ownerForThisAnnouncement = allUsers.find(user => user.id == _announcementOwnerID);
+
+   const showEligibleVideos = () => {
+      const idForVideosInThisAnnouncement = videosInChallenge.map((video) => video.id)
+      const eligibleVideos = videos.filter(video => (video._userID == currentUser.id) && !idForVideosInThisAnnouncement.includes(video.id))
+      return eligibleVideos;
    }
 
    useEffect(() => {
-      const videosInChallenge = videos.filter(({ id }) => challenge.videosInChallenge.includes(id)); //videos that joined challenge.
-      setActualChallenge(prv => ({ ...prv, ...announcementDetails.challenge }));
-      setChallengeAnnouncements([...challengeAnnouncements.filter(val => val.id == id), { ...announcementDetails, announcement: { ...announcementDetails.announcement, owner: announcementOwner.username }, challenge: { ...announcementDetails.challenge } }]);
-
-      setVideosInChallenge(prv => ([...prv, ...videosInChallenge]));
-
       return (() => {
-         setvideosEligibleForChallenge({ show: false, videos: [] });
-         setVideosInChallenge([]);
-         setActualChallenge({});
+         setShowEligibleVideosForChallenge(false);
       })
    }, [])
 
@@ -49,46 +42,40 @@ const AnnouncementDetailsComponent = () => {
       <div className='m-1 p-1'>
          <div className='announcementDetailsProfile w-100'>
             <div className='m-1'>
-               <h1>This Announcement Expires: <span style={{color: 'maroon'}}>{announcement.announcementEndsOn}</span></h1>
-               <h3>Announcement ID: {id}</h3>
-               <h3>Owner: <strong className='text-danger'>{announcement.owner}</strong>.</h3>
+               <h3>Announcement posted on {posted}.</h3>
+               <h1>This Announcement Expires: <span style={{color: 'maroon'}}>{announcementEndsOn}</span></h1>
+               <h3>Announcement ID: {_challengeAnnouncementID}.</h3>
+               <h3>Owner: <strong className='text-danger'>{ownerForThisAnnouncement.username} (owner id# {ownerForThisAnnouncement.id})</strong>.</h3>
                <hr />
-               <h5>Description: <strong className='text-danger'>{announcement.description}</strong>.</h5>
+               <h5>Description: <strong className='text-danger'>{description}</strong>.</h5>
             </div>
             <div className='announcementDetailsCoverImg'>
-               <img src={personalImages[0]} className='img-fluid'/>
+               <img src={cover_img} className='img-fluid'/>
             </div>
          </div>
          <Container>
             <headline className='p-3'>
                <h3>VIDEOS CURRENTLY IN THIS CHALLENGE:</h3>
             </headline>
-            <ShowChallengeVideos videosInChallenge={videosInChallenge} />
+            <ShowChallengeVideos challenge_videos={videosInChallenge} />
             {
-               !videosEligibleForChallenge.show && <Button color='danger' size='lg' onClick={showEligibleVideos}><strong>JOIN THIS CHALLENGE!!!</strong></Button>
+               !showEligibleVideosForChallenge && <Button color='danger' size='lg' onClick={() => setShowEligibleVideosForChallenge(true)}><strong>JOIN THIS CHALLENGE!!!</strong></Button>
             }            
          </Container>
-         <Container>
+         <Container className="mb-5">
             {
-               (videosEligibleForChallenge.show && !videosEligibleForChallenge.eligibleVideos.length) ?
-                  <h1>You have no eligible videos for challenge (probably because they are already in the challenge).</h1>
+               showEligibleVideosForChallenge &&
+               (
+                  showEligibleVideos().length ?
+                  <h5>{JSON.stringify(showEligibleVideos())}.</h5>
                   :
-                  videosEligibleForChallenge.show &&
-                  <AddVideosToChallenge
-                     videosInChallenge={videosInChallenge}
-                     eligibleVideos={videosEligibleForChallenge.eligibleVideos}
-                     actualChallenge={actualChallenge}
-                     setActualChallenge={setActualChallenge}
-                     setvideosEligibleForChallenge={setvideosEligibleForChallenge}
-                     setVideosInChallenge={setVideosInChallenge}
-                     showEligibleVideos={showEligibleVideos}
-                  />
-                  
+                  <h5>You have NO eligible videos for this challenge!!!</h5>
+               )
             }
             {
-               videosEligibleForChallenge.show
+               showEligibleVideosForChallenge
                &&
-               <Button color='success' size='lg' onClick={() => setvideosEligibleForChallenge(prv => ({ ...prv, show: false }))}>CLOSE THIS PANEL.</Button>
+               <Button color='success' size='lg' onClick={() => setShowEligibleVideosForChallenge(false)}>CLOSE THIS PANEL.</Button>
             }
          </Container>
       </div>
