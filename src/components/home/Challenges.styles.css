@@ -62,6 +62,9 @@
    display: grid;
    grid-template-columns: 19% 19% 19% 19% 19%;
    border: 3.5px solid black;
+   background: #C02425;  /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #F0CB35, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .eligibleVideosDiv {
