@@ -58,6 +58,12 @@
    overflow-wrap: anywhere;
 }
 
+.eligible-videos-container {
+   display: grid;
+   grid-template-columns: 19% 19% 19% 19% 19%;
+   border: 3.5px solid black;
+}
+
 .eligibleVideosDiv {
    display: grid;
    grid-template-columns: auto auto auto auto auto;
