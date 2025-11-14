@@ -70,21 +70,7 @@ const AnnouncementDetailsComponent = () => {
                showEligibleVideosForChallenge &&
                (
                   showEligibleVideos().length ?
-                  // <h5>{JSON.stringify(showEligibleVideos())}.</h5>
-                  <div className='eligible-videos-container m-1'>
-                     {
-                        showEligibleVideos().map(({ id, _userID, description, username, title, videoType, urlOrFile }) => (
-                           <VideoWrapper
-                              video_component={videoType == 'you-tube' ? <YouTubeVideo url={urlOrFile} /> : <UploadVideo file={urlOrFile} />}
-                              title={title}
-                              username={username}
-                              button_text="SELECT THIS VIDEO!!!" clickLogic={() => console.log(`video id ${id}, title: ${title} has been selected!!!`)} id={id} _userID={_userID}
-                           />
-                        )
-                           
-                        )
-                     } 
-                  </div>                  
+                  <AddVideosToChallenge showEligibleVideos={showEligibleVideos} />   
                   :
                   <h5>You have NO eligible videos for this challenge!!!</h5>
                )
