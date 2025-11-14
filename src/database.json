@@ -32,7 +32,58 @@
       "id": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd"
     }
   ],
-  "activeChallenges": [],
+  "activeChallenges": [
+    {
+      "id": "92a5b778-3c2f-46a8-a674-99698015139d",
+      "_challengeID": "92a5b778-3c2f-46a8-a674-99698015139d",
+      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+      "posted": "2025-11-14",
+      "title": "Who's the Better Singer?",
+      "description": "Cast your vote to see who has the better voice.",
+      "challengeCoverType": "online",
+      "challengeCoverImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRVRTPD2I49p3fUlCoYG-P8aZBAj5CUZ41Iw&s",
+      "challengeEndsOn": "2026-04-14",
+      "winningVotes": "19",
+      "videosInChallenge": [
+        {
+          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
+          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
+          "videoType": "you-tube",
+          "title": "The Wizard and I - cover.",
+          "record": {
+            "wins": 1,
+            "losses": 5,
+            "ties": 1,
+            "winPct": 0.14285714285714285
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 9,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "cac8900f-2676-40c6-a124-295fd0996256",
+          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
+          "videoType": "you-tube",
+          "title": "The Wizard and I - v2",
+          "record": {
+            "wins": 2,
+            "losses": 3,
+            "ties": 1,
+            "winPct": 0.3333333333333333
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 7,
+            "finalStatus": "pending"
+          }
+        }
+      ],
+      "howChallengeEnds": "votes",
+      "challengeAnnouncementID": ""
+    }
+  ],
   "challengeAnnouncements": [
     {
       "id": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
@@ -225,7 +276,13 @@
       "videoType": "you-tube",
       "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
       "id": "94127066-faf9-4268-b257-882bf802855c",
-      "posted": "11-10-2025"
+      "posted": "11-10-2025",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "winPct": 0
+      }
     }
   ]
 }
