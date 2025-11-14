@@ -4,6 +4,9 @@ import { Button, Container } from 'reactstrap';
 
 //Components.
 import AddVideosToChallenge from './AddVideosToChallenge';
+import UploadVideo from 'src/components/templates/video/upload/UploadVideo';
+import VideoWrapper from 'src/components/templates/video_wrapper/VideoWrapper';
+import YouTubeVideo from 'src/components/templates/video/you_tube/YouTubeVideo';
 import ShowChallengeVideos from './ShowChallengeVideos';
 
 //Context
@@ -13,7 +16,7 @@ import "../Challenges.styles.css";
 
 const AnnouncementDetailsComponent = () => {
    const { user, id } = useParams(); //_userid, challenge announcement id.
-   const { challengeAnnouncements, currentUser, allUsers, setChallengeAnnouncements, videos } = useContext(dataContext);
+   const { challengeAnnouncements, currentUser, allUsers, videos } = useContext(dataContext);
    const [showEligibleVideosForChallenge, setShowEligibleVideosForChallenge] = useState(false);
 
    const announcementDetails = challengeAnnouncements.find(({ announcement: { _challengeAnnouncementID } }) => _challengeAnnouncementID == id) //challengeAnnouncement object for this challenge.
@@ -62,12 +65,26 @@ const AnnouncementDetailsComponent = () => {
                !showEligibleVideosForChallenge && <Button color='danger' size='lg' onClick={() => setShowEligibleVideosForChallenge(true)}><strong>JOIN THIS CHALLENGE!!!</strong></Button>
             }            
          </Container>
-         <Container className="mb-5">
+         <Container className="mb-5 p-t">
             {
                showEligibleVideosForChallenge &&
                (
                   showEligibleVideos().length ?
-                  <h5>{JSON.stringify(showEligibleVideos())}.</h5>
+                  // <h5>{JSON.stringify(showEligibleVideos())}.</h5>
+                  <div className='eligible-videos-container m-1'>
+                     {
+                        showEligibleVideos().map(({ id, _userID, description, username, title, videoType, urlOrFile }) => (
+                           <VideoWrapper
+                              video_component={videoType == 'you-tube' ? <YouTubeVideo url={urlOrFile} /> : <UploadVideo file={urlOrFile} />}
+                              title={title}
+                              username={username}
+                              button_text="SELECT THIS VIDEO!!!" clickLogic={() => console.log(`video id ${id}, title: ${title} has been selected!!!`)} id={id} _userID={_userID}
+                           />
+                        )
+                           
+                        )
+                     } 
+                  </div>                  
                   :
                   <h5>You have NO eligible videos for this challenge!!!</h5>
                )
