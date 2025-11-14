@@ -9,52 +9,26 @@ import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 
 import "../Challenges.styles.css";
 
-const AddVideosToChallenge = ({ eligibleVideos, actualChallenge, setActualChallenge, setVideosInChallenge, showEligibleVideos, videosInChallenge }) => {
-   const { id:announcementID } = useParams();
-   const { challengeAnnouncements, setChallengeAnnouncements } = useContext(dataContext);
+const AddVideosToChallenge = ({ showEligibleVideos }) => {
+   const { id: _challengeAnnouncementID } = useParams;
 
-      const handleAddVideoToChallenge = ({ description, id, posted, title, urlOrFile, username, videoType, _userID }) => {
-      setVideosInChallenge(prv => ([...prv, { description, id, posted, title, urlOrFile, username, videoType, _userID }]));
-      
-      setActualChallenge(prv => ({ ...prv, videosInChallenge: [...videosInChallenge, id] }));
-      const challengeAnnouncementsUpdated = challengeAnnouncements.map(announcement_OBJECT => {
-         if (announcement_OBJECT.announcement.id == announcementID) {
-            announcement_OBJECT.challenge.videosInChallenge = [...announcement_OBJECT.challenge.videosInChallenge, id];
-         }
-         return announcement_OBJECT;
-      })
-      
-      setChallengeAnnouncements(challengeAnnouncementsUpdated);
+   const handleAddVideoToChallenge = (id, _userID, title, username) => {
+      console.log(`Added ${title} by ${username} (_videoID #${id}) into the challenge!!!`)
    }
 
-   useEffect(() => {
-      showEligibleVideos()
-   }, [actualChallenge.videosInChallenge.length])
-
    return (
-      <>
-         <h3>SELECT FROM THE VIDEOS BELOW TO ADD TO THIS CHALLENGE:</h3>
-         <div className="eligibleVideosDiv">
-               {
-                  eligibleVideos.map((val, idx) => {
-                     const video_component = val.videoType == 'you-tube' ? <YouTubeVideo url={val.urlOrFile} title={val.title} /> : <UploadVideo file={val.urlOrFile} />
-                     
-                     return (
-                        <VideoWrapper
-                           key={idx}
-                           idx={idx}
-                           video_component={video_component}
-                           username={val.username}
-                           title={val.title}
-                           description={val.description}
-                           button_text="ADD THIS VIDEO!!!"
-                           clickLogic={() => handleAddVideoToChallenge(val)}
-                        />
-                     )
-                  })
-               }
-         </div>
-      </>
+      <div className='eligible-videos-container p-3 my-3'>
+         {
+            showEligibleVideos().map(({ id, _userID, description, username, title, videoType, urlOrFile }, idx) => (
+               <VideoWrapper
+                  key={idx}
+                  video_component={videoType == 'you-tube' ? <YouTubeVideo url={urlOrFile} /> : <UploadVideo file={urlOrFile} />}
+                  title={title}
+                  username={username}
+                  button_text="SELECT THIS VIDEO!!!" clickLogic={() => handleAddVideoToChallenge(id, _userID, title, username)}
+               />))
+         }
+      </div>
    )
 }
 
