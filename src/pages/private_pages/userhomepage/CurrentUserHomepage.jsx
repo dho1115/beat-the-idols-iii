@@ -9,6 +9,8 @@ import { Container } from 'reactstrap';
 import LoggedInNavbar from '../../../components/navigationbars/logged_in_navbar/LoggedInNavbar';
 import SuspenseFallback from '../../../components/suspense_fallback/SuspenseFallback';
 
+import './CurrentUserHomepage.styles.css';
+
 const CurrentUserHomepage = () => {
    const { currentUser } = useContext(dataContext);
    const { username, email } = currentUser;
@@ -19,7 +21,7 @@ const CurrentUserHomepage = () => {
             <Suspense fallback={<SuspenseFallback />}>
                <LoggedInNavbar />
                <header className='current-user-homepage-header'>
-                  <h1>Homepage of <span className='text-danger'>{username} - {email}.</span>.</h1>
+                  <h1>Homepage of <span className='text-danger'>{username}</span> - <span className='text-danger'>{email}.</span>.</h1>
                </header>
             </Suspense>
 
