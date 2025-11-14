@@ -6,10 +6,14 @@ import YouTubeVideo from '../../templates/video/you_tube/YouTubeVideo';
 import UploadVideo from '../../templates/video/upload/UploadVideo';
 import VideoWrapper from '../../templates/video_wrapper/VideoWrapper';
 
-//Contexts.
+//contexts.
 import { dataContext } from '../../../App';
 
+//functions.
+import { UpdateDataInDBThenSetState } from 'src/functions/updateapi';
+
 import "../Challenges.styles.css";
+
 
 const AddVideosToChallenge = ({ showEligibleVideos }) => {
    const [videoSubmissionStatus, setVideoSubmissionStatus] = useState(false);
@@ -17,26 +21,29 @@ const AddVideosToChallenge = ({ showEligibleVideos }) => {
    const { challengeAnnouncements, setChallengeAnnouncements } = useContext(dataContext);
    const { id: _challengeAnnouncementID } = useParams();
 
-   const handleAddVideoToChallenge = args => {
-      setVideoSubmissionStatus(true);
-      const { description, posted, ...challengeArgs } = args;
-      const challengeVideoObject = { ...challengeArgs, challengeAccessories: { votes: 0, finalStatus: 'pending' } };
+   const handleAddVideoToChallenge = async args => {
+      try {
+         setVideoSubmissionStatus(true);
+         const { description, posted, ...challengeArgs } = args;
+         const challengeVideoObject = { ...challengeArgs, challengeAccessories: { votes: 0, finalStatus: 'pending' } };
 
-      const updatedChallengeAnnouncements = challengeAnnouncements.map(announcement => {
-         if (announcement.id == _challengeAnnouncementID) {
-            announcement.announcement.videosInChallenge.push(challengeVideoObject);
-            announcement.challenge.videosInChallenge.push(challengeVideoObject)
-         }
+         const thisAnnouncementUpdated = challengeAnnouncements
+            .map(announcement => {
+               if (announcement.id == _challengeAnnouncementID) {
+                  announcement.announcement.videosInChallenge.push(challengeVideoObject);
+                  announcement.challenge.videosInChallenge.push(challengeVideoObject)
+               }
+               return announcement;
+            }).find(announcement => announcement.id == _challengeAnnouncementID); //This is the { announcement } that will go into UpdateDataInDBTheSetState function (below).
 
-         return announcement;
-      })
+         const updateDBandState = await UpdateDataInDBThenSetState(`http://localhost:3003/challengeAnnouncements/${_challengeAnnouncementID}`, thisAnnouncementUpdated, data => setChallengeAnnouncements(data))
 
-      setChallengeAnnouncements(updatedChallengeAnnouncements);
-      setVideoSubmissionStatus(false)
+         setVideoSubmissionStatus(false)
 
-      console.log("===== CHALLENGE ANNOUNCEMENT UPDATED!!! =====");
-      console.log(`challengeAnnouncment id ${_challengeAnnouncementID} has been updated with ${JSON.stringify(challengeVideoObject)}. The state, updatedChallengeAnnouncements is now: `, updatedChallengeAnnouncements);
-      console.log("=============================================");
+         return updateDBandState;
+      } catch (error) {
+         console.error({ message: "handleAddVideoToChallenge function call ERROR!!!", error, errorMessage: error.message, errorName: error.name, errorStack: error.stack });
+      }
    }
 
    useEffect(() => {
@@ -65,4 +72,3 @@ const AddVideosToChallenge = ({ showEligibleVideos }) => {
 }
 
 export default AddVideosToChallenge
-
