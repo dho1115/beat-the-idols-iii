@@ -4,9 +4,6 @@ import { Button, Container } from 'reactstrap';
 
 //Components.
 import AddVideosToChallenge from './AddVideosToChallenge';
-import UploadVideo from 'src/components/templates/video/upload/UploadVideo';
-import VideoWrapper from 'src/components/templates/video_wrapper/VideoWrapper';
-import YouTubeVideo from 'src/components/templates/video/you_tube/YouTubeVideo';
 import ShowChallengeVideos from './ShowChallengeVideos';
 
 //Context
@@ -42,7 +39,7 @@ const AnnouncementDetailsComponent = () => {
    }, [])
 
    return (
-      <div className='m-1 p-1'>
+      <div className='p-3 m-1'>
          <div className='announcementDetailsProfile w-100'>
             <div className='m-1'>
                <h3>Announcement posted on {posted}.</h3>
