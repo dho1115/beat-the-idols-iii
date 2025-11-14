@@ -23,7 +23,7 @@ const AddVideo = () => {
     const _videoID = v4();
     const dateObject = DateTime.now().startOf("day")
     const datePosted = dateObject.toFormat("MM-dd-yyyy");
-    PostDataAPI("http://localhost:3003/videos", { ...video, id: _videoID, posted: datePosted })
+    PostDataAPI("http://localhost:3003/videos", { ...video, id: _videoID, posted: datePosted, record: { wins: 0, losses: 0, ties: 0, winPct: 0 } })
       .then(result => {
         console.log({ message: 'From onHandleAddVideo: PostDataAPI success!!!', result });
         setVideo(prv => ({ ...prv, id: _videoID, posted: datePosted }));
