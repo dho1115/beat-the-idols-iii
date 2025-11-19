@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { Suspense, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
 
 //Components.
 import AddVideosToChallenge from './AddVideosToChallenge';
+import ErrorBoundary from 'src/components/ErrorBoundary';
 import ShowChallengeVideos from './ShowChallengeVideos';
 
 //Context
@@ -16,7 +17,17 @@ const AnnouncementDetailsComponent = () => {
    const { challengeAnnouncements, currentUser, allUsers, videos } = useContext(dataContext);
    const [showEligibleVideosForChallenge, setShowEligibleVideosForChallenge] = useState(false);
 
-   const announcementDetails = challengeAnnouncements.find(({ announcement: { _challengeAnnouncementID } }) => _challengeAnnouncementID == id) //challengeAnnouncement object for this challenge.
+   const announcementDetails = challengeAnnouncements?.find(({ announcement: { _challengeAnnouncementID } }) => (
+      <Suspense fallback={<h3>Loading... Please wait...</h3>}>
+         <ErrorBoundary fallback={<h5>ERROR TRYING TO FIND _challengeAnnoucnementID which shows: {JSON.stringify(_challengeAnnouncementID)}!!!</h5>}>
+            { _challengeAnnouncementID == id }
+         </ErrorBoundary>
+      </Suspense>
+      
+   )) //challengeAnnouncement object for this challenge.
+
+   console.log({ announcementDetails });
+   debugger;
    
    const announcementOwner = allUsers.find(val => val.id == user);
 
@@ -33,9 +44,7 @@ const AnnouncementDetailsComponent = () => {
    }
 
    useEffect(() => {
-      return (() => {
-         setShowEligibleVideosForChallenge(false);
-      })
+      return (() => setShowEligibleVideosForChallenge(false))
    }, [])
 
    return (
