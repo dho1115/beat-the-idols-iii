@@ -1,10 +1,11 @@
 export const fetchDataAPI = async url => {
    try {
       const rawData = await fetch(url);
-      const jsonData = await rawData.json();
 
-
-      return jsonData;
+      if (rawData.ok) {
+         const jsonData = await rawData.json();
+         return jsonData;
+      } else throw new Error(`fetchDataAPI call error (fetchapi.jsx)!!! rawData.ok returned ${rawData.ok} while status code is ${rawData.status}!!!`);
    } catch (error) {
       console.error({ from: 'fetchDataAPI (fetchapi.jsx)', error, errorCode: error.code, errorMessage: error.message, status: error.status });
 
