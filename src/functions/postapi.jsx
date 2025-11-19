@@ -6,7 +6,7 @@ export const PostDataAPI = async (url, data) => {
          headers: { 'Content-Type': 'application/json' },
          body: jsonData
       }); //POST method.
-      
+
       console.log({ message: 'PostDataAPI success!!!', jsonData, postData });
 
       return { message: 'usePost success!!!', jsonData, postData, postDataJSON: postData.json() };
