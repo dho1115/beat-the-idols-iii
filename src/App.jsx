@@ -20,6 +20,7 @@ import { DateTime } from 'luxon';
 
 //Functions.
 import { findExpiredChallenges } from './functions/remainingtime';
+import { findExpiredAnnouncements } from './functions/AppJsxFunctions';
 import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
 import { UpdateDataAPI } from './functions/updateapi';
 import { InitialFetchDBandUpdateState } from './functions/AppJsxFunctions';
@@ -98,6 +99,10 @@ function App() {
 
   useEffect(() => {
     try {
+      const expiredAnnouncements = findExpiredAnnouncements(challengeAnnouncements, DateTime);
+
+      console.log({ expiredAnnouncements });
+
       const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime, "date")
 
       if (expiredChallenges.length) {
