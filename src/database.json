@@ -320,6 +320,24 @@
               "votes": 0,
               "finalStatus": "pending"
             }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Breaking Free Cover (by Acey Adams).",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
+            "id": "f252e3ca-9312-4134-908d-54f085696a23",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
           }
         ],
         "howChallengeEnds": "votes",
