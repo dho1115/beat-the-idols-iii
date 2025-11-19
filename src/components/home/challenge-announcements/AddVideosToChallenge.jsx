@@ -14,7 +14,6 @@ import { UpdateDataInDBThenSetState } from 'src/functions/updateapi';
 
 import "../Challenges.styles.css";
 
-
 const AddVideosToChallenge = ({ showEligibleVideos }) => {
    const [videoSubmissionStatus, setVideoSubmissionStatus] = useState(false);
 
