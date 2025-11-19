@@ -58,7 +58,7 @@
           },
           "username": "jamiesmith",
           "challengeAccessories": {
-            "votes": 9,
+            "votes": 15,
             "finalStatus": "pending"
           }
         },
@@ -75,7 +75,7 @@
           },
           "username": "jamiesmith",
           "challengeAccessories": {
-            "votes": 7,
+            "votes": 9,
             "finalStatus": "pending"
           }
         }
@@ -147,6 +147,42 @@
               "votes": 0,
               "finalStatus": "pending"
             }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Acey Adams Defying Gravity Cover",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
+            "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Breaking Free Cover (by Acey Adams).",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
+            "id": "f252e3ca-9312-4134-908d-54f085696a23",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
           }
         ]
       },
@@ -212,6 +248,78 @@
               "votes": 0,
               "finalStatus": "pending"
             }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Cover for The Wizard and I",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
+            "id": "94127066-faf9-4268-b257-882bf802855c",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Cover for The Wizard and I",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
+            "id": "94127066-faf9-4268-b257-882bf802855c",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Acey Adams Defying Gravity Cover",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
+            "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
+          },
+          {
+            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+            "username": "AceyAdams",
+            "title": "Breaking Free Cover (by Acey Adams).",
+            "videoType": "you-tube",
+            "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
+            "id": "f252e3ca-9312-4134-908d-54f085696a23",
+            "record": {
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "winPct": 0
+            },
+            "challengeAccessories": {
+              "votes": 0,
+              "finalStatus": "pending"
+            }
           }
         ],
         "howChallengeEnds": "votes",
@@ -271,12 +379,28 @@
     {
       "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
       "username": "AceyAdams",
-      "title": "Cover for The Wizard and I",
-      "description": "By Acey Adams: The Wizard and I cover",
+      "title": "Acey Adams Defying Gravity Cover",
+      "description": "Defying Gravity Cover by acey adams",
       "videoType": "you-tube",
-      "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
-      "id": "94127066-faf9-4268-b257-882bf802855c",
-      "posted": "11-10-2025",
+      "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
+      "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
+      "posted": "11-19-2025",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "winPct": 0
+      }
+    },
+    {
+      "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+      "username": "AceyAdams",
+      "title": "Breaking Free Cover (by Acey Adams).",
+      "description": "Upload of my cover: Breaking Free.",
+      "videoType": "you-tube",
+      "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
+      "id": "f252e3ca-9312-4134-908d-54f085696a23",
+      "posted": "11-19-2025",
       "record": {
         "wins": 0,
         "losses": 0,
