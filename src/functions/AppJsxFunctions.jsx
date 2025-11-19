@@ -1,6 +1,8 @@
 import { calculateHighestVote, updateFinalStatusesForVideos, updateRecordInVideosState, updateVideoRecords } from "../components/home/active-challenge/functions";
 import { fetchDataAPI, fetchDataThenSetState } from "./fetchapi";
 import { PatchDataAPI } from "./patchapi";
+import { PostDataAPI } from "./postapi";
+import { timeRemaining } from "./remainingtime";
 import { UpdateDataInDBThenSetState } from "./updateapi";
 import { findExpiredChallenges } from "./remainingtime";
 import { deleteObjectAPI } from "./deleteapi";
@@ -112,6 +114,34 @@ export const handleExpiredActiveChallenges = async (expiredChallenges, videos, c
       return { expiredChallenges, videos, currentChallenges };
    } catch (error) {
       console.error({ message: "ERROR inside handleExpiredActiveChallenges function!!!!!", location, expiredChallenges, function_arguments: { videos, currentChallenges, DateTime, setVideosWrapper }, error, errorName: error.name, errorMessage: JSON.stringify(error.message), stackTrace: error.stack });
+   }
+}
+
+export const findExpiredAnnouncements = (challengeAnnouncements, DateTime) => {
+   try {
+      const expiredAnnouncements = challengeAnnouncements.filter(({ announcement }) => timeRemaining(DateTime, announcement.announcementEndsOn) < 0);
+      
+      return expiredAnnouncements;
+   } catch (error) {
+      console.error({ message: "ERROR in findExpiredAnnouncements call!!!", error, errorMessage: error.message, errorName: error.name });
+   }
+}
+
+export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, setStateActiveChalenges, setStateChallengeAnnouncements, location=null) => {
+   try {
+      const post_response = await PostDataAPI("http://localhost:3003/activeChallenges", data);
+      const { postData, postDataJSON } = post_response;
+      const delete_response = await deleteObjectAPI(url_to_delete);
+      const { result } = delete_response;
+      const challengeAnnouncementData = await fetchDataAPI("http://localhost:3003/challengeAnnouncements");
+
+      if (postData.ok) setStateActiveChalenges(postDataJSON);
+
+      if (result.ok) setStateChallengeAnnouncements(challengeAnnouncementData);
+
+      return { activeChallenges_values: { postData, postDataJSON }, challengeAnnouncements_values: { challengeAnnouncementData }, delete_response };
+   } catch (error) {
+      console.error({ message: "ERROR from handleExpiredChallengeAnnouncements!!!", locationOfError: location, error, errorMessage: error.message, errorName: error.name });
    }
 }
    
