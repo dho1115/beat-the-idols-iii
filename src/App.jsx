@@ -20,7 +20,7 @@ import { DateTime } from 'luxon';
 
 //Functions.
 import { findExpiredChallenges } from './functions/remainingtime';
-import { findExpiredAnnouncements } from './functions/AppJsxFunctions';
+import { findExpiredAnnouncements, handleExpiredChallengeAnnouncements } from './functions/AppJsxFunctions';
 import { handleExpiredActiveChallenges } from './functions/AppJsxFunctions';
 import { UpdateDataAPI } from './functions/updateapi';
 import { InitialFetchDBandUpdateState } from './functions/AppJsxFunctions';
@@ -101,7 +101,21 @@ function App() {
     try {
       const expiredAnnouncements = findExpiredAnnouncements(challengeAnnouncements, DateTime);
 
-      console.log({ expiredAnnouncements });
+      if (expiredAnnouncements.length) {
+        expiredAnnouncements.forEach(async announcement => {
+          const { challenge, id } = announcement;
+          const url = `http://localhost:3003/challengeAnnouncements/${id}`;
+
+          try {
+            const handleChallengeAnnouncementResult = await handleExpiredChallengeAnnouncements(url, challenge, data => setCurrentChallenges(data), data => setChallengeAnnouncements(data), location.pathname);
+
+            console.log(handleChallengeAnnouncementResult);
+          }
+          catch (error) {
+            console.error({ message: "*** ERROR *** inside expiredAnnouncements.forEach() block (inside useEffect hook)!!!", announcement, challenge, challengeID: id, location: location.pathname, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name });
+          }
+        })
+      }
 
       const expiredChallenges = findExpiredChallenges(currentChallenges, DateTime, "date")
 
