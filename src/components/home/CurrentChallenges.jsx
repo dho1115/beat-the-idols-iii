@@ -14,6 +14,9 @@ const CurrentChallenges = () => {
   const currentChallengesRef = useRef();
   const navigate = useNavigate();
 
+  console.log(currentChallenges);
+  debugger;
+  
   const setGridTemplateColumns = currentChallenges.length >= 5 ? "auto auto auto auto auto" : currentChallenges.map((_, __, arr) => `${((1/100)*100)*25}%`).join(" ")
     
   useLayoutEffect(() => {
