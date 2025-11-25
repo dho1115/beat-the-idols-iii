@@ -82,20 +82,87 @@
       ],
       "howChallengeEnds": "votes",
       "challengeAnnouncementID": ""
+    },
+    {
+      "id": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
+      "_challengeID": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
+      "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+      "posted": null,
+      "title": "My Open (TEST) Challenge.",
+      "description": "Description of my (TEST) Challenge here.",
+      "challengeCoverType": "online",
+      "challengeCoverImage": "https://media.timeout.com/images/105915017/750/562/image.jpg",
+      "challengeEndsOn": "2026-04-23",
+      "winningVotes": "31",
+      "videosInChallenge": [
+        {
+          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
+          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
+          "videoType": "you-tube",
+          "title": "The Wizard and I - cover.",
+          "record": {
+            "wins": 1,
+            "losses": 5,
+            "ties": 1,
+            "winPct": 0.14285714285714285
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 11,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "cac8900f-2676-40c6-a124-295fd0996256",
+          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
+          "videoType": "you-tube",
+          "title": "The Wizard and I - v2",
+          "record": {
+            "wins": 2,
+            "losses": 3,
+            "ties": 1,
+            "winPct": 0.3333333333333333
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 3,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
+          "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
+          "videoType": "you-tube",
+          "title": "The World will Know (\"Newsies\").",
+          "record": {
+            "wins": 3,
+            "losses": 4,
+            "ties": 0,
+            "winPct": 0.42857142857142855
+          },
+          "username": "jamiesmith",
+          "challengeAccessories": {
+            "votes": 9,
+            "finalStatus": "pending"
+          }
+        }
+      ],
+      "howChallengeEnds": "votes",
+      "challengeAnnouncementID": "e9eb2649-50fe-4d89-82a6-c7154afb9285"
     }
   ],
   "challengeAnnouncements": [
     {
-      "id": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
+      "id": "36477dcd-1562-4514-9cee-336d4103d5ab",
       "announcement": {
-        "id": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
+        "id": "36477dcd-1562-4514-9cee-336d4103d5ab",
         "_announcementOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-        "headline": "HEADLINE for my (TEST) Challenge.",
-        "description": "Put your videos against my videos and vote who's the best???",
-        "cover_img": "https://media.timeout.com/images/105915017/750/562/image.jpg",
-        "announcementEndsOn": "2025-11-23",
-        "_challengeAnnouncementID": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
-        "posted": "2025-11-10",
+        "headline": "HEADLINE FOR ANNOUNCEMENT!!!",
+        "description": "JOIN THIS CHALLENGE!!!",
+        "cover_img": "https://plus.unsplash.com/premium_photo-1669377593274-41985c518d03?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8b3V0ZG9vcnxlbnwwfHwwfHx8MA%3D%3D",
+        "announcementEndsOn": "2025-11-25",
+        "_challengeAnnouncementID": "36477dcd-1562-4514-9cee-336d4103d5ab",
+        "posted": "2025-11-24",
         "videosInChallenge": [
           {
             "id": "a814910a-d9ae-4123-bc13-48333718cec2",
@@ -115,23 +182,6 @@
             }
           },
           {
-            "id": "cac8900f-2676-40c6-a124-295fd0996256",
-            "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
-            "videoType": "you-tube",
-            "title": "The Wizard and I - v2",
-            "record": {
-              "wins": 2,
-              "losses": 3,
-              "ties": 1,
-              "winPct": 0.3333333333333333
-            },
-            "username": "jamiesmith",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
             "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
             "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
             "videoType": "you-tube",
@@ -143,24 +193,6 @@
               "winPct": 0.42857142857142855
             },
             "username": "jamiesmith",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-            "username": "AceyAdams",
-            "title": "Acey Adams Defying Gravity Cover",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
-            "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
             "challengeAccessories": {
               "votes": 0,
               "finalStatus": "pending"
@@ -187,16 +219,16 @@
         ]
       },
       "challenge": {
-        "id": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
-        "_challengeID": "e9eb2649-50fe-4d89-82a6-c7154afb9285",
+        "id": "36477dcd-1562-4514-9cee-336d4103d5ab",
+        "_challengeID": "36477dcd-1562-4514-9cee-336d4103d5ab",
         "_challengeOwnerID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
         "posted": null,
-        "title": "My Open (TEST) Challenge.",
-        "description": "Description of my (TEST) Challenge here.",
+        "title": "Challenge Announcement (TEST).",
+        "description": "This is my TEST Challenge Announcement.",
         "challengeCoverType": "online",
-        "challengeCoverImage": "https://media.timeout.com/images/105915017/750/562/image.jpg",
-        "challengeEndsOn": "2026-04-23",
-        "winningVotes": "31",
+        "challengeCoverImage": "https://plus.unsplash.com/premium_photo-1669377593274-41985c518d03?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8b3V0ZG9vcnxlbnwwfHwwfHx8MA%3D%3D",
+        "challengeEndsOn": "2025-11-28",
+        "winningVotes": 0,
         "videosInChallenge": [
           {
             "id": "a814910a-d9ae-4123-bc13-48333718cec2",
@@ -208,23 +240,6 @@
               "losses": 5,
               "ties": 1,
               "winPct": 0.14285714285714285
-            },
-            "username": "jamiesmith",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "id": "cac8900f-2676-40c6-a124-295fd0996256",
-            "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
-            "videoType": "you-tube",
-            "title": "The Wizard and I - v2",
-            "record": {
-              "wins": 2,
-              "losses": 3,
-              "ties": 1,
-              "winPct": 0.3333333333333333
             },
             "username": "jamiesmith",
             "challengeAccessories": {
@@ -252,78 +267,6 @@
           {
             "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
             "username": "AceyAdams",
-            "title": "Cover for The Wizard and I",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
-            "id": "94127066-faf9-4268-b257-882bf802855c",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-            "username": "AceyAdams",
-            "title": "Cover for The Wizard and I",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=81EjYixiKSM",
-            "id": "94127066-faf9-4268-b257-882bf802855c",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-            "username": "AceyAdams",
-            "title": "Acey Adams Defying Gravity Cover",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
-            "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-            "username": "AceyAdams",
-            "title": "Breaking Free Cover (by Acey Adams).",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
-            "id": "f252e3ca-9312-4134-908d-54f085696a23",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-            "username": "AceyAdams",
             "title": "Breaking Free Cover (by Acey Adams).",
             "videoType": "you-tube",
             "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
@@ -340,8 +283,8 @@
             }
           }
         ],
-        "howChallengeEnds": "votes",
-        "challengeAnnouncementID": "e9eb2649-50fe-4d89-82a6-c7154afb9285"
+        "howChallengeEnds": "date",
+        "challengeAnnouncementID": "36477dcd-1562-4514-9cee-336d4103d5ab"
       }
     }
   ],
