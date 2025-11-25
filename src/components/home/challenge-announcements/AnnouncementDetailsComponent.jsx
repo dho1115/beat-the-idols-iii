@@ -25,9 +25,6 @@ const AnnouncementDetailsComponent = () => {
       </Suspense>
       
    )) //challengeAnnouncement object for this challenge.
-
-   console.log({ announcementDetails });
-   debugger;
    
    const announcementOwner = allUsers.find(val => val.id == user);
 
