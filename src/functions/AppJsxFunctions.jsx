@@ -53,10 +53,10 @@ export const UpdateAllVideos = (expired_challenges, videos, link, setVideosWrapp
    )
 }
 
-export const unexpired_challenges = (expired_challenges, active_challenges) => {
-   const expired_challenges_ids = expired_challenges.map(({ id }) => id);
+export const unexpired_challenges = (expired_challenges, challenges) => {
+   const expired_challenges_ids = expired_challenges.map(({ id }) => id); //[id]
 
-   return active_challenges.filter(val => !expired_challenges_ids.includes(val.id));
+   return challenges.filter(val => !expired_challenges_ids.includes(val.id));
 }
 
 export const videosFromExpiredChallenges = (activeChallenges, DateTime) => findExpiredChallenges(activeChallenges, DateTime).reduce((acc, expiredChallenge) => {
@@ -127,17 +127,20 @@ export const findExpiredAnnouncements = (challengeAnnouncements, DateTime) => {
    }
 }
 
-export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, setStateActiveChalenges, setStateChallengeAnnouncements, location=null) => {
+export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, setStateActiveChallenges, setStateChallengeAnnouncements, location=null) => {
    try {
       const post_response = await PostDataAPI("http://localhost:3003/activeChallenges", data);
       const { postData, postDataJSON } = post_response;
       const delete_response = await deleteObjectAPI(url_to_delete);
-      const { result } = delete_response;
+      const { result, result_ok } = delete_response;
+
+      if (!(result_ok || result.ok)) throw new Error(`result_ok returned ${result_ok} and result.ok returned ${result.ok} for delete_resuponse inside handleExpiredChallengeAnnouncements (AppJsxFunctions.jsx)!!!`);
+
       const challengeAnnouncementData = await fetchDataAPI("http://localhost:3003/challengeAnnouncements");
 
-      if (postData.ok) setStateActiveChalenges(postDataJSON);
+      setStateChallengeAnnouncements(challengeAnnouncementData);
 
-      if (result.ok) setStateChallengeAnnouncements(challengeAnnouncementData);
+      if (postData.ok) setStateActiveChallenges(postDataJSON);
 
       return { activeChallenges_values: { postData, postDataJSON }, challengeAnnouncements_values: { challengeAnnouncementData }, delete_response };
    } catch (error) {
