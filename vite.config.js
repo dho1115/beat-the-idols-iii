@@ -12,7 +12,6 @@ export default defineConfig({
   server: { port: 3001 },
   resolve: {
     alias: {
-      // Map 'src' to the absolute path of your 'src' directory
       'src': path.resolve(__dirname, './src'),
     }
   }
