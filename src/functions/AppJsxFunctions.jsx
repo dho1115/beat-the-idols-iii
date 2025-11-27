@@ -127,10 +127,14 @@ export const findExpiredAnnouncements = (challengeAnnouncements, DateTime) => {
    }
 }
 
-export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, setStateActiveChallenges, setStateChallengeAnnouncements, location=null) => {
+export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, setStateActiveChallenges, setStateChallengeAnnouncements, location = null) => {
+   console.log("The data argument is:", data);
+   debugger;
+
    try {
       const post_response = await PostDataAPI("http://localhost:3003/activeChallenges", data);
       const { postData, postDataJSON } = post_response;
+
       const delete_response = await deleteObjectAPI(url_to_delete);
       const { result, result_ok } = delete_response;
 
@@ -141,6 +145,9 @@ export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, s
       setStateChallengeAnnouncements(challengeAnnouncementData);
 
       if (postData.ok) setStateActiveChallenges(postDataJSON);
+
+      console.log({ postData, postDataJSON, challengeAnnouncementData, postDataIsOk:postData.ok });
+      debugger;
 
       return { activeChallenges_values: { postData, postDataJSON }, challengeAnnouncements_values: { challengeAnnouncementData }, delete_response };
    } catch (error) {

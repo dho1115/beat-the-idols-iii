@@ -100,16 +100,18 @@ function App() {
   useEffect(() => {
     try {
       const expiredAnnouncements = findExpiredAnnouncements(challengeAnnouncements, DateTime);
-
       if (expiredAnnouncements.length) {
         expiredAnnouncements.forEach(async announcement => {
           const { challenge, id } = announcement;
+
+          console.log("The challenge to be transferred is:", challenge);
+          console.log("The id is:", id);
+          debugger;
+
           const url = `http://localhost:3003/challengeAnnouncements/${id}`;
 
           try {
             const handleChallengeAnnouncementResult = await handleExpiredChallengeAnnouncements(url, challenge, data => setCurrentChallenges(data), data => setChallengeAnnouncements(data), location.pathname);
-
-            console.log(handleChallengeAnnouncementResult);
           }
           catch (error) {
             console.error({ message: "*** ERROR *** inside expiredAnnouncements.forEach() block (inside useEffect hook)!!!", announcement, challenge, challengeID: id, location: location.pathname, error, errorMessage: error.message, errorStack: error.stack, errorName: error.name });
