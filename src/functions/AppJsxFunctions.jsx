@@ -154,4 +154,3 @@ export const handleExpiredChallengeAnnouncements = async (url_to_delete, data, s
       console.error({ message: "ERROR from handleExpiredChallengeAnnouncements!!!", locationOfError: location, error, errorMessage: error.message, errorName: error.name });
    }
 }
-   
