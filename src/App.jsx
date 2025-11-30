@@ -130,11 +130,7 @@ function App() {
 
             return { ...value, currentChallenges: fetchCurrentChallenges, anyExpiredChallenges: checkForExpiredChallenges };
           })
-          .then(value => {
-            value.anyExpiredChallenges.length && console.error(`Please wait while we clear out all expired challenges. Expired challenges currently is ${JSON.stringify(value.expiredChallenges)}.`)
-            console.log({ value });
-            return navigate("/");
-          })
+          .then(value => navigate("/home"))
           .catch(error => ({ message: "ERROR inside handleExpiredChallenges function call!!!", location: location.pathname, error, errorMessage: error.message, errorName: error.name, expiredChallenges, videos, currentChallenges }));
       }
     } catch (error) {
