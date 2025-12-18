@@ -147,217 +147,113 @@
       ],
       "howChallengeEnds": "votes",
       "challengeAnnouncementID": "e9eb2649-50fe-4d89-82a6-c7154afb9285"
-    }
-  ],
-  "challengeAnnouncements": [
+    },
     {
       "id": "88d5bd83-1fda-4c5a-a194-e933e0c9789a",
-      "announcement": {
-        "id": "88d5bd83-1fda-4c5a-a194-e933e0c9789a",
-        "_announcementOwnerID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-        "headline": "Acey Adam's Announcement!!!",
-        "description": "Here is my challenge.",
-        "cover_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj7lWSS6etY12WV9fs5dkygbHp60x-VRYZQw&s",
-        "announcementEndsOn": "2025-12-01",
-        "_challengeAnnouncementID": "88d5bd83-1fda-4c5a-a194-e933e0c9789a",
-        "posted": "2025-11-30",
-        "videosInChallenge": [
-          {
-            "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
-            "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
-            "videoType": "you-tube",
-            "title": "Acey Adams Defying Gravity Cover",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
-            "username": "AceyAdams",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
+      "_challengeID": "88d5bd83-1fda-4c5a-a194-e933e0c9789a",
+      "_challengeOwnerID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
+      "posted": null,
+      "title": "Acey Adam's Challenge!!!",
+      "description": "Description of Acey Adam's Challenge.",
+      "challengeCoverType": "online",
+      "challengeCoverImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj7lWSS6etY12WV9fs5dkygbHp60x-VRYZQw&s",
+      "challengeEndsOn": "2025-12-04",
+      "winningVotes": 0,
+      "videosInChallenge": [
+        {
+          "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
+          "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
+          "videoType": "you-tube",
+          "title": "Acey Adams Defying Gravity Cover",
+          "record": {
+            "wins": 0,
+            "losses": 0,
+            "ties": 0,
+            "winPct": 0
           },
-          {
-            "id": "f252e3ca-9312-4134-908d-54f085696a23",
-            "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
-            "videoType": "you-tube",
-            "title": "Breaking Free Cover (by Acey Adams).",
-            "record": {
-              "wins": 1,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 1
-            },
-            "username": "AceyAdams",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-            "username": "jamiesmith",
-            "title": "The Wizard and I - v2",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
-            "id": "cac8900f-2676-40c6-a124-295fd0996256",
-            "record": {
-              "wins": 2,
-              "losses": 3,
-              "ties": 1,
-              "winPct": 0.3333333333333333
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-            "username": "jamiesmith",
-            "title": "The World will Know (\"Newsies\").",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
-            "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
-            "record": {
-              "wins": 3,
-              "losses": 5,
-              "ties": 0,
-              "winPct": 0.375
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-            "username": "jamiesmith",
-            "title": "The Wizard and I - cover.",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
-            "id": "a814910a-d9ae-4123-bc13-48333718cec2",
-            "record": {
-              "wins": 1,
-              "losses": 6,
-              "ties": 1,
-              "winPct": 0.125
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
+          "username": "AceyAdams",
+          "challengeAccessories": {
+            "votes": 19,
+            "finalStatus": "pending"
           }
-        ]
-      },
-      "challenge": {
-        "id": "88d5bd83-1fda-4c5a-a194-e933e0c9789a",
-        "_challengeID": "88d5bd83-1fda-4c5a-a194-e933e0c9789a",
-        "_challengeOwnerID": "8941b70e-072a-433b-9c1f-fd4f1d0fcbfd",
-        "posted": null,
-        "title": "Acey Adam's Challenge!!!",
-        "description": "Description of Acey Adam's Challenge.",
-        "challengeCoverType": "online",
-        "challengeCoverImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj7lWSS6etY12WV9fs5dkygbHp60x-VRYZQw&s",
-        "challengeEndsOn": "2025-12-04",
-        "winningVotes": 0,
-        "videosInChallenge": [
-          {
-            "id": "b98a0cf9-cd03-4ed9-8699-a31d53206e06",
-            "urlOrFile": "https://www.youtube.com/watch?v=AoON1CyhQAM",
-            "videoType": "you-tube",
-            "title": "Acey Adams Defying Gravity Cover",
-            "record": {
-              "wins": 0,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 0
-            },
-            "username": "AceyAdams",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
+        },
+        {
+          "id": "f252e3ca-9312-4134-908d-54f085696a23",
+          "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
+          "videoType": "you-tube",
+          "title": "Breaking Free Cover (by Acey Adams).",
+          "record": {
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "winPct": 1
           },
-          {
-            "id": "f252e3ca-9312-4134-908d-54f085696a23",
-            "urlOrFile": "https://www.youtube.com/watch?v=nSl0mqBjQW4",
-            "videoType": "you-tube",
-            "title": "Breaking Free Cover (by Acey Adams).",
-            "record": {
-              "wins": 1,
-              "losses": 0,
-              "ties": 0,
-              "winPct": 1
-            },
-            "username": "AceyAdams",
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-            "username": "jamiesmith",
-            "title": "The Wizard and I - v2",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
-            "id": "cac8900f-2676-40c6-a124-295fd0996256",
-            "record": {
-              "wins": 2,
-              "losses": 3,
-              "ties": 1,
-              "winPct": 0.3333333333333333
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-            "username": "jamiesmith",
-            "title": "The World will Know (\"Newsies\").",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
-            "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
-            "record": {
-              "wins": 3,
-              "losses": 5,
-              "ties": 0,
-              "winPct": 0.375
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
-          },
-          {
-            "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
-            "username": "jamiesmith",
-            "title": "The Wizard and I - cover.",
-            "videoType": "you-tube",
-            "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
-            "id": "a814910a-d9ae-4123-bc13-48333718cec2",
-            "record": {
-              "wins": 1,
-              "losses": 6,
-              "ties": 1,
-              "winPct": 0.125
-            },
-            "challengeAccessories": {
-              "votes": 0,
-              "finalStatus": "pending"
-            }
+          "username": "AceyAdams",
+          "challengeAccessories": {
+            "votes": 19,
+            "finalStatus": "pending"
           }
-        ],
-        "howChallengeEnds": "date",
-        "challengeAnnouncementID": "88d5bd83-1fda-4c5a-a194-e933e0c9789a"
-      }
+        },
+        {
+          "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+          "username": "jamiesmith",
+          "title": "The Wizard and I - v2",
+          "videoType": "you-tube",
+          "urlOrFile": "https://www.youtube.com/watch?v=WsCSTv8nqN4",
+          "id": "cac8900f-2676-40c6-a124-295fd0996256",
+          "record": {
+            "wins": 2,
+            "losses": 3,
+            "ties": 1,
+            "winPct": 0.3333333333333333
+          },
+          "challengeAccessories": {
+            "votes": 11,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+          "username": "jamiesmith",
+          "title": "The World will Know (\"Newsies\").",
+          "videoType": "you-tube",
+          "urlOrFile": "https://www.youtube.com/watch?v=ecAHKvT8OFg",
+          "id": "52596c9b-1ad8-4283-a56c-36894b1ed830",
+          "record": {
+            "wins": 3,
+            "losses": 5,
+            "ties": 0,
+            "winPct": 0.375
+          },
+          "challengeAccessories": {
+            "votes": 17,
+            "finalStatus": "pending"
+          }
+        },
+        {
+          "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
+          "username": "jamiesmith",
+          "title": "The Wizard and I - cover.",
+          "videoType": "you-tube",
+          "urlOrFile": "https://www.youtube.com/watch?v=QTt1WwQMAto",
+          "id": "a814910a-d9ae-4123-bc13-48333718cec2",
+          "record": {
+            "wins": 1,
+            "losses": 6,
+            "ties": 1,
+            "winPct": 0.125
+          },
+          "challengeAccessories": {
+            "votes": 19,
+            "finalStatus": "pending"
+          }
+        }
+      ],
+      "howChallengeEnds": "date",
+      "challengeAnnouncementID": "88d5bd83-1fda-4c5a-a194-e933e0c9789a"
     }
   ],
+  "challengeAnnouncements": [],
   "videos": [
     {
       "_userID": "e3288652-f5be-4e52-b315-a7c232c9e0cb",
